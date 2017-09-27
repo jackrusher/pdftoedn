@@ -38,7 +38,7 @@ test_start () {
 filter_meta () {
     local SRC="$1"
     local DST="$2"
-    cat "$SRC" | sed 's/:versions {[a-z0-9:\ \.,"]*}/:versions {}/' | sed 's/:filename "[a-zA-Z0-9/\_\.\-]*"/:filename ""/' > "$DST"
+    cat "$SRC" | sed 's/:versions {[a-z0-9:\ \.,_"]*}/:versions {}/' | sed 's/:filename "[a-zA-Z0-9/\_\.\-]*"/:filename ""/' > "$DST"
 }
 
 # output and execute the command

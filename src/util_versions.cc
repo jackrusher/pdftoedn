@@ -19,7 +19,6 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
-#include <regex>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -35,6 +34,7 @@
 
 #ifdef HAVE_LIBOPENSSL
 #include <openssl/crypto.h>
+#include <boost/regex.hpp>
 #endif
 
 #include "util_versions.h"
@@ -86,24 +86,23 @@ namespace pdftoedn {
 
 #ifdef HAVE_LIBOPENSSL
             static const std::string openssl() {
-                std::string openssl_version_str;
-                std::smatch match;
-
 #if OPENSSL_VERSION_NUMBER >= 0x1010000fL
  #define OPENSSL_VERSION_FN  OpenSSL_version(0)
 #else
  #define OPENSSL_VERSION_FN  SSLeay_version(0)
 #endif
-                openssl_version_str = OPENSSL_VERSION_FN;
+                static const char* pattern = "[[:digit:]]+\\.[[:digit:]]+\\.[[:alnum:]]+";
+                std::string openssl_version_str;
+                boost::cmatch match;
 
                 try
                 {
-                    std::regex pattern("(\\d)+.(\\d)+.(\\d\\w)+");
-                    std::regex_search(openssl_version_str, match, pattern);
-                    if (!match.empty()) {
+                    // using boost as regex support is borked before g++ 4.9
+                    if (boost::regex_search(OPENSSL_VERSION_FN, match, boost::regex(pattern))) {
                         openssl_version_str = match[0];
                     }
                 } catch (const std::exception& e) {
+                    openssl_version_str = OPENSSL_VERSION_FN;
                 }
                 return openssl_version_str;
             };
