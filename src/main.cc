@@ -72,17 +72,19 @@ int main(int argc, char** argv)
     try
     {
         namespace po = boost::program_options;
-        po::options_description opts("Options");
-        opts.add_options()
-            ("output_file,o",       po::value<std::string>(&edn_output_filename)->required(),
-             "REQUIRED: Destination file path to write output to.")
+        po::options_description desc("Options");
+        desc.add_options()
+            ("help,h",
+             "Display this message.")
+            ("version,v",
+             "Display version information and exit.")
             ("use_page_crop_box,a", po::bool_switch(&flags.use_page_crop_box),
              "Use page crop box instead of media box when reading page content.")
             ("debug_meta,D",        po::bool_switch(&flags.include_debug_info),
              "Include additional debug metadata in output.")
             ("show_font_map_list,F",po::bool_switch(&show_font_list),
-             "Display the configured font substitution list and exit.")
-            ("force_output,f"  ,    po::bool_switch(&flags.force_output_write),
+             "Display the configured font substitution list and exit. Use with -m flag to see resulting list.")
+            ("force,f",             po::bool_switch(&flags.force_output_write),
              "Overwrite output file if it exists.")
             ("invisible_text,i",    po::bool_switch(&flags.include_invisible_text),
              "Include invisible text in output (for use with OCR'd documents).")
@@ -98,30 +100,29 @@ int main(int argc, char** argv)
              "PDF owner password if document is encrypted.")
             ("user_password,u",     po::value<std::string>(&pdf_user_password),
              "PDF user password if document is encrypted.")
+            ("output_file,o",       po::value<std::string>(&edn_output_filename)->required(),
+             "REQUIRED: Destination file (.edn) to write output to.")
             ("filename",            po::value<std::string>(&pdf_filename)->required(),
-             "PDF document to process.")
-            ("version,v",
-             "Display version information and exit.")
-            ("help,h",
-             "Display this message.")
+             "REQUIRED: PDF document to process (--filename flag is optional).")
             ;
 
-        po::positional_options_description p;
-        p.add("filename", 1);
+        po::positional_options_description po_desc;
+        po_desc.add("filename", 1);
 
         po::variables_map vm;
 
         try
         {
-            po::store(po::command_line_parser(argc, argv).options(opts).positional(p).run(), vm);
+            po::store(po::command_line_parser(argc, argv).options(desc).positional(po_desc).run(), vm);
 
             if ( vm.count("help") ) {
-                std::cout << "Usage: " << boost::filesystem::basename(argv[0]) << " [options] -o <output file> filename" << std::endl
-                          << opts << std::endl;
+                std::cerr << boost::filesystem::basename(argv[0]) << " "
+                          << PDFTOEDN_VERSION << std::endl
+                          << desc << std::endl;
                 return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
             }
             if ( vm.count("version") ) {
-                std::cout << boost::filesystem::basename(argv[0]) << " "
+                std::cerr << boost::filesystem::basename(argv[0]) << " "
                           << PDFTOEDN_VERSION << std::endl
                           << "Linked libraries:" << std::endl
                           << pdftoedn::util::version::info();
@@ -130,22 +131,22 @@ int main(int argc, char** argv)
             if ( vm.count("page_number")) {
                 intmax_t pg = vm["page_number"].as<intmax_t>();
                 if (pg < 0) {
-                    std::cout << "Invalid page number " << pg << std::endl;
+                    std::cerr << "Invalid page number " << pg << std::endl;
                     return pdftoedn::ErrorTracker::CODE_INIT_ERROR;
                 }
             }
             po::notify(vm);
         }
         catch (po::error& e) {
-            std::cout << "Error parsing program arguments: " << e.what() << std::endl
+            std::cerr << "Error parsing program arguments: " << e.what() << std::endl
                       << std::endl
-                      << opts << std::endl;
+                      << desc << std::endl;
             return pdftoedn::ErrorTracker::CODE_INIT_ERROR;
         }
     }
     catch (std::exception& e)
     {
-        std::cout << "Argument error: " << std::endl
+        std::cerr << "Argument error: " << std::endl
                   << e.what() << std::endl;
         return pdftoedn::ErrorTracker::CODE_INIT_ERROR;
     }
@@ -167,7 +168,7 @@ int main(int argc, char** argv)
                                               (page_number >= 0 ? page_number : -1));
     }
     catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
         return pdftoedn::ErrorTracker::CODE_INIT_ERROR;
     }
 
