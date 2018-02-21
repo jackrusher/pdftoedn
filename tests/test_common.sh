@@ -46,8 +46,7 @@ run_cmd () {
     local cmd="$@"
 
     # output the command, run it, grab its return code and std-output
-    echo $cmd
-    $cmd > $STDOUTFILE
+    ( set -x; $cmd &> $STDOUTFILE )
     local status=$?
     cat $STDOUTFILE
     return $status

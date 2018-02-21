@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
             ("version,v",
              "Display version information and exit.")
             ("show_font_map_list,F",
-             "Display the configured font substitution list and exit. Use with -m flag to see resulting list.")
+             "Display the configured font substitution list and exit. Use with -m flag to see resulting merged list.")
             ("use_page_crop_box,a", po::bool_switch(&flags.use_page_crop_box),
              "Use page crop box instead of media box when reading page content.")
             ("debug_meta,D",        po::bool_switch(&flags.include_debug_info),
@@ -121,16 +121,16 @@ int main(int argc, char** argv)
         {
             po::store(po::command_line_parser(argc, argv).options(desc).positional(po_desc).run(), vm);
 
-            if ( vm.count("help") ) {
+            if (vm.count("help")) {
                 progversion(std::cerr, argv[0]) << desc << std::endl;
                 return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
             }
-            if ( vm.count("version") ) {
+            if (vm.count("version")) {
                 progversion(std::cerr, argv[0]) << "Linked libraries:" << std::endl
                                                 << pdftoedn::util::version::info();
                 return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
             }
-            if ( vm.count("show_font_map_list") ) {
+            if (vm.count("show_font_map_list")) {
                 // if one is given, load the font map config & dump
                 // the font map list - NOTE: if the -m flag is not
                 // passed, font_map_file is "" so only the default
@@ -142,7 +142,7 @@ int main(int argc, char** argv)
                 std::cout << pdftoedn::doc_font_maps << std::endl;
                 return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
             }
-            if ( vm.count("page_number")) {
+            if (vm.count("page_number")) {
                 intmax_t pg = vm["page_number"].as<intmax_t>();
                 if (pg < 0) {
                     std::cerr << "Invalid page number " << pg << std::endl;
