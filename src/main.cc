@@ -54,6 +54,13 @@ namespace pdftoedn {
 
 } // namespace
 
+std::ostream& progversion(std::ostream& o, const char* prog_name)
+{
+    o << boost::filesystem::basename(prog_name) << " "
+      << PDFTOEDN_VERSION << std::endl;
+    return o;
+}
+
 
 int main(int argc, char** argv)
 {
@@ -66,7 +73,6 @@ int main(int argc, char** argv)
     // parse the options
     pdftoedn::Options::Flags flags = { false };
     std::string pdf_filename, pdf_owner_password, pdf_user_password, edn_output_filename, font_map_file;
-    bool show_font_list = false;
     intmax_t page_number = -1;
 
     try
@@ -78,12 +84,12 @@ int main(int argc, char** argv)
              "Display this message.")
             ("version,v",
              "Display version information and exit.")
+            ("show_font_map_list,F",
+             "Display the configured font substitution list and exit. Use with -m flag to see resulting list.")
             ("use_page_crop_box,a", po::bool_switch(&flags.use_page_crop_box),
              "Use page crop box instead of media box when reading page content.")
             ("debug_meta,D",        po::bool_switch(&flags.include_debug_info),
              "Include additional debug metadata in output.")
-            ("show_font_map_list,F",po::bool_switch(&show_font_list),
-             "Display the configured font substitution list and exit. Use with -m flag to see resulting list.")
             ("force,f",             po::bool_switch(&flags.force_output_write),
              "Overwrite output file if it exists.")
             ("invisible_text,i",    po::bool_switch(&flags.include_invisible_text),
@@ -116,16 +122,24 @@ int main(int argc, char** argv)
             po::store(po::command_line_parser(argc, argv).options(desc).positional(po_desc).run(), vm);
 
             if ( vm.count("help") ) {
-                std::cerr << boost::filesystem::basename(argv[0]) << " "
-                          << PDFTOEDN_VERSION << std::endl
-                          << desc << std::endl;
+                progversion(std::cerr, argv[0]) << desc << std::endl;
                 return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
             }
             if ( vm.count("version") ) {
-                std::cerr << boost::filesystem::basename(argv[0]) << " "
-                          << PDFTOEDN_VERSION << std::endl
-                          << "Linked libraries:" << std::endl
-                          << pdftoedn::util::version::info();
+                progversion(std::cerr, argv[0]) << "Linked libraries:" << std::endl
+                                                << pdftoedn::util::version::info();
+                return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
+            }
+            if ( vm.count("show_font_map_list") ) {
+                // if one is given, load the font map config & dump
+                // the font map list - NOTE: if the -m flag is not
+                // passed, font_map_file is "" so only the default
+                // map is loaded
+                if (vm.count("font_map_file")) {
+                    font_map_file = vm["font_map_file"].as<std::string>();
+                }
+                pdftoedn::options = pdftoedn::Options(font_map_file);
+                std::cout << pdftoedn::doc_font_maps << std::endl;
                 return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
             }
             if ( vm.count("page_number")) {
@@ -170,12 +184,6 @@ int main(int argc, char** argv)
     catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
         return pdftoedn::ErrorTracker::CODE_INIT_ERROR;
-    }
-
-    // dump the font map list and exit if the -F flag was passed
-    if (show_font_list) {
-        std::cout << pdftoedn::doc_font_maps << std::endl;
-        return pdftoedn::ErrorTracker::CODE_RUNTIME_OK;
     }
 
     // init support libs if needed

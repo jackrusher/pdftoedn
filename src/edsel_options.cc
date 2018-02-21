@@ -125,6 +125,35 @@ namespace pdftoedn {
             }
         }
 
+        // font maps
+        load_font_maps(fontmap);
+
+        // configure some useful paths, etc.
+        doc_base_name = output_filepath.stem().string();
+
+        // determine the resource directory based on the output path
+        // but don't create it yet as some documents might not have
+        // images, etc. that will need saving.
+        fs::path res_dir = (parent_path / doc_base_name);
+
+        // but, if it exists, make sure it's a directory
+        if (fs::exists(res_dir) && !fs::is_directory(res_dir)) {
+            std::stringstream err;
+            err << res_dir.string() << " resource path exists but is not a folder";
+            throw invalid_file(err.str());
+        }
+        resource_dir = res_dir.string();
+
+        //        std::cerr << *this << std::endl;
+    }
+
+
+    //
+    //
+    bool Options::load_font_maps(const std::string& fontmap)
+    {
+        namespace fs = boost::filesystem;
+
         // -- font maps --
         std::string f_map;
 
@@ -158,34 +187,17 @@ namespace pdftoedn {
         // load the font map if set
         if (!f_map.empty()) {
             // load_config throws if error
-            if (load_config(f_map)) {
+            if (load_font_map_file(f_map)) {
                 font_map = f_map;
+                return true;
             }
         }
-
-        // configure some useful paths, etc.
-        doc_base_name = output_filepath.stem().string();
-
-        // determine the resource directory based on the output path
-        // but don't create it yet as some documents might not have
-        // images, etc. that will need saving.
-        fs::path res_dir = (parent_path / doc_base_name);
-
-        // but, if it exists, make sure it's a directory
-        if (fs::exists(res_dir) && !fs::is_directory(res_dir)) {
-            std::stringstream err;
-            err << res_dir.string() << " resource path exists but is not a folder";
-            throw invalid_file(err.str());
-        }
-        resource_dir = res_dir.string();
-
-        //        std::cerr << *this << std::endl;
+        return false;
     }
-
 
     //
     // load the default config followed by the specified font map
-    bool Options::load_config(const std::string& new_font_map_file)
+    bool Options::load_font_map_file(const std::string& new_font_map_file)
     {
         char* font_map_data;
         // try load the file - first read the contents

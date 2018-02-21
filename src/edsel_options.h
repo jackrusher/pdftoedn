@@ -39,6 +39,10 @@ namespace pdftoedn {
         };
 
         Options() : page_num(-1) {}
+        Options(const std::string& font_map) :
+            page_num(-1) {
+            load_font_maps(font_map);
+        }
         Options(const std::string& pdf_filename,
                 const std::string& pdf_owner_password,
                 const std::string& pdf_user_password,
@@ -82,7 +86,8 @@ namespace pdftoedn {
         std::string resource_dir;
         std::string doc_base_name;
 
-        bool load_config(const std::string& new_font_map_file);
+        bool load_font_maps(const std::string& font_map_file);
+        bool load_font_map_file(const std::string& new_font_map_file);
     };
 
     extern pdftoedn::Options options;
