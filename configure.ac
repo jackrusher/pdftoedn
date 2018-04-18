@@ -1,6 +1,10 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 m4_define([pdftoedn_version],[0.34.3])
+m4_define([min_poppler_version],[0.64.0])
+m4_define([min_lept_version],[1.74])
+m4_define([min_boost_version],[1.60])
+
 
 AC_PREREQ([2.68])
 AC_INIT([pdftoedn], [pdftoedn_version], [ed@motologic.com])
@@ -20,6 +24,9 @@ if test "x$ax_enable_debug" = "xyes"; then
 fi
 AC_SUBST([PDFTOEDN_BUILD_CPPFLAGS])
 
+dnl compiler options
+AX_CHECK_COMPILE_FLAG([-Wno-user-defined-warnings], [CXXFLAGS="$CXXFLAGS -Wno-user-defined-warnings"])
+
 dnl Checks for programs.
 PKG_PROG_PKG_CONFIG
 AC_PROG_CXX
@@ -29,7 +36,7 @@ dnl define version in config.h
 AC_DEFINE_UNQUOTED([PDFTOEDN_VERSION], ["pdftoedn_version"], [Explicitly named version])
 
 dnl c++-11 is required
-AX_CXX_COMPILE_STDCXX_11
+AX_CXX_COMPILE_STDCXX_11(noext)
 
 dnl -----------------------------------------------
 dnl Checks for C libraries
@@ -47,7 +54,7 @@ else
 fi
 
 dnl leptonica
-PKG_CHECK_MODULES([lept], [lept >= 1.74], [], [AC_MSG_ERROR([leptonica 1.74 was not found])])
+PKG_CHECK_MODULES([lept], [lept >= min_lept_version], [], [AC_MSG_ERROR([leptonica min_lept_version was not found])])
 
 dnl openssl
 AX_CHECK_OPENSSL(openssl_found=yes, openssl_found=no)
@@ -75,7 +82,7 @@ dnl Checks for c++ libraries.
 AC_LANG_PUSH(C++)
 
 dnl boost
-AX_BOOST_BASE([1.60],[], [AC_MSG_ERROR([boost was not found in your system])])
+AX_BOOST_BASE([min_boost_version],[], [AC_MSG_ERROR([boost min_boost_version was not found in your system])])
 AX_BOOST_SYSTEM
 AX_BOOST_FILESYSTEM
 AX_BOOST_PROGRAM_OPTIONS
@@ -83,8 +90,8 @@ AX_BOOST_REGEX
 AX_BOOST_LOCALE
 
 dnl poppler
-PKG_CHECK_MODULES([poppler], [poppler >= 0.64.0], [], [AC_MSG_ERROR([poppler 0.64.0 was not found])])
-PKG_CHECK_MODULES([poppler_cpp], [poppler-cpp >= 0.64.0], [], [AC_MSG_ERROR([poppler cpp lib 0.64.0 not found])])
+PKG_CHECK_MODULES([poppler], [poppler >= min_poppler_version], [], [AC_MSG_ERROR([poppler min_poppler_version was not found])])
+PKG_CHECK_MODULES([poppler_cpp], [poppler-cpp >= min_poppler_version], [], [AC_MSG_ERROR([poppler cpp lib min_poppler_version not found])])
 
 dnl poppler doesn't scope usage of its x-pdf headers but I prefer to.
 dnl This is usually not a problem unless poppler is installed in a
