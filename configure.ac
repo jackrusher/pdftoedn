@@ -1,6 +1,6 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-m4_define([pdftoedn_version],[0.34.3])
+m4_define([pdftoedn_version],[0.35.0])
 m4_define([min_poppler_version],[0.64.0])
 m4_define([min_lept_version],[1.74])
 m4_define([min_boost_version],[1.60])

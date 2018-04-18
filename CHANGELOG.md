@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.35.0 - 2018-04-18
+### Changed
+* API compatibility for poppler-0.64.0 (new min. required)
+
+### Fixed
+* lib version output
+* program arguments don't require options not needed
+
 ## 0.34.3 - 2017-08-14
 
 ### Fixed
