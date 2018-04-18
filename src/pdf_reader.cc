@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -316,7 +316,7 @@ namespace pdftoedn
     //
     //
     // get link page number
-    uintmax_t PDFReader::get_link_page_num( LinkDest* dest )
+    uintmax_t PDFReader::get_link_page_num(const LinkDest* dest)
     {
         if (!dest)
             return 0;
@@ -332,7 +332,7 @@ namespace pdftoedn
 
     //
     //
-    void PDFReader::outline_link_dest(LinkDest* dest, PdfOutline::Entry& entry)
+    void PDFReader::outline_link_dest(const LinkDest* dest, PdfOutline::Entry& entry)
     {
         uintmax_t page_num = get_link_page_num(dest);
         entry.set_page( page_num );
@@ -347,7 +347,7 @@ namespace pdftoedn
 
     //
     // PDF GoTo link types
-    void PDFReader::outline_action_goto(LinkGoTo *link, PdfOutline::Entry& entry)
+    void PDFReader::outline_action_goto(const LinkGoTo *link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
             LinkDest* dest = NULL;
@@ -368,7 +368,7 @@ namespace pdftoedn
 
     //
     // gotoR links pointing to other files in the FS
-    void PDFReader::outline_action_goto_r(LinkGoToR *link, PdfOutline::Entry& entry)
+    void PDFReader::outline_action_goto_r(const LinkGoToR *link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
 
@@ -392,7 +392,7 @@ namespace pdftoedn
 
     //
     // URI links pointing to URI resources
-    void PDFReader::outline_action_uri(LinkURI *link, PdfOutline::Entry& entry)
+    void PDFReader::outline_action_uri(const LinkURI *link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
             // set the URI as the destination
@@ -422,19 +422,19 @@ namespace pdftoedn
             entry_list.push_back(e);
 
             // action shoud get LINK_GOTO
-            LinkAction* link_action = const_cast<LinkAction *>(item->getAction());
+            const LinkAction* link_action = item->getAction();
 
             if (link_action)
             {
                 // select the link type
                 if (link_action->getKind() == actionGoTo) {
-                    outline_action_goto( dynamic_cast<LinkGoTo*>(link_action), *e );
+                    outline_action_goto( dynamic_cast<const LinkGoTo*>(link_action), *e );
                 } else if (link_action->getKind() == actionGoToR) {
                     // TESLA-6168 - include GotoR link destination for Mike P.
-                    outline_action_goto_r( dynamic_cast<LinkGoToR*>(link_action), *e );
+                    outline_action_goto_r( dynamic_cast<const LinkGoToR*>(link_action), *e );
                 } else if (link_action->getKind() == actionURI) {
                     // (and adding URI link destination in case)
-                    outline_action_uri( dynamic_cast<LinkURI*>(link_action), *e );
+                    outline_action_uri( dynamic_cast<const LinkURI*>(link_action), *e );
                 } else {
                     std::stringstream err;
                     err << "link action kind: " << link_action->getKind();

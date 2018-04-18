@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -77,7 +77,7 @@ namespace pdftoedn {
 
         std::wstring unicode_to_wstring(const Unicode* const u, int len);
         uint8_t pdf_to_svg_blend_mode(GfxBlendMode mode);
-        void copy_link_meta(PdfLink& link, LinkDest& ldest, double page_height);
+        void copy_link_meta(PdfLink& link, const LinkDest& ldest, double page_height);
         StreamProps::stream_type_e poppler_stream_type_to_edsel(StreamKind k);
         bool poppler_error_to_edsel(ErrorCategory category, const std::string& poppler_msg, int pos,
                                     ErrorTracker::error_type& err, ErrorTracker::error::level& level);

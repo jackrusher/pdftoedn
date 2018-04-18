@@ -157,7 +157,7 @@ namespace pdftoedn
                   }
 
                   // found some PDFs where URIs had NULL strings.. huh?
-                  GooString* uri = const_cast<GooString *>(ha->getURI());
+                  const GooString* uri = ha->getURI();
                   pdf_link = new PdfAnnotLinkURI(x1, y1, x2, y2, effect,
                                                  ((uri != NULL) ? uri->getCString() : ""));
               }

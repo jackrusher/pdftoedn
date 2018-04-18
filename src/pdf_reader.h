@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -67,11 +67,11 @@ namespace pdftoedn
         bool init_font_engine();
         bool process_outline(pdftoedn::PdfOutline& outline_output);
         void outline_level(GooList* items, int level, std::list<PdfOutline::Entry *>& entry_list);
-        void outline_action_goto(LinkGoTo *link, PdfOutline::Entry& entry);
-        void outline_action_goto_r(LinkGoToR *link, PdfOutline::Entry& entry);
-        void outline_action_uri(LinkURI *link, PdfOutline::Entry& entry);
-        void outline_link_dest(LinkDest* dest, PdfOutline::Entry& entry);
-        uintmax_t get_link_page_num(LinkDest* link);
+        void outline_action_goto(const LinkGoTo *link, PdfOutline::Entry& entry);
+        void outline_action_goto_r(const LinkGoToR *link, PdfOutline::Entry& entry);
+        void outline_action_uri(const LinkURI *link, PdfOutline::Entry& entry);
+        void outline_link_dest(const LinkDest* dest, PdfOutline::Entry& entry);
+        uintmax_t get_link_page_num(const LinkDest* link);
 
         void process_page(::OutputDev* dev, uintmax_t page);
 

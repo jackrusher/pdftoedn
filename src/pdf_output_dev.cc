@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -315,7 +315,7 @@ namespace pdftoedn
     // so a PDF viewer shows different text from what's encoded. We
     // cache the unicode values and then substitute them when
     // characters come in
-    void OutputDev::beginActualText(GfxState* state, GooString *text )
+    void OutputDev::beginActualText(GfxState* state, const GooString *text )
     {
         if (state->getStrokeColorSpace()->isNonMarking()) {
             return;
@@ -1049,7 +1049,7 @@ namespace pdftoedn
 
 
     //----- grouping operators
-    void OutputDev::beginMarkedContent(char *name, Dict *properties)
+    void OutputDev::beginMarkedContent(const char *name, Dict *properties)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << ": " << name << " ---- + " << std::endl);
 
@@ -1063,12 +1063,12 @@ namespace pdftoedn
         //        et.log_info( ErrorTracker::ERROR_OD_UNIMPLEMENTED_CB, MODULE, __FUNCTION__ );
     }
 
-    void OutputDev::markPoint(char *name)
+    void OutputDev::markPoint(const char *name)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << ": " << name << " ---- + " << std::endl);
     }
 
-    void OutputDev::markPoint(char *name, Dict *properties)
+    void OutputDev::markPoint(const char *name, Dict *properties)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << ": " << name << " ---- + " << std::endl);
     }

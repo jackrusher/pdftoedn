@@ -83,8 +83,8 @@ AX_BOOST_REGEX
 AX_BOOST_LOCALE
 
 dnl poppler
-PKG_CHECK_MODULES([poppler], [poppler >= 0.55.0], [], [AC_MSG_ERROR([poppler 0.55.0 was not found])])
-PKG_CHECK_MODULES([poppler_cpp], [poppler-cpp >= 0.55.0], [], [AC_MSG_ERROR([poppler cpp lib 0.55.0 not found])])
+PKG_CHECK_MODULES([poppler], [poppler >= 0.64.0], [], [AC_MSG_ERROR([poppler 0.64.0 was not found])])
+PKG_CHECK_MODULES([poppler_cpp], [poppler-cpp >= 0.64.0], [], [AC_MSG_ERROR([poppler cpp lib 0.64.0 not found])])
 
 dnl poppler doesn't scope usage of its x-pdf headers but I prefer to.
 dnl This is usually not a problem unless poppler is installed in a
@@ -96,7 +96,7 @@ AC_SUBST([POPPLER_PARENT_INCLUDE])
 dnl make sure poppler xpdf headers are installed
 save_CPPFLAGS=$CPPFLAGS
 CPPFLAGS="$CPPFLAGS $poppler_CFLAGS"
-AC_CHECK_HEADER([GfxState.h],,[AC_MSG_ERROR([poppler headers not found. Please configure poppler with --enable-xpdf-headers flag])])
+AC_CHECK_HEADER([GfxState.h],,[AC_MSG_ERROR([poppler headers not found. Please build poppler with -DENABLE_XPDF_HEADERS=ON])])
 CPPFLAGS=$save_CPPFLAGS
 
 dnl rapidjson

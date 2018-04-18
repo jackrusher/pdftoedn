@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -24,15 +24,7 @@
 #include "config.h"
 #endif
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-local-typedef"
-#endif
 #include <boost/locale.hpp>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-
 #include <poppler/Link.h>
 #include <poppler/CharTypes.h>
 
@@ -173,7 +165,7 @@ namespace pdftoedn
 
         //
         // sets PDF meta values from a poppler LinkDest type
-        void copy_link_meta(PdfLink& link, LinkDest& ldest, double page_height)
+        void copy_link_meta(PdfLink& link, const LinkDest& ldest, double page_height)
         {
 #if 0
             std::cerr << "top: " << ldest.getTop()

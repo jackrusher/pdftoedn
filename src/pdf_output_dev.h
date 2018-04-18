@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -116,7 +116,7 @@ namespace pdftoedn
                               double dx, double dy,
                               double originX, double originY,
                               CharCode code, int nBytes, Unicode *u, int uLen);
-        virtual void beginActualText(GfxState* state, GooString *text );
+        virtual void beginActualText(GfxState* state, const GooString *text );
         virtual void endActualText(GfxState * /*state*/) { }
 
         //----- paths
@@ -165,9 +165,9 @@ namespace pdftoedn
 
         //----- grouping operators
         virtual void endMarkedContent(GfxState *state);
-        virtual void beginMarkedContent(char *name, Dict *properties);
-        virtual void markPoint(char *name);
-        virtual void markPoint(char *name, Dict *properties);
+        virtual void beginMarkedContent(const char *name, Dict *properties);
+        virtual void markPoint(const char *name);
+        virtual void markPoint(const char *name, Dict *properties);
 
         //----- transparency groups and soft masks
         virtual GBool checkTransparencyGroup(GfxState * /*state*/, GBool /*knockout*/) { return gTrue; }

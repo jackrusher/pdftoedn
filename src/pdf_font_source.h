@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -258,9 +258,6 @@ namespace pdftoedn
         bool load_truetype_font(Gfx8BitFont* gfx8_font);
         bool load_cid_font(GfxCIDFont * cid_font);
         bool load_cidtype2_font(GfxCIDFont * cid_font);
-
-        static Encoding* get_font_encoding(Gfx8BitFont* gfx_font);
-        static bool check_for_mac_roman_encoding(GfxFont *);
     };
 
 } // namespace
