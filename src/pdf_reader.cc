@@ -306,7 +306,7 @@ namespace pdftoedn
         Outline *outline = getOutline();
 
         if (outline && outline->getItems()) {
-            outline_level(outline->getItems(), 0, outline_output.get_entry_list());
+            outline_level(const_cast<GooList *>(outline->getItems()), 0, outline_output.get_entry_list());
             return true;
         }
         return false;
@@ -422,7 +422,7 @@ namespace pdftoedn
             entry_list.push_back(e);
 
             // action shoud get LINK_GOTO
-            LinkAction* link_action = item->getAction();
+            LinkAction* link_action = const_cast<LinkAction *>(item->getAction());
 
             if (link_action)
             {
@@ -445,7 +445,7 @@ namespace pdftoedn
             // traverse the child nodes
             item->open();
             if (item->hasKids()) {
-                outline_level(item->getKids(), level + 1, e->get_entry_list());
+                outline_level(const_cast<GooList *>(item->getKids()), level + 1, e->get_entry_list());
             }
             item->close();
         }

@@ -229,7 +229,7 @@ namespace pdftoedn
         gfx_font_flags(gfx_font->getFlags()),
         encoding(NULL),
         code_to_gid(NULL),
-        to_unicode((gfx_font->getToUnicode() != NULL) && (gfx_font->getToUnicode()->getLength() > 1)),
+        to_unicode((gfx_font->getToUnicode() != NULL) && ((const_cast<CharCodeToUnicode *>(gfx_font->getToUnicode()))->getLength() > 1)),
         ft_lib(lib), ft_face(NULL), face_index(font_face_index),
         font_ok(false)
     {
@@ -251,7 +251,7 @@ namespace pdftoedn
         gfx_font_flags(gfx_font->getFlags()),
         encoding(NULL),
         code_to_gid(NULL),
-        to_unicode((gfx_font->getToUnicode() != NULL) && (gfx_font->getToUnicode()->getLength() > 1)),
+        to_unicode((gfx_font->getToUnicode() != NULL) && ((const_cast<CharCodeToUnicode *>(gfx_font->getToUnicode()))->getLength() > 1)),
         ft_lib(NULL), ft_face(NULL), face_index(-1),
         filename(font_file),
         font_ok(false)
