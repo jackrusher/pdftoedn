@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.35.1 - 2018-04-18
+### Fixed
+* Added missing m4 macros
+
 ## 0.35.0 - 2018-04-18
 ### Changed
 * API compatibility for poppler-0.64.0 (new min. required)
