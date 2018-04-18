@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -25,16 +25,9 @@
 #include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-private-field"
-#endif
 #include <poppler/poppler-config.h>
 #include <poppler/OutputDev.h>
 #include <poppler/GfxFont.h>
-#ifdef __clang__
-#pragma clang diagnostic push
-#endif
 
 #include "pdf_font_source.h"
 #include "font_maps.h"

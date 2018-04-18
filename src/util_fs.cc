@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -20,18 +20,8 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-local-typedef"
-#endif
 #include <boost/filesystem.hpp>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-
 #include <wordexp.h>
-
 #include "util_fs.h"
 #include "pdf_error_tracker.h"
 

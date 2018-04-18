@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -19,17 +19,7 @@
 #pragma once
 
 #include <ostream>
-
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-private-field"
-#endif
 #include <poppler/GfxState.h>
-#ifdef __clang__
-#pragma clang diagnostic push
-#endif
-
-
 #include "base_types.h"
 
 namespace pdftoedn
