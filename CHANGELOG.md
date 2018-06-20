@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.35.2 - 2018-06-20
+### Changed
+* Minor change to prevent joining spans that are too far apart.
+
+### Added
+* New -T and -G options for extracting only text or graphics data.
+
 ## 0.35.1 - 2018-04-18
 ### Fixed
 * Added missing m4 macros
@@ -9,8 +16,8 @@
 * API compatibility for poppler-0.64.0 (new min. required)
 
 ### Fixed
-* lib version output
-* program arguments don't require options not needed
+* lib version output.
+* program arguments don't require options not needed.
 
 ## 0.34.3 - 2017-08-14
 
