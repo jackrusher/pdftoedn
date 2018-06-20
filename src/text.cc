@@ -80,7 +80,7 @@ namespace pdftoedn
         }
 
         double scaling = attribs.txt.font_size * metrics.horiz_scaling;
-        double max_space = 2 * scaling;
+        double max_space = 1.2 * scaling;
 
         // found cases where a very large whitespace is used to
         // separate text spans in table cells, footers, etc.
