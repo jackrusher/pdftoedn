@@ -94,12 +94,16 @@ int main(int argc, char** argv)
              "Overwrite output file if it exists.")
             ("invisible_text,i",    po::bool_switch(&flags.include_invisible_text),
              "Include invisible text in output (for use with OCR'd documents).")
-            ("links_only,l",        po::bool_switch(&flags.link_output_only),
+            ("links_only,L",        po::bool_switch(&flags.link_output_only),
              "Extract only link data.")
-            ("font_map_file,m",     po::value<std::string>(&font_map_file),
-             "JSON font mapping configuration file to use for this run.")
+            ("text_only,T",         po::bool_switch(&flags.text_output_only),
+             "Extract only text data.")
+            ("graphics_only,G",     po::bool_switch(&flags.gfx_output_only),
+             "Extract only graphics data.")
             ("omit_outline,O",      po::bool_switch(&flags.omit_outline),
              "Don't extract outline data.")
+            ("font_map_file,m",     po::value<std::string>(&font_map_file),
+             "JSON font mapping configuration file to use for this run.")
             ("page_number,p",       po::value<intmax_t>(&page_number),
              "Extract data for only this page.")
             ("owner_password,t",    po::value<std::string>(&pdf_owner_password),
@@ -148,6 +152,10 @@ int main(int argc, char** argv)
                     std::cerr << "Invalid page number " << pg << std::endl;
                     return pdftoedn::ErrorTracker::CODE_INIT_ERROR;
                 }
+            }
+            if (vm.count("text_only") && vm["text_only"].as<bool>() &&
+                vm.count("graphics_only") && vm["graphics_only"].as<bool>()) {
+                throw std::logic_error("Can't select both 'text only' and 'graphics only' options.");
             }
             po::notify(vm);
         }

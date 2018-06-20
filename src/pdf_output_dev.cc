@@ -233,7 +233,8 @@ namespace pdftoedn
             return;
         }
 
-        if (state->getStrokeColorSpace()->isNonMarking()) {
+        if (pdftoedn::options.gfx_output_only() ||
+            state->getStrokeColorSpace()->isNonMarking()) {
             return;
         }
 
@@ -317,7 +318,8 @@ namespace pdftoedn
     // characters come in
     void OutputDev::beginActualText(GfxState* state, const GooString *text )
     {
-        if (state->getStrokeColorSpace()->isNonMarking()) {
+        if (pdftoedn::options.gfx_output_only() ||
+            state->getStrokeColorSpace()->isNonMarking()) {
             return;
         }
 
@@ -448,7 +450,8 @@ namespace pdftoedn
     {
         DBG_TRACE_IMG(std::cerr << "===========================" << std::endl << __FUNCTION__);
 
-        if (state->getFillColorSpace()->isNonMarking()) {
+        if (pdftoedn::options.text_output_only() ||
+            state->getFillColorSpace()->isNonMarking()) {
             return;
         }
 
@@ -539,7 +542,8 @@ namespace pdftoedn
                                         GfxImageColorMap *maskColorMap,
                                         GBool maskInterpolate)
     {
-        if (state->getFillColorSpace()->isNonMarking()) {
+        if (pdftoedn::options.text_output_only() ||
+            state->getFillColorSpace()->isNonMarking()) {
             return;
         }
 
@@ -639,7 +643,8 @@ namespace pdftoedn
     {
         DBG_TRACE_IMG(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
 
-        if (state->getFillColorSpace()->isNonMarking()) {
+        if (pdftoedn::options.text_output_only() ||
+            state->getFillColorSpace()->isNonMarking()) {
             return;
         }
 
@@ -714,7 +719,8 @@ namespace pdftoedn
                               int width, int height, GfxImageColorMap *colorMap,
                               GBool interpolate, int *maskColors, GBool inlined)
     {
-        if (state->getFillColorSpace()->isNonMarking()) {
+        if (pdftoedn::options.text_output_only() ||
+            state->getFillColorSpace()->isNonMarking()) {
             return;
         }
 
@@ -1122,7 +1128,8 @@ namespace pdftoedn
 
     void OutputDev::build_path_command(GfxState* state, PdfDocPath::Type type, PdfDocPath::EvenOddRule eo_flag)
     {
-        if (!state->getPath()) {
+        if (pdftoedn::options.text_output_only() ||
+            !state->getPath()) {
             return;
         }
 

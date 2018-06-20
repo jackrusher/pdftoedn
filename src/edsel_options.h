@@ -36,6 +36,8 @@ namespace pdftoedn {
             bool libpng_use_best_compression;
             bool force_font_preprocess;
             bool force_output_write;
+            bool text_output_only;
+            bool gfx_output_only;
         };
 
         Options() : page_num(-1) {}
@@ -71,6 +73,8 @@ namespace pdftoedn {
         bool include_debug_info() const          { return flags.include_debug_info; }
         bool force_pre_process_fonts() const     { return flags.force_font_preprocess; }
         bool force_output_write() const          { return flags.force_output_write; }
+        bool text_output_only() const            { return flags.text_output_only; }
+        bool gfx_output_only() const             { return flags.gfx_output_only; }
 
         friend std::ostream& operator<<(std::ostream& o, const Options& opt);
 
