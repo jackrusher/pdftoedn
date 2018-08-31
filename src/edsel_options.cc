@@ -107,6 +107,14 @@ namespace pdftoedn {
         // check if the destination file exists
         if (fs::exists(output_filepath))
         {
+            if (output_filepath == file_path) {
+                // trying to overwrite the PDF? interesting...
+                std::stringstream err;
+                err << " output file (" << output_filepath
+                    << ") looks to be the same as the source PDF (" <<  file_path << ")";
+                throw invalid_file(err.str());
+            }
+
             // remove the file if asked to do so
             if (flags.force_output_write) {
                 // but check if it's a file that can be deleted
@@ -114,7 +122,6 @@ namespace pdftoedn {
                     std::stringstream err;
                     err << output_filepath << " destination exists but it is not a regular file and can't be overwritten";
                     throw invalid_file(err.str());
-
                 }
                 fs::remove(output_filepath);
             } else {
