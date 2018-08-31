@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.35.3 - 2018-08-31
+### Changed
+* Relaxed boost min version to 1.57 to make it easier to install on
+  certain distros
+* Removed (almost?) all remaining references to Edsel
+* Prevent overwriting of source PDF if passed to -o by mistake
+
 ## 0.35.2 - 2018-06-20
 ### Changed
 * Minor change to prevent joining spans that are too far apart.
