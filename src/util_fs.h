@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -27,7 +27,7 @@ namespace pdftoedn
     {
         namespace fs {
             bool create_fs_dir(const boost::filesystem::path& path);
-            void expand_path(std::string& path);
+            std::string expand_path(const std::string& path);
             bool check_valid_input_file(const boost::filesystem::path& infile);
             bool write_image_to_disk(const std::string& filename, const std::string& blob,
                                      bool overwrite = false);

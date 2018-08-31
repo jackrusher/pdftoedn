@@ -113,7 +113,7 @@ int main(int argc, char** argv)
             ("output_file,o",       po::value<std::string>(&edn_output_filename)->required(),
              "REQUIRED: Destination file (.edn) to write output to.")
             ("filename",            po::value<std::string>(&pdf_filename)->required(),
-             "REQUIRED: PDF document to process (--filename flag is optional).")
+             "REQUIRED: PDF document to process (--filename flag is optional when the arg is passed last).")
             ;
 
         po::positional_options_description po_desc;
@@ -178,13 +178,10 @@ int main(int argc, char** argv)
     try
     {
         // expand the paths if they start with ~
-        pdftoedn::util::fs::expand_path(pdf_filename);
-        pdftoedn::util::fs::expand_path(edn_output_filename);
-
-        pdftoedn::options = pdftoedn::Options(pdf_filename,
+        pdftoedn::options = pdftoedn::Options(pdftoedn::util::fs::expand_path(pdf_filename),
                                               pdf_owner_password,
                                               pdf_user_password,
-                                              edn_output_filename,
+                                              pdftoedn::util::fs::expand_path(edn_output_filename),
                                               font_map_file,
                                               flags,
                                               (page_number >= 0 ? page_number : -1));
@@ -198,8 +195,6 @@ int main(int argc, char** argv)
     pdftoedn::util::xform::init_transform_lib();
 
     globalParams = new GlobalParams();
-    globalParams->setProfileCommands(false);
-    globalParams->setPrintCommands(false);
 
     // register the error handler for this document
     setErrorCallback(&pdftoedn::ErrorTracker::error_handler, &pdftoedn::et);

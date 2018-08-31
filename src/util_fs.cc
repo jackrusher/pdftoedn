@@ -53,25 +53,26 @@ namespace pdftoedn
 
             //
             // if path starts with ~, expand it
-            void expand_path(std::string& path)
+            std::string expand_path(const std::string& path)
             {
                 if (path.find("~") == 0) {
                     wordexp_t exp_result;
                     std::string exp_rslt;
 
-                    if (wordexp(path.c_str(), &exp_result, WRDE_SHOWERR) == 0) {
-                        for (intmax_t ii = 0; ii < exp_result.we_wordc; ++ii) {
-                            if (ii != 0) {
-                                exp_rslt += ' ';
-                            }
-                            exp_rslt += exp_result.we_wordv[ii];
-                        }
-                        wordfree(&exp_result);
-                        path = exp_rslt;
-                    } else {
+                    if (wordexp(path.c_str(), &exp_result, WRDE_SHOWERR) != 0) {
                         throw invalid_file("error expanding path");
                     }
+
+                    for (intmax_t ii = 0; ii < exp_result.we_wordc; ++ii) {
+                        if (ii != 0) {
+                            exp_rslt += ' ';
+                        }
+                        exp_rslt += exp_result.we_wordv[ii];
+                    }
+                    wordfree(&exp_result);
+                    return exp_rslt;
                 }
+                return path;
             }
 
             //
