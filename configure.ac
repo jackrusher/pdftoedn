@@ -3,7 +3,7 @@
 m4_define([pdftoedn_version],[0.35.2])
 m4_define([min_poppler_version],[0.64.0])
 m4_define([min_lept_version],[1.74])
-m4_define([min_boost_version],[1.60])
+m4_define([min_boost_version],[1.57])
 
 
 AC_PREREQ([2.68])
