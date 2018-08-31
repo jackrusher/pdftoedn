@@ -33,7 +33,7 @@
 #include "base_types.h"
 #include "pdf_error_tracker.h"
 #include "pdf_reader.h"
-#include "edsel_options.h"
+#include "runtime_options.h"
 #include "font_maps.h"
 #include "util_edn.h"
 #include "util_fs.h"

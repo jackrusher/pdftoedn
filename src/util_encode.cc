@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -27,7 +27,7 @@
 #include "image.h"
 #include "pdf_error_tracker.h"
 #include "util_encode.h"
-#include "edsel_options.h"
+#include "runtime_options.h"
 
 namespace pdftoedn
 {

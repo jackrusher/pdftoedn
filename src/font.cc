@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -25,7 +25,10 @@
 #include "util.h"
 #include "util_edn.h"
 #include "util_debug.h"
-#include "edsel_options.h"
+
+#if 0
+#include "runtime_options.h"
+#endif
 
 namespace pdftoedn
 {

@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -31,7 +31,7 @@
 #include "graphics.h"
 #include "pdf_error_tracker.h"
 #include "doc_page.h"
-#include "edsel_options.h"
+#include "runtime_options.h"
 #include "util.h"
 #include "util_fs.h"
 #include "util_versions.h"
@@ -715,6 +715,11 @@ namespace pdftoedn
     // output the page in EDN
     std::ostream& PdfPage::to_edn(std::ostream& o) const
     {
+        // // when extracting only link-output, omit pages without links
+        // if (pdftoedn::options.link_output_only() && links.empty()) {
+        //     return o;
+        // }
+
         util::edn::Hash page_h(15);
         page_h.push( util::version::SYMBOL_DATA_FORMAT_VERSION, util::version::data_format_version() );
         page_h.push( SYMBOL_PAGE_NUMBER,                        number );

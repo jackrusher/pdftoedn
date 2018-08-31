@@ -29,7 +29,6 @@
 #include "util.h"
 #include "font_maps.h"
 #include "pdf_font_source.h"
-#include "edsel_options.h"
 
 #undef ENABLE_FONT_LOOKUP_TRACE
 

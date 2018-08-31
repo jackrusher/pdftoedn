@@ -37,7 +37,7 @@
 #include "graphics.h"
 #include "util_encode.h"
 #include "util_xform.h"
-#include "edsel_options.h"
+#include "runtime_options.h"
 
 // debug
 //#define ENABLE_OP_TRACE            // dump traces to show op order

@@ -33,7 +33,7 @@
 #include "font_engine_dev.h"
 #include "pdf_doc_outline.h"
 #include "doc_page.h"
-#include "edsel_options.h"
+#include "runtime_options.h"
 
 namespace pdftoedn
 {

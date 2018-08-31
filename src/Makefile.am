@@ -7,7 +7,6 @@ pdftoedn_SOURCES = \
 	base_types.cc \
 	color.cc \
 	doc_page.cc \
-	edsel_options.cc \
 	eng_output_dev.cc \
 	font.cc \
 	font_engine.cc \
@@ -23,6 +22,7 @@ pdftoedn_SOURCES = \
 	pdf_links.cc \
 	pdf_output_dev.cc \
 	pdf_reader.cc \
+	runtime_options.cc \
 	text.cc \
 	transforms.cc \
 	util.cc \

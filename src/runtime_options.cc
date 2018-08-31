@@ -25,7 +25,7 @@
 #include <boost/regex.hpp>
 #endif
 
-#include "edsel_options.h"
+#include "runtime_options.h"
 #include "util.h"
 #include "util_config.h"
 #include "util_fs.h"
