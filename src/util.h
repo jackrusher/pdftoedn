@@ -78,10 +78,10 @@ namespace pdftoedn {
         std::wstring unicode_to_wstring(const Unicode* const u, int len);
         uint8_t pdf_to_svg_blend_mode(GfxBlendMode mode);
         void copy_link_meta(PdfLink& link, const LinkDest& ldest, double page_height);
-        StreamProps::stream_type_e poppler_stream_type_to_edsel(StreamKind k);
-        bool poppler_error_to_edsel(ErrorCategory category, const std::string& poppler_msg, int pos,
-                                    ErrorTracker::error_type& err, ErrorTracker::error::level& level);
-        FontSource::FontType poppler_gfx_font_type_to_edsel(GfxFontType t);
+        StreamProps::stream_type_e poppler_stream_type_to_edn(StreamKind k);
+        bool poppler_error_to_edn(ErrorCategory category, const std::string& poppler_msg, int pos,
+                                  ErrorTracker::error_type& err, ErrorTracker::error::level& level);
+        FontSource::FontType poppler_gfx_font_type_to_edn(GfxFontType t);
 
         // trim a wstring
         inline std::wstring &ltrim(std::wstring &s) {

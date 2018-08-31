@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -88,7 +88,7 @@ namespace pdftoedn
     //
     StreamProps::BitmapAttribs::BitmapAttribs(StreamKind strKind, uint32_t w, uint32_t h,
                                               uint8_t num_comps, uint8_t bpp, bool interp) :
-        stream_type(util::poppler_stream_type_to_edsel(strKind)), width(w), height(h),
+        stream_type(util::poppler_stream_type_to_edn(strKind)), width(w), height(h),
         num_pixel_comps(num_comps), bits_per_pixel(bpp),
         interpolate(interp)
     {}
@@ -97,7 +97,7 @@ namespace pdftoedn
     StreamProps::MaskAttribs::MaskAttribs(StreamKind strKind, uintmax_t w, uintmax_t h,
                                           uint8_t pix_comps, uint8_t bpp,
                                           bool interp, bool m_inverted) :
-        stream_type(util::poppler_stream_type_to_edsel(strKind)),
+        stream_type(util::poppler_stream_type_to_edn(strKind)),
         width(w), height(h),
         num_pixel_comps(pix_comps), bits_per_pixel(bpp),
         interpolate(interp), invert(m_inverted)
@@ -106,7 +106,7 @@ namespace pdftoedn
     StreamProps::MaskAttribs::MaskAttribs(StreamKind strKind, uintmax_t w, uintmax_t h,
                                           uint8_t pix_comps, uint8_t bpp, bool interp, bool m_inverted,
                                           const RGBColor& m_fill, GfxColorSpaceMode fill_cs_mode) :
-        stream_type(util::poppler_stream_type_to_edsel(strKind)),
+        stream_type(util::poppler_stream_type_to_edn(strKind)),
         width(w), height(h),
         num_pixel_comps(pix_comps), bits_per_pixel(bpp),
         interpolate(interp), invert(m_inverted),

@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -209,7 +209,7 @@ namespace pdftoedn
 
                     // create a buffer instance to manage this data
                     font_src = new FontSource(gfx_font,
-                                              util::poppler_gfx_font_type_to_edsel(font_type),
+                                              util::poppler_gfx_font_type_to_edn(font_type),
                                               font_name, ft_lib, buf, buf_len);
 
                     // galloc'd by GfxFont::readEmbFontFile() call to Stream::toUnsignedChars()
@@ -222,7 +222,7 @@ namespace pdftoedn
                     // notice that font type is overridden from the
                     // gfx_font_loc data!!
                     font_src = new FontSource(gfx_font,
-                                              util::poppler_gfx_font_type_to_edsel(font_type), // TODO: use system type? gfx_font_loc->fontType
+                                              util::poppler_gfx_font_type_to_edn(font_type), // TODO: use system type? gfx_font_loc->fontType
                                               font_name, gfx_font_loc->path->getCString());
 
                     #if 0

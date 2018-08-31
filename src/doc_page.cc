@@ -536,7 +536,7 @@ namespace pdftoedn
     void PdfPage::add_path(GfxState* state, PdfDocPath::Type type, PdfDocPath::EvenOddRule eo_flag)
     {
         // convert the poppler path to our own type
-        PdfDocPath* edsel_path = new PdfDocPath(type, cur_gfx.attribs, eo_flag);
+        PdfDocPath* path = new PdfDocPath(type, cur_gfx.attribs, eo_flag);
         Coord c1, c2, c3;
         GfxPath* poppler_path = state->getPath();
 
@@ -548,7 +548,7 @@ namespace pdftoedn
             {
                 // register a new move_to command
                 state->transform(subpath->getX(0), subpath->getY(0), &c1.x, &c1.y);
-                edsel_path->move_to(c1);
+                path->move_to(c1);
 
                 for (intmax_t j = 1; j < subpath->getNumPoints(); j++)
                 {
@@ -559,17 +559,17 @@ namespace pdftoedn
                         state->transform(subpath->getX(j), subpath->getY(j), &c2.x, &c2.y);
                         j++;
                         state->transform(subpath->getX(j), subpath->getY(j), &c3.x, &c3.y);
-                        edsel_path->curve_to(c1, c2, c3);
+                        path->curve_to(c1, c2, c3);
                     }
                     else {
                         // a line to
                         state->transform(subpath->getX(j), subpath->getY(j), &c1.x, &c1.y);
-                        edsel_path->line_to(c1);
+                        path->line_to(c1);
                     }
                 }
                 // if the path is closed, mark it as so
                 if (subpath->isClosed()) {
-                    edsel_path->close();
+                    path->close();
                 }
             }
         }
@@ -578,18 +578,18 @@ namespace pdftoedn
         // if this is a clip path, we must check if we've already
         // created and stored it. Don't want duplicate clip paths
         // stored
-        if (edsel_path->type() == PdfDocPath::CLIP) {
-            intmax_t cur_path_idx = find_clip_path(edsel_path);
+        if (path->type() == PdfDocPath::CLIP) {
+            intmax_t cur_path_idx = find_clip_path(path);
 
             if (cur_path_idx == -1) {
                 // not found.. assign a unique id and store it
                 cur_path_idx = clip_paths.size();
-                edsel_path->set_clip_id( cur_path_idx );
-                clip_paths.push_back( edsel_path );
-                //                std::cerr << " --- new clip path: " << *edsel_path << std::endl;
+                path->set_clip_id( cur_path_idx );
+                clip_paths.push_back( path );
+                //                std::cerr << " --- new clip path: " << *path << std::endl;
             } else {
                 // found.. discard the incoming path
-                delete edsel_path;
+                delete path;
                 //                std::cerr << " --- clip path already exists with id: " << cur_path_idx << std::endl;
             }
 
@@ -603,44 +603,44 @@ namespace pdftoedn
                 // outside of the clip.
                 const BoundingBox& cb = clip_paths[ cur_gfx.clip_path() ]->bounding_box();
 
-                BoundingBox::eClipState clip_state = edsel_path->bounding_box().is_clipped_by(cb);
+                BoundingBox::eClipState clip_state = path->bounding_box().is_clipped_by(cb);
                 if (clip_state == BoundingBox::FULLY_CLIPPED) {
                     // We don't want to store these so delete it and break out
-                    delete edsel_path;
+                    delete path;
                     return;
                 }
 
                 // if the path is partially clipped, we'll adjust the
                 // bounds to match the clip's
                 if (clip_state == BoundingBox::PARTIALLY_CLIPPED) {
-                    edsel_path->clip_bounds(cb); // TODO: unify w/ text + images
+                    path->clip_bounds(cb); // TODO: unify w/ text + images
                 }
 
                 // and set the clip id for the SVG output
-                edsel_path->set_clip_id( cur_gfx.clip_path() );
+                path->set_clip_id( cur_gfx.clip_path() );
             }
 
             // finally don't bother with paths outside of the page
             // bounds
-            if (!inside_page(edsel_path->bounding_box())) {
-                delete edsel_path;
+            if (!inside_page(path->bounding_box())) {
+                delete path;
                 return;
             }
 
             //
             // cleanup text painted over by opaque fill regions
-            if ( edsel_path->type() == PdfDocPath::FILL &&
+            if ( path->type() == PdfDocPath::FILL &&
                  cur_gfx.attribs.fill.opacity == 1.0 &&
-                 edsel_path->is_rectangular() )
+                 path->is_rectangular() )
             {
-                remove_spans_overlapped_by_region( *edsel_path );
+                remove_spans_overlapped_by_region( *path );
             }
 
             // all other paths get stored in the graphics list
-            graphics.push_back( edsel_path );
+            graphics.push_back( path );
 
             // update the total graphics bounds
-            cur_gfx.bounds.expand( edsel_path->bounding_box() );
+            cur_gfx.bounds.expand( path->bounding_box() );
         }
     }
 

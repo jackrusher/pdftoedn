@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -141,7 +141,7 @@ namespace pdftoedn
 
             const char* get_font_type_str(GfxFontType type)
             {
-                return get_font_type_str(poppler_gfx_font_type_to_edsel(type));
+                return get_font_type_str(poppler_gfx_font_type_to_edn(type));
             }
 
             //

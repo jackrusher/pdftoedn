@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -247,7 +247,7 @@ namespace pdftoedn
             ErrorTracker::error_type e;
             ErrorTracker::error::level l;
 
-            if (util::poppler_error_to_edsel(category, msg, pos, e, l)) {
+            if (util::poppler_error_to_edn(category, msg, pos, e, l)) {
                 et->log(e, l, "poppler", msg);
             }
         }

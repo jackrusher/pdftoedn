@@ -142,7 +142,7 @@ namespace pdftoedn
 
         //
         // translate a stream kind to our internal types
-        StreamProps::stream_type_e poppler_stream_type_to_edsel(StreamKind k)
+        StreamProps::stream_type_e poppler_stream_type_to_edn(StreamKind k)
         {
             switch (k)
             {
@@ -216,8 +216,8 @@ namespace pdftoedn
 
         //
         // translate poppler errors to our own
-        bool poppler_error_to_edsel(ErrorCategory category, const std::string& poppler_msg, int pos,
-                                    ErrorTracker::error_type& err, ErrorTracker::error::level& level)
+        bool poppler_error_to_edn(ErrorCategory category, const std::string& poppler_msg, int pos,
+                                  ErrorTracker::error_type& err, ErrorTracker::error::level& level)
         {
             ErrorTracker::error_type e;
 
@@ -251,7 +251,7 @@ namespace pdftoedn
 
         //
         // convert poppler's font type to our own
-        FontSource::FontType poppler_gfx_font_type_to_edsel(GfxFontType t)
+        FontSource::FontType poppler_gfx_font_type_to_edn(GfxFontType t)
         {
             FontSource::FontType font_type;
 

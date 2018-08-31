@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -80,7 +80,7 @@ namespace pdftoedn {
             // * Coord and BoundingBox storage behavior is the same as
             //   std::string
             //
-            // * any edsel type passed as a pointer is not copied
+            // * any 'edn' type passed as a pointer is not copied
             //   since it is assumed they are members of a class that
             //   will persist beyond the call to to_edn().
             //
