@@ -149,7 +149,7 @@ namespace pdftoedn
         }
 
         // set the entity map if found
-        const char** enc_map = (const char**) gfx_font->getEncoding();
+        const char** enc_map = const_cast<const char**>(gfx_font->getEncoding());
         if (enc_map) {
             const char* entity;
             for (uint_fast16_t ii = 0; ii < 256; ++ii) {
@@ -231,12 +231,13 @@ namespace pdftoedn
         code_to_gid(NULL),
         to_unicode((gfx_font->getToUnicode() != NULL) &&
                    // TODO: fix cast once poppler corrects GfxFont constness
+                   // ((gfx_font->getToUnicode())->getLength() > 1),
                    ((const_cast<CharCodeToUnicode *>(gfx_font->getToUnicode()))->getLength() > 1)),
         ft_lib(lib), ft_face(NULL), face_index(font_face_index),
         font_ok(false)
     {
         // save a copy of the blob and compute its md5
-        font_blob.append((const char*) buffer, len);
+        font_blob.append(reinterpret_cast<const char*>(buffer), len);
         blob_md5 = util::md5(font_blob);
 
         font_ok = load_font(gfx_font);
@@ -352,7 +353,7 @@ namespace pdftoedn
                 return status;
             }
 
-            GooString* col = cid_font->getCollection();
+            const GooString* col = cid_font->getCollection();
             if (col && (col->getLength() > 0)) {
                 collection = col->getCString();
             }
@@ -478,7 +479,7 @@ namespace pdftoedn
         if (cid_font->getCIDToGID()) {
             code_to_gid = new CodeToGIDMap(cid_font->getCIDToGIDLen(), cid_font->getCIDToGID());
         } else {
-            FoFiTrueType* ff = FoFiTrueType::make((char*) font_blob.c_str(), font_blob.length());
+            FoFiTrueType* ff = FoFiTrueType::make(const_cast<char*>(font_blob.c_str()), font_blob.length());
 
             if (ff) {
                 int n;

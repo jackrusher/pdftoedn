@@ -180,10 +180,10 @@ namespace pdftoedn
             meta_h.push( SYMBOL_FONT_ENG_FONT_WARN            , true );
         }
 
-        meta_h.push( SYMBOL_PDF_MAJ_VER                   , (uint8_t) getPDFMajorVersion() );
-        meta_h.push( SYMBOL_PDF_MIN_VER                   , (uint8_t) getPDFMinorVersion() );
+        meta_h.push( SYMBOL_PDF_MAJ_VER                   , static_cast<uint8_t>(getPDFMajorVersion()) );
+        meta_h.push( SYMBOL_PDF_MIN_VER                   , static_cast<uint8_t>(getPDFMinorVersion()) );
 
-        meta_h.push( SYMBOL_PDF_NUM_PAGES                 , (uintmax_t) getNumPages() );
+        meta_h.push( SYMBOL_PDF_NUM_PAGES                 , static_cast<uintmax_t>(getNumPages()) );
 
         // outline - empty hash if none
         meta_h.push( SYMBOL_PDF_OUTLINE                   , &outline_output );
@@ -316,7 +316,7 @@ namespace pdftoedn
     //
     //
     // get link page number
-    uintmax_t PDFReader::get_link_page_num(const LinkDest* dest)
+    uintmax_t PDFReader::get_link_page_num(const LinkDest* const dest)
     {
         if (!dest)
             return 0;
@@ -332,7 +332,7 @@ namespace pdftoedn
 
     //
     //
-    void PDFReader::outline_link_dest(const LinkDest* dest, PdfOutline::Entry& entry)
+    void PDFReader::outline_link_dest(const LinkDest* const dest, PdfOutline::Entry& entry)
     {
         uintmax_t page_num = get_link_page_num(dest);
         entry.set_page( page_num );
@@ -347,10 +347,10 @@ namespace pdftoedn
 
     //
     // PDF GoTo link types
-    void PDFReader::outline_action_goto(const LinkGoTo *link, PdfOutline::Entry& entry)
+    void PDFReader::outline_action_goto(const LinkGoTo* const link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
-            LinkDest* dest = NULL;
+            const LinkDest* dest = NULL;
 
             if (link->getDest()) {
                 dest = link->getDest()->copy();
@@ -368,7 +368,7 @@ namespace pdftoedn
 
     //
     // gotoR links pointing to other files in the FS
-    void PDFReader::outline_action_goto_r(const LinkGoToR *link, PdfOutline::Entry& entry)
+    void PDFReader::outline_action_goto_r(const LinkGoToR* const link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
 
@@ -392,7 +392,7 @@ namespace pdftoedn
 
     //
     // URI links pointing to URI resources
-    void PDFReader::outline_action_uri(const LinkURI *link, PdfOutline::Entry& entry)
+    void PDFReader::outline_action_uri(const LinkURI* const link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
             // set the URI as the destination
@@ -403,14 +403,14 @@ namespace pdftoedn
     //
     //
     // process the current outline entry in the list
-    void PDFReader::outline_level(GooList* items, int level,
+    void PDFReader::outline_level(const GooList* const items, int level,
                                   std::list<PdfOutline::Entry *>& entry_list)
     {
         // run through the list
         for (int i = 0; i < items->getLength(); i++)
         {
             // get the current item
-            OutlineItem* item = (OutlineItem*) items->get( i );
+            OutlineItem* item = static_cast<OutlineItem*>(items->get(i));
 
             if (!item) {
                 continue;

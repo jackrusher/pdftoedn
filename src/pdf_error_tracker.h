@@ -149,7 +149,7 @@ namespace pdftoedn
         virtual std::ostream& to_edn(std::ostream& o) const;
 
         // method to register error handler w/ poppler
-        static void error_handler(void *data, ErrorCategory category, Goffset pos, char *msg);
+        static void error_handler(void *data, ErrorCategory category, Goffset pos, const char *msg);
 
     private:
 

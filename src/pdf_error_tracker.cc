@@ -233,7 +233,7 @@ namespace pdftoedn
 
     //
     // static function for registering with poppler's error handler
-    void ErrorTracker::error_handler(void *data, ErrorCategory category, Goffset pos, char *msg)
+    void ErrorTracker::error_handler(void *data, ErrorCategory category, Goffset pos, const char *msg)
     {
         if (!msg) {
             std::cerr << __FUNCTION__ << " - NULL error message" << std::endl;

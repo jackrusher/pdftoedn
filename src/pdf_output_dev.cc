@@ -192,8 +192,8 @@ namespace pdftoedn
 
         // matrix manipulation to compensate for rotated pages -
         // compute the product of the state and text matrices.
-        double* ctma = state->getCTM();
-        double* txta = state->getTextMat();
+        const double* ctma = state->getCTM();
+        const double* txta = state->getTextMat();
         text_tm = PdfTM(txta[0] * ctma[0] + txta[1] * ctma[2],
                         -(txta[0] * ctma[1] + txta[1] * ctma[3]),
                         txta[2] * ctma[0] + txta[3] * ctma[2],

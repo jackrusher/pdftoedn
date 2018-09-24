@@ -66,12 +66,12 @@ namespace pdftoedn
 
         bool init_font_engine();
         bool process_outline(pdftoedn::PdfOutline& outline_output);
-        void outline_level(GooList* items, int level, std::list<PdfOutline::Entry *>& entry_list);
-        void outline_action_goto(const LinkGoTo *link, PdfOutline::Entry& entry);
-        void outline_action_goto_r(const LinkGoToR *link, PdfOutline::Entry& entry);
-        void outline_action_uri(const LinkURI *link, PdfOutline::Entry& entry);
-        void outline_link_dest(const LinkDest* dest, PdfOutline::Entry& entry);
-        uintmax_t get_link_page_num(const LinkDest* link);
+        void outline_level(const GooList* const items, int level, std::list<PdfOutline::Entry *>& entry_list);
+        void outline_action_goto(const LinkGoTo* const link, PdfOutline::Entry& entry);
+        void outline_action_goto_r(const LinkGoToR* const link, PdfOutline::Entry& entry);
+        void outline_action_uri(const LinkURI* const link, PdfOutline::Entry& entry);
+        void outline_link_dest(const LinkDest* const dest, PdfOutline::Entry& entry);
+        uintmax_t get_link_page_num(const LinkDest* const link);
 
         void process_page(::OutputDev* dev, uintmax_t page);
 
@@ -81,4 +81,3 @@ namespace pdftoedn
     };
 
 } // namespace
-
