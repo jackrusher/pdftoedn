@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -63,8 +63,8 @@ namespace pdftoedn
                 PIX* p = pixReadMemPng(reinterpret_cast<const l_uint8*>(blob.c_str()),
                                        blob.length());
                 if (!p) {
-                    et.log_critical( ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
-                                     "pixReadMemPng() error reading image data");
+                    et.log_critical(ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
+                                    "pixReadMemPng() error reading image data");
                     return XFORM_ERR;
                 }
 
@@ -74,7 +74,6 @@ namespace pdftoedn
 
                 // try to decompose the transformation. First, check if there's a rotation
                 if (ctm.is_rotated()) {
-
                     double angle_d = std::round( ctm.rotation_deg() );
 
                     DBG_TRACE(std::cerr << "\trotation - ");
@@ -112,7 +111,7 @@ namespace pdftoedn
                         double angle = ctm.rotation_deg();
                         p2 = pixRotate(p,  PdfTM::deg_to_rad(angle), L_ROTATE_SAMPLING,
                                        inverted_mask ? L_BRING_IN_BLACK : L_BRING_IN_WHITE,
-                                       (l_int32) width, (l_int32) height);
+                                       static_cast<l_int32>(width), static_cast<l_int32>(height));
 
                         ops |= XFORM_ROT_ARB;
                         DBG_TRACE(std::cerr << angle << " deg" << std::endl);
@@ -125,7 +124,7 @@ namespace pdftoedn
                     if (!p2) {
                         std::stringstream err;
                         err << "pixRotate[XX]() op failed for " << angle_d << " degrees";
-                        et.log_critical( ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE, err.str() );
+                        et.log_critical(ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE, err.str());
                         return XFORM_ERR;
                     }
 
@@ -140,15 +139,15 @@ namespace pdftoedn
                     pixDestroy(&p);
 
                     if (!p2) {
-                        et.log_critical( ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
-                                         "pixFlipLR() failed");
+                        et.log_critical(ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
+                                        "pixFlipLR() failed");
                         return XFORM_ERR;
                     }
 
                     p = p2;
                     p2 = NULL;
 
-                    ctm.scale(-1,1);
+                    ctm.scale(-1, 1);
                     ops |= XFORM_FLIP_H;
                     DBG_TRACE(std::cerr << "\tis flipped " << std::endl);
                 }
@@ -158,15 +157,15 @@ namespace pdftoedn
                     pixDestroy(&p);
 
                     if (!p2) {
-                        et.log_critical( ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
-                                         "pixFlipTB() failed");
+                        et.log_critical(ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
+                                        "pixFlipTB() failed");
                         return XFORM_ERR;
                     }
 
                     p = p2;
                     p2 = NULL;
 
-                    ctm.scale(1,-1);
+                    ctm.scale(1, -1);
                     ops |= XFORM_FLIP_V;
                     DBG_TRACE(std::cerr << "\tis upside down" << std::endl);
                 }
@@ -180,7 +179,7 @@ namespace pdftoedn
                 // browser respecting the viewport. Still, mark as if
                 // the op was done
                 double img_ar, tm_ar;
-                img_ar = (double) width / height;
+                img_ar = static_cast<double>(width) / height;
                 tm_ar = ctm.b() / ctm.c();
 
                 double ratio_r = img_ar / tm_ar;
@@ -205,8 +204,8 @@ namespace pdftoedn
                     blob = std::string(reinterpret_cast<const char*>(xformed_data), size);
                     free(xformed_data);
                 } else {
-                    et.log_critical( ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
-                                     "pixWriteMemPng() failed to write PNG");
+                    et.log_critical(ErrorTracker::ERROR_UT_IMAGE_XFORM, MODULE,
+                                    "pixWriteMemPng() failed to write PNG");
                     ops = XFORM_ERR;
                 }
 

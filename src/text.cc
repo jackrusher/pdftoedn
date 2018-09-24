@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -386,14 +386,14 @@ namespace pdftoedn
                 transforms.push_back(new Rotate(-angle, x1, y1));
                 w = 0;
             }
-            else if ((int) angle == 45) {
+            else if (45 == static_cast<int>(angle)) {
                 transforms.push_back(new Rotate(-angle, x1, y1));
                 w = h = 0;
             }
             else if (angle < 90) {
                 transforms.push_back(new Rotate(-angle, x2, y2));
             }
-            else if ((int) angle == 90) {
+            else if (90 == static_cast<int>(angle)) {
                 transforms.push_back(new Rotate(-angle, x1, bbox.y2()));
                 h = 0;
             }
@@ -409,7 +409,7 @@ namespace pdftoedn
             else if (angle < 270) {
                 transforms.push_back(new Rotate(-angle, x1, y2));
             }
-            else if ((int) angle == 270) {
+            else if (270 == static_cast<int>(angle)) {
                 transforms.push_back(new Translate(-h, w));
                 transforms.push_back(new Rotate(-angle, x1, y2));
             }

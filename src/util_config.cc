@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -93,7 +93,7 @@ namespace pdftoedn
                         if (ent_data.IsString()) {
                             // looks like a string but make sure it's not empty
                             if (ent_data.GetStringLength() > 0) {
-                                unicode = (uint32_t) (ent_data.GetString())[0];
+                                unicode = static_cast<uint32_t>((ent_data.GetString())[0]);
                             } else {
                                 // ignore it
                                 continue;

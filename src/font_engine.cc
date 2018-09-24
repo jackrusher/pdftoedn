@@ -187,7 +187,7 @@ namespace pdftoedn
 
                     // yes, read it into a buffer
                     int buf_len;
-                    uint8_t *buf = (uint8_t*) gfx_font->readEmbFontFile(xref, &buf_len);
+                    uint8_t *buf = reinterpret_cast<uint8_t*>(gfx_font->readEmbFontFile(xref, &buf_len));
 
                     if (!buf) {
                         std::stringstream err;
@@ -202,7 +202,7 @@ namespace pdftoedn
                         std::ofstream file;
                         std::string path = util::debug::expand_environment_variables("${HOME}") + "Desktop/" + font_name + util::debug::get_font_file_extension(font_type);
                         file.open(path.c_str());
-                        file.write((const char*) buf, buf_len);
+                        file.write(const_cast<const char*>(buf), buf_len);
                         file.close();
                     }
 #endif
