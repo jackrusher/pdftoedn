@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -32,14 +32,8 @@ namespace pdftoedn
 
         // set up graphics output for page
         if (state) {
-            w = (int)(state->getPageWidth() + 0.5);
-            if (w <= 0) {
-                w = 1;
-            }
-            h = (int)(state->getPageHeight() + 0.5);
-            if (h <= 0) {
-                h = 1;
-            }
+            w = EngOutputDev::adjust_page_dim(state->getPageWidth());
+            h = EngOutputDev::adjust_page_dim(state->getPageHeight());
             rot = state->getRotate();
         } else {
             w = h = 1;

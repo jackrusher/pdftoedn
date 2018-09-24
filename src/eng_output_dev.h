@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -45,6 +45,8 @@ namespace pdftoedn
         static double get_transformed_font_size(GfxState* state) {
             return (std::ceil(state->getTransformedFontSize() * 100) / 100);
         }
+
+        static int adjust_page_dim(int dim);
 
         // returns the collected data after displayPage has been
         // called to process a page

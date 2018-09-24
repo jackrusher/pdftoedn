@@ -106,18 +106,12 @@ namespace pdftoedn
             // setup HTML output for page
             setDefaultCTM( state->getCTM() );
 
-            w = (int)(state->getPageWidth() + 0.5);
-            if (w <= 0) {
-                w = 1;
-            }
-            h = (int)(state->getPageHeight() + 0.5);
-            if (h <= 0) {
-                h = 1;
-            }
+            w = EngOutputDev::adjust_page_dim(state->getPageWidth());
+            h = EngOutputDev::adjust_page_dim(state->getPageHeight());
+            rot = state->getRotate();
 
             updateCTM(state, 0, 0, 0, 0, 0, 0);
 
-            rot = state->getRotate();
         } else {
             w = h = 1;
             rot = 0;

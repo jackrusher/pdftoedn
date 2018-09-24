@@ -191,7 +191,6 @@ namespace pdftoedn
         }
     }
 
-
     //
     // retrieve the page number from a link actionGoto type
     uintmax_t EngOutputDev::get_dest_goto_page(LinkDest* dest) const
@@ -204,4 +203,12 @@ namespace pdftoedn
         return dest->getPageNum();
     }
 
+    //
+    // helper to ensure page dim is not negative
+    int EngOutputDev::adjust_page_dim(int page_dim) {
+        page_dim = static_cast<int>(page_dim + 0.5);
+        if (page_dim <= 0)
+            return 1;
+        return page_dim;
+    }
 } // namespace
