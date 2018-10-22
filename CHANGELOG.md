@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.36.0 - 2018-10-22
+### Fixed
+* Updated method / function signatures to compile with poppler-0.70.0
+
+### Changed
+* minor internal tweaks and cleanup
+
 ## 0.35.3 - 2018-08-31
 ### Changed
 * Relaxed boost min version to 1.57 to make it easier to install on
