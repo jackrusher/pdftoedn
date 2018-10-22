@@ -216,11 +216,11 @@ namespace pdftoedn
         // search for trailing style attributes - anything following
         // these substrings will also be dropped
         static const char* style_str[] = {
-            "-bold", "bold", "-italic", "italic", "-oblique", "oblique", NULL
+            "-bold", "bold", "-italic", "italic", "-oblique", "oblique", nullptr
         };
 
         uintmax_t style_start;
-        for (uintmax_t i = 0; style_str[i] != NULL; i++) {
+        for (uintmax_t i = 0; style_str[i] != nullptr; i++) {
             style_start = font_name.find(style_str[i]);
 
             if (style_start != std::string::npos) {
@@ -281,11 +281,11 @@ namespace pdftoedn
             "MS Serif", //New York
 
             // delimiter
-            NULL
+            nullptr
         };
 
-        for (uint_fast8_t i = 0; bundledFonts[i] != NULL; i++) {
-            if (std::strstr(bundledFonts[i], family.c_str()) != NULL) {
+        for (uint_fast8_t i = 0; bundledFonts[i] != nullptr; i++) {
+            if (std::strstr(bundledFonts[i], family.c_str()) != nullptr) {
                 DBG_TRACE(std::cerr << "\tmatched bundled font" << std::endl);
                 return true;
             }
@@ -344,7 +344,7 @@ namespace pdftoedn
 
         bool bundled_font = is_bundled_font(parsed_family);
 
-        const FontData* config_fd = NULL;
+        const FontData* config_fd = nullptr;
 
         // if the font does not have a to_unicode map, we must have a map of our own
         if (!font_source->has_to_unicode() ||
@@ -530,7 +530,7 @@ namespace pdftoedn
     // add entries to the glyph map
     bool DocFontMaps::add_glyph_map(const std::string& map_name, const std::string& code, uintmax_t unicode)
     {
-        EntityMap* em = NULL;
+        EntityMap* em = nullptr;
         GlyphMap::iterator em_it = doc_glyph_maps.find(map_name);
 
         if (em_it == doc_glyph_maps.end()) {

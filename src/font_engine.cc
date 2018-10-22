@@ -49,7 +49,7 @@ namespace pdftoedn
     // init freetype
     FontEngine::FontEngine(XRef *doc_xref) :
         xref(doc_xref), has_font_warnings(false),
-        ft_lib(NULL), cur_doc_font(NULL)
+        ft_lib(nullptr), cur_doc_font(nullptr)
     {
         FT_Library ftl;
 
@@ -69,7 +69,7 @@ namespace pdftoedn
         if (fi != fonts.end()) {
             return fi->second;
         }
-        return NULL;
+        return nullptr;
     }
 
     //
@@ -98,8 +98,8 @@ namespace pdftoedn
     // looks up a font in the Font Cache.. if not found, allocates an entry
     PdfFont* FontEngine::load_font(GfxFont* gfx_font)
     {
-        GfxFontLoc *gfx_font_loc = NULL;
-        FontSource* font_src = NULL;
+        GfxFontLoc *gfx_font_loc = nullptr;
+        FontSource* font_src = nullptr;
 
         do
         {
@@ -112,7 +112,7 @@ namespace pdftoedn
                 }
 
                 // unset the current font - it'll get re-set below
-                cur_doc_font = NULL;
+                cur_doc_font = nullptr;
             }
 
             // can't handle Type 3 fonts
@@ -125,7 +125,7 @@ namespace pdftoedn
                     et.log_warn(ErrorTracker::ERROR_FE_FONT_READ_UNSUPPORTED, MODULE, err.str() );
                 else
                     et.log_error(ErrorTracker::ERROR_FE_FONT_READ_UNSUPPORTED, MODULE, err.str() );
-                return NULL;
+                return nullptr;
             }
 
             // look up the font
@@ -133,7 +133,7 @@ namespace pdftoedn
             if (!font)
             {
                 // not cached.. locate the font in the document
-                if (!(gfx_font_loc = gfx_font->locateFont(xref, NULL))) {
+                if (!(gfx_font_loc = gfx_font->locateFont(xref, nullptr))) {
                     std::stringstream err;
                     err << "locateFont failed for ref " << PdfRef(gfx_font->getID());
                     et.log_error(ErrorTracker::ERROR_FE_FONT_READ, MODULE, err.str() );
@@ -268,7 +268,7 @@ namespace pdftoedn
         delete gfx_font_loc;
         delete font_src;
 
-        return NULL;
+        return nullptr;
     }
 
 

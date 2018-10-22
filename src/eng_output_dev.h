@@ -34,7 +34,7 @@ namespace pdftoedn
     class EngOutputDev : public ::OutputDev {
     public:
         EngOutputDev(Catalog* doc_cat) :
-            catalog(doc_cat), pg_data(NULL) { }
+            catalog(doc_cat), pg_data(nullptr) { }
         virtual ~EngOutputDev();
 
         // skip anything larger than 10 inches

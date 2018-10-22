@@ -126,7 +126,7 @@ namespace pdftoedn
             // caller must free buffer
             bool read_text_file(const std::string& filename, char** data)
             {
-                *data = NULL;
+                *data = nullptr;
 
                 // open it for reading
                 std::ifstream tmp(filename, std::ifstream::in);
@@ -139,7 +139,7 @@ namespace pdftoedn
                 std::size_t size = tmp.tellg();
 
                 // allocate and copy contents of file to the buffer
-                // with room to NULL-terminate
+                // with room to null-terminate
                 *data = new char[size + 1];
                 tmp.seekg(0, std::ios::beg);
                 tmp.read(*data, size);

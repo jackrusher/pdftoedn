@@ -276,7 +276,7 @@ namespace pdftoedn
             //            && string("HGMaruGothicMPRO") == state->getFont()->getName()->getCString()
             ) {
             std::cerr << "\t'"
-                 << (char) code << "' (" << (int) code << "), u? " << (u != NULL ? *u : 0)
+                 << (char) code << "' (" << (int) code << "), u? " << (u != nullptr ? *u : 0)
                  << ", returned unicode: '" << (char) unicode << "' (" << unicode << ") *u? " << (u?*u:0);
                 //                 << " - bbox: " << BoundingBox(x1, y1, w1, h1)
                 //                 << "\tx, y: " << x << " " << y << ", w: " << w1 << ", h: " << h1 << std::endl
@@ -317,7 +317,7 @@ namespace pdftoedn
             return;
         }
 
-        Unicode *uni = NULL;
+        Unicode *uni = nullptr;
         int length = TextStringToUCS4(text, &uni);
 
 #ifdef ENABLE_OP_TRACE
@@ -685,7 +685,7 @@ namespace pdftoedn
             std::ostringstream blob;
             bool encode_status = util::encode::encode_rgba_image(blob, imgStr, maskImgStr,
                                                                  properties,
-                                                                 colorMap, NULL,
+                                                                 colorMap, nullptr,
                                                                  maskInvert);
 
             // poppler cleanup
@@ -760,7 +760,7 @@ namespace pdftoedn
 
             DBG_TRACE_IMG(std::cerr << __FUNCTION__ << std::endl
                                     << properties << std::endl
-                                    << "mask colors? " << (maskColors != NULL) << std::endl
+                                    << "mask colors? " << (maskColors != nullptr) << std::endl
                                     << " ctm: " << std::endl << ctm
                                     << std::endl);
 
@@ -846,7 +846,7 @@ namespace pdftoedn
 
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
 
-        assert((pg_data != NULL) && "updateAll: PdfPage instance has not been allocated" );
+        assert((pg_data != nullptr) && "updateAll: PdfPage instance has not been allocated" );
     }
 
 

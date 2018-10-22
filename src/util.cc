@@ -298,7 +298,7 @@ namespace pdftoedn
 
             post = post.substr( pos + 1 );
 
-            if ( getenv( variable.c_str() ) != NULL ) {
+            if ( getenv( variable.c_str() ) != nullptr ) {
                 value = std::string( getenv( variable.c_str() ) );
             }
 

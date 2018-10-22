@@ -64,12 +64,12 @@ namespace pdftoedn
                 std::ostream* str_p = reinterpret_cast<std::ostream*>( png_get_io_ptr(png_ptr) );
 
                 if (!str_p) {
-                    png_error(NULL, "NULL stream pointer passed to PNG write()");
+                    png_error(nullptr, "null stream pointer passed to PNG write()");
                     return;
                 }
 
                 if (!data) {
-                    png_error(NULL, "NULL data pointer passed to PNG write()");
+                    png_error(nullptr, "null data pointer passed to PNG write()");
                     return;
                 }
 
@@ -81,7 +81,7 @@ namespace pdftoedn
                 std::ostream* str_p = reinterpret_cast<std::ostream*>( png_get_io_ptr(png_ptr) );
 
                 if (!str_p) {
-                    png_error(NULL, "NULL stream pointer passed to PNG io_flush()");
+                    png_error(nullptr, "null stream pointer passed to PNG io_flush()");
                     return;
                 }
 
@@ -234,11 +234,11 @@ namespace pdftoedn
             {
                 // Create and initialize the png_struct with the desired error handler
                 // functions.  If you want to use the default stderr and longjump method,
-                // you can supply NULL for the last three parameters.  We also check that
+                // you can supply null for the last three parameters.  We also check that
                 // the library version is compatible with the one used at compile time,
                 // in case we are using dynamically linked libraries.
                 png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-                                                              NULL,
+                                                              nullptr,
                                                               user_error_fn,
                                                               user_warning_fn);
                 if (!png_ptr) {
@@ -248,7 +248,7 @@ namespace pdftoedn
                 // Allocate/initialize the image information data.
                 png_infop info_ptr = png_create_info_struct(png_ptr);
                 if (!info_ptr) {
-                    png_destroy_write_struct(&png_ptr, reinterpret_cast<png_infopp>(NULL));
+                    png_destroy_write_struct(&png_ptr, nullptr);
                     return false;
                 }
 
@@ -266,7 +266,7 @@ namespace pdftoedn
 
                 GfxColorSpaceMode cspace_mode = color_map->getColorSpace()->getMode();
                 int png_type = poppler_cspace_mode_to_png_type(num_pix_comps, cspace_mode);
-                png_colorp palette = NULL;
+                png_colorp palette = nullptr;
 
 #if 0
                 std::cerr << "color space mode is: '"
@@ -401,7 +401,7 @@ namespace pdftoedn
                 // Create and initialize the png_struct with the desired error handler
                 // functions.
                 png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-                                                              NULL,
+                                                              nullptr,
                                                               user_error_fn,
                                                               user_warning_fn);
                 if (!png_ptr) {
@@ -411,7 +411,7 @@ namespace pdftoedn
                 // Allocate/initialize the image information data.
                 png_infop info_ptr = png_create_info_struct(png_ptr);
                 if (!info_ptr) {
-                    png_destroy_write_struct(&png_ptr, reinterpret_cast<png_infopp>(NULL));
+                    png_destroy_write_struct(&png_ptr, nullptr);
                     return false;
                 }
 
@@ -428,10 +428,10 @@ namespace pdftoedn
                 uintmax_t mask_width = properties.mask_width();
                 uintmax_t mask_height = properties.mask_height();
                 uint8_t mask_num_pix_comps = properties.mask_num_pixel_comps();
-                png_colorp palette = NULL;
+                png_colorp palette = nullptr;
 
-                png_bytep data_row = NULL;
-                uint8_t* mask_buf = NULL;
+                png_bytep data_row = nullptr;
+                uint8_t* mask_buf = nullptr;
                 bool status = true;
 
                 try
@@ -560,7 +560,7 @@ namespace pdftoedn
             bool encode_mask(std::ostream& output, ImageStream* img_str, const StreamProps& properties)
             {
                 png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-                                                              NULL,
+                                                              nullptr,
                                                               user_error_fn,
                                                               user_warning_fn);
                 if (!png_ptr) {
@@ -569,7 +569,7 @@ namespace pdftoedn
 
                 png_infop info_ptr = png_create_info_struct(png_ptr);
                 if (!info_ptr) {
-                    png_destroy_write_struct(&png_ptr, reinterpret_cast<png_infopp>(NULL));
+                    png_destroy_write_struct(&png_ptr, nullptr);
                     return false;
                 }
 
@@ -580,15 +580,15 @@ namespace pdftoedn
 
                 uintmax_t width = properties.mask_width();
                 uintmax_t height = properties.mask_height();
-                png_colorp palette = NULL;
-                uint8_t* data_row = NULL;
+                png_colorp palette = nullptr;
+                uint8_t* data_row = nullptr;
                 bool status = true;
 
                 try
                 {
                     // 2-palette entries.. one is set to transparent (0x00)
                     png_byte transp[2] = { 0xff, 0x00 };
-                    png_set_tRNS(png_ptr, info_ptr, transp, 2, NULL);
+                    png_set_tRNS(png_ptr, info_ptr, transp, 2, nullptr);
 
                     // save the header chunk
                     png_set_IHDR(png_ptr, info_ptr, width, height, 1,
@@ -682,7 +682,7 @@ namespace pdftoedn
                                    GfxImageColorMap *color_map)
             {
                 png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-                                                              NULL,
+                                                              nullptr,
                                                               user_error_fn,
                                                               user_warning_fn);
                 if (!png_ptr) {
@@ -692,7 +692,7 @@ namespace pdftoedn
                 // Allocate/initialize the image information data.
                 png_infop info_ptr = png_create_info_struct(png_ptr);
                 if (!info_ptr) {
-                    png_destroy_write_struct(&png_ptr, reinterpret_cast<png_infopp>(NULL));
+                    png_destroy_write_struct(&png_ptr, nullptr);
                     return false;
                 }
 
@@ -712,7 +712,7 @@ namespace pdftoedn
                           << std::endl;
 #endif
 
-                png_bytep data_row = NULL;
+                png_bytep data_row = nullptr;
                 bool status = true;
                 try
                 {

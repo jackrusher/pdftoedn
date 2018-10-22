@@ -90,7 +90,7 @@ namespace pdftoedn
                     CASE_STRINGIFY(errInternal);
                     DEFAULT_STRINGIFY(e);
                 }
-                return NULL;
+                return nullptr;
             }
 
             //
@@ -113,7 +113,7 @@ namespace pdftoedn
                     CASE_STRINGIFY(strWeird);
                     DEFAULT_STRINGIFY(sk);
                 }
-                return NULL;
+                return nullptr;
             }
 
             //
@@ -168,7 +168,7 @@ namespace pdftoedn
                     CASE_STRINGIFY(gfxBlendLuminosity);
                     DEFAULT_STRINGIFY(mode);
                 }
-                return NULL;
+                return nullptr;
             }
 
             //

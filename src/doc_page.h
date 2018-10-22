@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -169,7 +169,7 @@ namespace pdftoedn
 
         // transient state as text is collected
         struct TextState {
-            TextState() : span(NULL) { }
+            TextState() : span(nullptr) { }
             ~TextState() { delete span; }
 
             pdftoedn::TextAttribs attribs;

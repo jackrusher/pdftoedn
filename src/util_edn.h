@@ -87,13 +87,13 @@ namespace pdftoedn {
             template <class T>
             class Container : public pdftoedn::gemable {
             protected:
-                Container() : elems(NULL) {}
+                Container() : elems(nullptr) {}
                 Container(uintmax_t size) : elems(new std::vector<T>()) { elems->reserve(size); }
             public:
-                Container(Container<T>& v) : elems(NULL) {
+                Container(Container<T>& v) : elems(nullptr) {
                     swap(*this, v);
                 }
-                Container(Container<T>&& v) : elems(NULL) {
+                Container(Container<T>&& v) : elems(nullptr) {
                     swap(*this, v);
                 }
                 Container<T>& operator=(Container<T> v) {

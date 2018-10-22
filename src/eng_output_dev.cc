@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -61,11 +61,11 @@ namespace pdftoedn
     // helper to add annocation links to a page
     void EngOutputDev::create_annot_link(AnnotLink* annot_link)
     {
-        assert(pg_data != NULL && "create_annot_link() - no page storage allocated");
+        assert(pg_data != nullptr && "create_annot_link() - no page storage allocated");
 
         LinkAction* link_action = annot_link->getAction();
 
-        // getting bit too many times by NULL pointers that shouldn't be.. ugh
+        // getting bit too many times by null pointers that shouldn't be.. ugh
         if (!link_action) {
             return;
         }
@@ -93,8 +93,8 @@ namespace pdftoedn
         effect = annot_link->getLinkEffect();
 
         // here we allocate the appropriate type of link
-        PdfAnnotLink* pdf_link = NULL;
-        LinkDest *dest = NULL;
+        PdfAnnotLink* pdf_link = nullptr;
+        LinkDest *dest = nullptr;
 
         switch (action_kind)
         {
@@ -108,10 +108,10 @@ namespace pdftoedn
 
                   std::string dest_file;
 
-                  if (ha->getDest() != NULL) {
+                  if (ha->getDest() != nullptr) {
                       dest = ha->getDest()->copy();
                   }
-                  else if (ha->getNamedDest() != NULL) {
+                  else if (ha->getNamedDest() != nullptr) {
                       dest = catalog->findDest(ha->getNamedDest());
                       dest_file = ha->getNamedDest()->getCString();
                   }
@@ -137,7 +137,7 @@ namespace pdftoedn
                   }
 
                   int page = -1;
-                  if (ha->getDest() != NULL) {
+                  if (ha->getDest() != nullptr) {
                       dest = ha->getDest()->copy();
 
                       if (!dest->isPageRef()) {
@@ -156,10 +156,10 @@ namespace pdftoedn
                       break;
                   }
 
-                  // found some PDFs where URIs had NULL strings.. huh?
+                  // found some PDFs where URIs had null strings.. huh?
                   const GooString* uri = ha->getURI();
                   pdf_link = new PdfAnnotLinkURI(x1, y1, x2, y2, effect,
-                                                 ((uri != NULL) ? uri->getCString() : ""));
+                                                 ((uri != nullptr) ? uri->getCString() : ""));
               }
               break;
 

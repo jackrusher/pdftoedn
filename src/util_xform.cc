@@ -68,7 +68,7 @@ namespace pdftoedn
                     return XFORM_ERR;
                 }
 
-                PIX* p2 = NULL;
+                PIX* p2 = nullptr;
 
                 DBG_TRACE(std::cerr << std::endl<< "\tXFORM === w: " << width << ", h: " << height << std::endl);
 
@@ -80,7 +80,7 @@ namespace pdftoedn
 
                     // leptonica has optimized orthogonal rotation operations
                     if (angle_d == 180) {
-                        p2 = pixRotate180(NULL, p);
+                        p2 = pixRotate180(nullptr, p);
 
                         ctm = ctm * PdfTM(PdfTM::deg_to_rad(180), 0, 0);
 
@@ -130,12 +130,12 @@ namespace pdftoedn
 
                     // swap
                     p = p2;
-                    p2 = NULL;
+                    p2 = nullptr;
                 }
 
                 // next if there's a H or V flip
                 if (ctm.is_flipped()) {
-                    p2 = pixFlipLR(NULL, p);
+                    p2 = pixFlipLR(nullptr, p);
                     pixDestroy(&p);
 
                     if (!p2) {
@@ -145,7 +145,7 @@ namespace pdftoedn
                     }
 
                     p = p2;
-                    p2 = NULL;
+                    p2 = nullptr;
 
                     ctm.scale(-1, 1);
                     ops |= XFORM_FLIP_H;
@@ -153,7 +153,7 @@ namespace pdftoedn
                 }
 
                 if (ctm.is_upside_down()) {
-                    p2 = pixFlipTB(NULL, p);
+                    p2 = pixFlipTB(nullptr, p);
                     pixDestroy(&p);
 
                     if (!p2) {
@@ -163,7 +163,7 @@ namespace pdftoedn
                     }
 
                     p = p2;
-                    p2 = NULL;
+                    p2 = nullptr;
 
                     ctm.scale(1, -1);
                     ops |= XFORM_FLIP_V;

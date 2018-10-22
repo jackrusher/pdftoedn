@@ -60,7 +60,7 @@ namespace pdftoedn
     {
         if (passwd.empty()) {
             // don't allocate anything
-            return NULL;
+            return nullptr;
         }
         return new GooString(passwd.c_str());
     }
@@ -74,7 +74,7 @@ namespace pdftoedn
                get_pdf_password(pdftoedn::options.pdf_owner_password()),
                get_pdf_password(pdftoedn::options.pdf_user_password())),
         font_engine(getXRef()),
-        eng_odev(NULL),
+        eng_odev(nullptr),
         use_page_media_box(true)
     {
         if (!isOk()) {
@@ -350,7 +350,7 @@ namespace pdftoedn
     void PDFReader::outline_action_goto(const LinkGoTo* const link, PdfOutline::Entry& entry)
     {
         if (link && link->isOk()) {
-            const LinkDest* dest = NULL;
+            const LinkDest* dest = nullptr;
 
             if (link->getDest()) {
                 dest = link->getDest()->copy();
@@ -375,7 +375,7 @@ namespace pdftoedn
             // set the filename as the destination, then copy the meta info
             entry.set_dest( link->getFileName()->getCString() );
 
-            LinkDest* dest = NULL;
+            LinkDest* dest = nullptr;
             if (link->getDest()) {
                 dest = link->getDest()->copy();
             }

@@ -204,7 +204,7 @@ namespace pdftoedn
         bool is_cid() const { return (type & FONT_TYPE_CID_MASK); }
         bool is_embedded() const { return (location == LOC_EMBEDDED); }
 
-        bool has_encoding() const { return (encoding != NULL); }
+        bool has_encoding() const { return (encoding != nullptr); }
         bool has_std_encoding() const { return (encoding && encoding->is_standard()); }
         bool has_to_unicode() const { return to_unicode; }
         const std::string& md5() const { return (code_to_gid ? code_to_gid->md5() : blob_md5); }
@@ -223,11 +223,11 @@ namespace pdftoedn
         bool is_small_cap() const { return (gfx_font_flags & FONT_FLAG_SMALL_CAP); }
         bool is_force_bold() const { return (gfx_font_flags & FONT_FLAG_FORCE_BOLD); }
 
-        bool has_code_to_gid() const { return ((code_to_gid != NULL) && code_to_gid->has_code_to_gid_map()); }
+        bool has_code_to_gid() const { return ((code_to_gid != nullptr) && code_to_gid->has_code_to_gid_map()); }
         const CodeToGIDMap* get_code_to_gid() const { return code_to_gid; }
 
         const Encoding* get_encoding() const { return encoding; }
-        bool get_glyph_path(CharCode code, PdfPath& path, const PdfTM* tm = NULL) const;
+        bool get_glyph_path(CharCode code, PdfPath& path, const PdfTM* tm = nullptr) const;
 
     private:
         PdfRef ref;

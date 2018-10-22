@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -144,8 +144,8 @@ namespace pdftoedn
     class PdfText : public PdfBoxedItem {
     public:
 
-        PdfText() : overlap_pred(NULL) { }
-        PdfText(const PdfTM& ctm) : PdfBoxedItem(ctm), overlap_pred(NULL) { }
+        PdfText() : overlap_pred(nullptr) { }
+        PdfText(const PdfTM& ctm) : PdfBoxedItem(ctm), overlap_pred(nullptr) { }
         virtual ~PdfText() { util::delete_ptr_container_elems(chars); delete overlap_pred; }
 
         // accessors, setters

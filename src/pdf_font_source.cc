@@ -73,7 +73,7 @@ namespace pdftoedn
     }
 
     CodeToGIDMap::CodeToGIDMap(uintmax_t len, int* code_to_GID_map) :
-        size(len), c2g_map(NULL)
+        size(len), c2g_map(nullptr)
     {
         if (len > 0) {
             c2g_map = new int[len];
@@ -168,7 +168,7 @@ namespace pdftoedn
         if (code < 256) {
             return e_map[code].c_str();
         }
-        return NULL;
+        return nullptr;
     }
 
     // debug
@@ -194,7 +194,7 @@ namespace pdftoedn
           default:
               return "INVALID";
         }
-        return NULL;
+        return nullptr;
     }
 
     std::ostream& Encoding::dump(std::ostream& o) const
@@ -227,13 +227,13 @@ namespace pdftoedn
         name(font_name),
         location(LOC_EMBEDDED),
         gfx_font_flags(gfx_font->getFlags()),
-        encoding(NULL),
-        code_to_gid(NULL),
-        to_unicode((gfx_font->getToUnicode() != NULL) &&
+        encoding(nullptr),
+        code_to_gid(nullptr),
+        to_unicode((gfx_font->getToUnicode() != nullptr) &&
                    // TODO: fix cast once poppler corrects GfxFont constness
                    // ((gfx_font->getToUnicode())->getLength() > 1),
                    ((const_cast<CharCodeToUnicode *>(gfx_font->getToUnicode()))->getLength() > 1)),
-        ft_lib(lib), ft_face(NULL), face_index(font_face_index),
+        ft_lib(lib), ft_face(nullptr), face_index(font_face_index),
         font_ok(false)
     {
         // save a copy of the blob and compute its md5
@@ -252,12 +252,12 @@ namespace pdftoedn
         name(font_name),
         location(LOC_EXTERNAL),
         gfx_font_flags(gfx_font->getFlags()),
-        encoding(NULL),
-        code_to_gid(NULL),
-        to_unicode((gfx_font->getToUnicode() != NULL) &&
+        encoding(nullptr),
+        code_to_gid(nullptr),
+        to_unicode((gfx_font->getToUnicode() != nullptr) &&
                    // TODO: fix cast once poppler corrects GfxFont constness
                    ((const_cast<CharCodeToUnicode *>(gfx_font->getToUnicode()))->getLength() > 1)),
-        ft_lib(NULL), ft_face(NULL), face_index(-1),
+        ft_lib(nullptr), ft_face(nullptr), face_index(-1),
         filename(font_file),
         font_ok(false)
     {
@@ -290,13 +290,13 @@ namespace pdftoedn
     {
         if (name.empty()) {
             std::stringstream name_stream;
-            // NULL font name - fabricate one using ref values to identify it
+            // null font name - fabricate one using ref values to identify it
             name_stream << "[" << ref << "]";
             name = name_stream.str();
 
             // log an error
             std::stringstream err;
-            err << "NULL font name for ref " << name
+            err << "null font name for ref " << name
                 << ", type: " << util::debug::get_font_type_str(type);
             et.log_warn(ErrorTracker::ERROR_FE_FONT_READ, MODULE, err.str() );
         }
@@ -321,8 +321,8 @@ namespace pdftoedn
         }
 
         // if it's a CID font, get the collection name
-        GfxCIDFont* cid_font = NULL;
-        Gfx8BitFont* g8_font = NULL;
+        GfxCIDFont* cid_font = nullptr;
+        Gfx8BitFont* g8_font = nullptr;
         if ( !is_cid() )
         {
             g8_font = dynamic_cast<Gfx8BitFont*>(gfx_font);

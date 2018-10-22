@@ -808,7 +808,7 @@ namespace pdftoedn
     PdfText* PdfPage::TextState::pop_text()
     {
         PdfText* t = span;
-        span = NULL;
+        span = nullptr;
         return t;
     }
 

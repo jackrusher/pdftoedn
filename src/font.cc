@@ -103,7 +103,7 @@ namespace pdftoedn
         PdfPath *p = new PdfPath;
         if (!font_src->get_glyph_path(code, *p)) {
             delete p;
-            return NULL;
+            return nullptr;
         }
 
         glyph_path_cache.insert(std::pair<uint16_t, PdfPath*>(code, p));
@@ -376,7 +376,7 @@ namespace pdftoedn
         std::stringstream codes_stream;
         if (!unmapped_codes.empty()) {
             codes_stream << "[ ";
-            const Encoding *e = NULL;
+            const Encoding *e = nullptr;
 
             if (is_type1()) {
                 e = font_src->get_encoding();

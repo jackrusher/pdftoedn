@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2018 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -35,7 +35,7 @@ namespace pdftoedn
     {
     public:
         FontEngDev(pdftoedn::FontEngine& fnt_engine) :
-            font_engine(fnt_engine), cur_font(NULL)
+            font_engine(fnt_engine), cur_font(nullptr)
         { }
         virtual ~FontEngDev() { }
 
