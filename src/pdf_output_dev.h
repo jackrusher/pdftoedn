@@ -58,22 +58,22 @@ namespace pdftoedn
         // =========================
         // Does this device use upside-down coordinates?
         // (Upside-down means (0,0) is the top left corner of the page.)
-        virtual GBool upsideDown() { return gTrue; }
+        virtual bool upsideDown() { return true; }
 
-        virtual GBool needNonText() { return gTrue; }
-        virtual GBool needCharCount() { return gTrue; }
+        virtual bool needNonText() { return true; }
+        virtual bool needCharCount() { return true; }
 
         // Does this device use drawChar() or drawString()?
-        virtual GBool useDrawChar() { return gTrue; }
+        virtual bool useDrawChar() { return true; }
 
-        virtual GBool useTilingPatternFill() { return gTrue; }
+        virtual bool useTilingPatternFill() { return true; }
 
         // Does this device use beginType3Char/endType3Char?  Otherwise,
         // text in Type 3 fonts will be drawn with drawChar/drawString.
-        virtual GBool interpretType3Chars() { return gTrue; }
+        virtual bool interpretType3Chars() { return true; }
 
         // This device now supports text in pattern colorspace!
-        virtual GBool supportTextCSPattern(GfxState *state) {
+        virtual bool supportTextCSPattern(GfxState *state) {
             return state->getFillColorSpace()->getMode() == csPattern;
         }
 
@@ -125,7 +125,7 @@ namespace pdftoedn
         virtual void eoFill(GfxState *state);
 
         //----- patterns
-        virtual GBool tilingPatternFill(GfxState * /*state*/, Gfx * /*gfx*/, Catalog * /*cat*/, Object * /*str*/,
+        virtual bool tilingPatternFill(GfxState * /*state*/, Gfx * /*gfx*/, Catalog * /*cat*/, Object * /*str*/,
                                         double * /*pmat*/, int /*paintType*/, int /*tilingType*/, Dict * /*resDict*/,
                                         double * /*mat*/, double * /*bbox*/,
                                         int /*x0*/, int /*y0*/, int /*x1*/, int /*y1*/,
@@ -138,30 +138,30 @@ namespace pdftoedn
 
         //----- images
         virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
-                                   int width, int height, GBool invert, GBool interpolate,
-                                   GBool inlineImg);
+                                   int width, int height, bool invert, bool interpolate,
+                                   bool inlineImg);
         virtual void drawImage(GfxState *state, Object *ref, Stream *str,
                                int width, int height, GfxImageColorMap *colorMap,
-                               GBool interpolate, int *maskColors, GBool inlineImg);
+                               bool interpolate, int *maskColors, bool inlineImg);
 
         virtual void setSoftMaskFromImageMask(GfxState *state,
                                               Object *ref, Stream *str,
-                                              int width, int height, GBool invert,
-                                              GBool inlineImg, double *baseMatrix);
+                                              int width, int height, bool invert,
+                                              bool inlineImg, double *baseMatrix);
         virtual void unsetSoftMaskFromImageMask(GfxState *state, double *baseMatrix);
         virtual void drawMaskedImage(GfxState *state, Object *ref, Stream *str,
                                      int width, int height,
-                                     GfxImageColorMap *colorMap, GBool interpolate,
+                                     GfxImageColorMap *colorMap, bool interpolate,
                                      Stream *maskStr, int maskWidth, int maskHeight,
-                                     GBool maskInvert, GBool maskInterpolate);
+                                     bool maskInvert, bool maskInterpolate);
         virtual void drawSoftMaskedImage(GfxState *state, Object *ref, Stream *str,
                                          int width, int height,
                                          GfxImageColorMap *colorMap,
-                                         GBool interpolate,
+                                         bool interpolate,
                                          Stream *maskStr,
                                          int maskWidth, int maskHeight,
                                          GfxImageColorMap *maskColorMap,
-                                         GBool maskInterpolate);
+                                         bool maskInterpolate);
 
         //----- grouping operators
         virtual void endMarkedContent(GfxState *state);
@@ -170,14 +170,14 @@ namespace pdftoedn
         virtual void markPoint(const char *name, Dict *properties);
 
         //----- transparency groups and soft masks
-        virtual GBool checkTransparencyGroup(GfxState * /*state*/, GBool /*knockout*/) { return gTrue; }
+        virtual bool checkTransparencyGroup(GfxState * /*state*/, bool /*knockout*/) { return true; }
         virtual void beginTransparencyGroup(GfxState * /*state*/, double * /*bbox*/,
                                             GfxColorSpace * /*blendingColorSpace*/,
-                                            GBool /*isolated*/, GBool /*knockout*/,
-                                            GBool /*forSoftMask*/);
+                                            bool /*isolated*/, bool /*knockout*/,
+                                            bool /*forSoftMask*/);
         virtual void endTransparencyGroup(GfxState * /*state*/);
         virtual void paintTransparencyGroup(GfxState * /*state*/, double * /*bbox*/);
-        virtual void setSoftMask(GfxState * /*state*/, double * /*bbox*/, GBool /*alpha*/,
+        virtual void setSoftMask(GfxState * /*state*/, double * /*bbox*/, bool /*alpha*/,
                                  Function * /*transferFunc*/, GfxColor * /*backdropColor*/);
         virtual void clearSoftMask(GfxState * /*state*/);
 

@@ -38,21 +38,21 @@ namespace pdftoedn
         // =========================
         // Does this device use upside-down coordinates?
         // (Upside-down means (0,0) is the top left corner of the page.)
-        virtual GBool upsideDown() { return gTrue; }
+        virtual bool upsideDown() { return true; }
 
-        virtual GBool needNonText() { return gFalse; }
-        virtual GBool needCharCount() { return gFalse; }
+        virtual bool needNonText() { return false; }
+        virtual bool needCharCount() { return false; }
 
         // Does this device use drawChar() or drawString()?
-        virtual GBool useDrawChar() { return gFalse; }
-        virtual GBool useTilingPatternFill() { return gFalse; }
+        virtual bool useDrawChar() { return false; }
+        virtual bool useTilingPatternFill() { return false; }
 
         // Does this device use beginType3Char/endType3Char?  Otherwise,
         // text in Type 3 fonts will be drawn with drawChar/drawString.
-        virtual GBool interpretType3Chars() { return gFalse; }
+        virtual bool interpretType3Chars() { return false; }
 
         // This device now supports text in pattern colorspace!
-        virtual GBool supportTextCSPattern(GfxState *state) { return gFalse; }
+        virtual bool supportTextCSPattern(GfxState *state) { return false; }
 
         //----- initialization and control
         virtual void startPage(int pageNum, GfxState *state, XRef *xref);

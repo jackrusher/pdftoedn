@@ -388,18 +388,18 @@ namespace pdftoedn
 
     //
     // tiled patterns
-    GBool OutputDev::tilingPatternFill(GfxState* state, Gfx* gfx, Catalog* cat, Object* str,
-                                       double* pmat, int paintType, int tilingType, Dict* resDict,
-                                       double* mat, double* bbox,
-                                       int x0, int y0, int x1, int y1,
-                                       double xStep, double yStep)
+    bool OutputDev::tilingPatternFill(GfxState* state, Gfx* gfx, Catalog* cat, Object* str,
+                                      double* pmat, int paintType, int tilingType, Dict* resDict,
+                                      double* mat, double* bbox,
+                                      int x0, int y0, int x1, int y1,
+                                      double xStep, double yStep)
     {
         DBG_TRACE(std::cerr << __FUNCTION__ << std::endl);
 
         // TESLA-5735 - don't do anything for now as it's not
         // crucial. However, adding this prevents poppler from
         // entering an infinite loop with certain docs
-        return gTrue;
+        return true;
     }
 
     //
@@ -439,8 +439,8 @@ namespace pdftoedn
     //
     // 1-bit rasters
     void OutputDev::drawImageMask(GfxState *state, Object *obj, Stream *str,
-                                  int width, int height, GBool invert, GBool interpolate,
-                                  GBool inlined)
+                                  int width, int height, bool invert, bool interpolate,
+                                  bool inlined)
     {
         DBG_TRACE_IMG(std::cerr << "===========================" << std::endl << __FUNCTION__);
 
@@ -530,11 +530,11 @@ namespace pdftoedn
     void OutputDev::drawSoftMaskedImage(GfxState *state, Object *obj, Stream *str,
                                         int width, int height,
                                         GfxImageColorMap *colorMap,
-                                        GBool interpolate,
+                                        bool interpolate,
                                         Stream *maskStr,
                                         int maskWidth, int maskHeight,
                                         GfxImageColorMap *maskColorMap,
-                                        GBool maskInterpolate)
+                                        bool maskInterpolate)
     {
         if (pdftoedn::options.text_output_only() ||
             state->getFillColorSpace()->isNonMarking()) {
@@ -614,8 +614,8 @@ namespace pdftoedn
     // not yet implemented
     void OutputDev::setSoftMaskFromImageMask(GfxState *state,
                                              Object *ref, Stream *str,
-                                             int width, int height, GBool invert,
-                                             GBool inlineImg, double *baseMatrix)
+                                             int width, int height, bool invert,
+                                             bool inlineImg, double *baseMatrix)
     {
         DBG_TRACE_IMG(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
 
@@ -631,9 +631,9 @@ namespace pdftoedn
 
     void OutputDev::drawMaskedImage(GfxState *state, Object *obj, Stream *str,
                                     int width, int height,
-                                    GfxImageColorMap *colorMap, GBool interpolate,
+                                    GfxImageColorMap *colorMap, bool interpolate,
                                     Stream *maskStr, int maskWidth, int maskHeight,
-                                    GBool maskInvert, GBool maskInterpolate)
+                                    bool maskInvert, bool maskInterpolate)
     {
         DBG_TRACE_IMG(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
 
@@ -711,7 +711,7 @@ namespace pdftoedn
     // image handling
     void OutputDev::drawImage(GfxState *state, Object *obj, Stream *str,
                               int width, int height, GfxImageColorMap *colorMap,
-                              GBool interpolate, int *maskColors, GBool inlined)
+                              bool interpolate, int *maskColors, bool inlined)
     {
         if (pdftoedn::options.text_output_only() ||
             state->getFillColorSpace()->isNonMarking()) {
@@ -1077,8 +1077,8 @@ namespace pdftoedn
     //----- transparency groups and soft masks
     void OutputDev::beginTransparencyGroup(GfxState * /*state*/, double * /*bbox*/,
                                            GfxColorSpace * /*blendingColorSpace*/,
-                                           GBool /*isolated*/, GBool /*knockout*/,
-                                           GBool /*forSoftMask*/)
+                                           bool /*isolated*/, bool /*knockout*/,
+                                           bool /*forSoftMask*/)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
 
@@ -1100,7 +1100,7 @@ namespace pdftoedn
     }
 
 
-    void OutputDev::setSoftMask(GfxState * /*state*/, double * /*bbox*/, GBool /*alpha*/,
+    void OutputDev::setSoftMask(GfxState * /*state*/, double * /*bbox*/, bool /*alpha*/,
                                 Function * /*transferFunc*/, GfxColor * /*backdropColor*/)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
