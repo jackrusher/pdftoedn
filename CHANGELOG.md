@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.36.1 - 2018-10-31
+### Fixed
+* Replaced deprecated poppler boooleans to allow compilation against poppler-0.71.0
+
 ## 0.36.0 - 2018-10-22
 ### Fixed
 * Updated method / function signatures to compile with poppler-0.70.0
