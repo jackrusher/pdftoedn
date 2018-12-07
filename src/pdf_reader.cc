@@ -373,7 +373,7 @@ namespace pdftoedn
         if (link && link->isOk()) {
 
             // set the filename as the destination, then copy the meta info
-            entry.set_dest( link->getFileName()->getCString() );
+            entry.set_dest( link->getFileName()->c_str() );
 
             LinkDest* dest = nullptr;
             if (link->getDest()) {
@@ -396,7 +396,7 @@ namespace pdftoedn
     {
         if (link && link->isOk()) {
             // set the URI as the destination
-            entry.set_dest( link->getURI()->getCString() );
+            entry.set_dest( link->getURI()->c_str() );
         }
     }
 

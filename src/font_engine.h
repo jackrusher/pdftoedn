@@ -60,7 +60,7 @@ namespace pdftoedn
         void update_document_ref(XRef* doc_xref) { xref = doc_xref; }
 
         // load system / embedded document font using FT
-        pdftoedn::PdfFont* load_font(GfxFont* gfx_font);
+        pdftoedn::PdfFont* load_font(const GfxFont* gfx_font);
 
         //
         // some ops can be helped if we provide a sorted list of font
@@ -89,7 +89,7 @@ namespace pdftoedn
         FT_Library ft_lib;
         pdftoedn::PdfFont* cur_doc_font;
 
-        pdftoedn::PdfFont* find_font(GfxFont* gfx_font) const;
+        pdftoedn::PdfFont* find_font(const GfxFont* gfx_font) const;
         static std::string sanitize_font_name(const std::string& name);
     };
 

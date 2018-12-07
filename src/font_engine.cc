@@ -63,7 +63,7 @@ namespace pdftoedn
 
     //
     // look up the font in our cache
-    pdftoedn::PdfFont* FontEngine::find_font(GfxFont* gfx_font) const
+    pdftoedn::PdfFont* FontEngine::find_font(const GfxFont* gfx_font) const
     {
         FontList::const_iterator fi = fonts.find(PdfRef(gfx_font->getID()));
         if (fi != fonts.end()) {
@@ -96,9 +96,9 @@ namespace pdftoedn
 
     //
     // looks up a font in the Font Cache.. if not found, allocates an entry
-    PdfFont* FontEngine::load_font(GfxFont* gfx_font)
+    PdfFont* FontEngine::load_font(const GfxFont* gfx_font)
     {
-        GfxFontLoc *gfx_font_loc = nullptr;
+        const GfxFontLoc *gfx_font_loc = nullptr;
         FontSource* font_src = nullptr;
 
         do
@@ -133,22 +133,22 @@ namespace pdftoedn
             if (!font)
             {
                 // not cached.. locate the font in the document
-                if (!(gfx_font_loc = gfx_font->locateFont(xref, nullptr))) {
+                if (!(gfx_font_loc = const_cast<GfxFont*>(gfx_font)->locateFont(xref, nullptr))) {
                     std::stringstream err;
                     err << "locateFont failed for ref " << PdfRef(gfx_font->getID());
                     et.log_error(ErrorTracker::ERROR_FE_FONT_READ, MODULE, err.str() );
                     break;
                 }
 
-                std::string font_name = sanitize_font_name( (gfx_font->getName() ? gfx_font->getName()->getCString() : "") );
+                std::string font_name = sanitize_font_name(gfx_font->getName() ? gfx_font->getName()->c_str() : "");
 
                 // is the font embedded?
                 if (gfx_font_loc->locType == gfxFontLocEmbedded) {
 
                     // check the embedded font name
-                    std::string embedded_name = sanitize_font_name( (gfx_font->getEmbeddedFontName() ?
-                                                                     gfx_font->getEmbeddedFontName()->getCString() :
-                                                                     "" ) );
+                    std::string embedded_name = sanitize_font_name(gfx_font->getEmbeddedFontName() ?
+                                                                   gfx_font->getEmbeddedFontName()->c_str() :
+                                                                   "");
 
                     // poppler modifies embedded font names to clean
                     // them up by removing the garbled prefix
@@ -187,7 +187,7 @@ namespace pdftoedn
 
                     // yes, read it into a buffer
                     int buf_len;
-                    uint8_t *buf = reinterpret_cast<uint8_t*>(gfx_font->readEmbFontFile(xref, &buf_len));
+                    uint8_t *buf = reinterpret_cast<uint8_t*>(const_cast<GfxFont*>(gfx_font)->readEmbFontFile(xref, &buf_len));
 
                     if (!buf) {
                         std::stringstream err;
@@ -223,7 +223,7 @@ namespace pdftoedn
                     // gfx_font_loc data!!
                     font_src = new FontSource(gfx_font,
                                               util::poppler_gfx_font_type_to_edn(font_type), // TODO: use system type? gfx_font_loc->fontType
-                                              font_name, gfx_font_loc->path->getCString());
+                                              font_name, gfx_font_loc->path->c_str());
 
                     #if 0
                     if (font_src->is_cid() && !font_src->has_code_to_gid()) {

@@ -103,7 +103,7 @@ namespace pdftoedn
             ENC_INVALID
         };
 
-        Encoding(Gfx8BitFont* font);
+        Encoding(const Gfx8BitFont* font);
 
         bool is_ok() const { return (e_type != ENC_INVALID); }
 
@@ -187,10 +187,10 @@ namespace pdftoedn
         };
 
         // constructor / destructor
-        FontSource(GfxFont* gfx_font, FontType font_type, const std::string& font_name,
+        FontSource(const GfxFont* gfx_font, FontType font_type, const std::string& font_name,
                    FT_Library lib, const uint8_t* buffer, uintmax_t len,
                    uintmax_t font_face_index = 0);
-        FontSource(GfxFont* gfx_font, FontType font_type, const std::string& font_name,
+        FontSource(const GfxFont* gfx_font, FontType font_type, const std::string& font_name,
                    const std::string& file);
         ~FontSource();
 
@@ -251,13 +251,13 @@ namespace pdftoedn
         bool font_ok;
 
         void check_name();
-        bool load_font(GfxFont* gfx_font);
+        bool load_font(const GfxFont* gfx_font);
 
         bool load_face();
-        bool load_type1_font(Gfx8BitFont* gfx8_font);
-        bool load_truetype_font(Gfx8BitFont* gfx8_font);
-        bool load_cid_font(GfxCIDFont * cid_font);
-        bool load_cidtype2_font(GfxCIDFont * cid_font);
+        bool load_type1_font(const Gfx8BitFont* gfx8_font);
+        bool load_truetype_font(const Gfx8BitFont* gfx8_font);
+        bool load_cid_font(const GfxCIDFont * cid_font);
+        bool load_cidtype2_font(const GfxCIDFont * cid_font);
     };
 
 } // namespace

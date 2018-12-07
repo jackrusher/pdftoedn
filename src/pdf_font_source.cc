@@ -114,33 +114,30 @@ namespace pdftoedn
     // =============================================================================
     // encoding container
     //
-    Encoding::Encoding(Gfx8BitFont* gfx_font) :
-        e_type(ENC_INVALID)
+    Encoding::Encoding(const Gfx8BitFont* gfx_font) :
+        e_type(ENC_INVALID),
+        e_name(gfx_font->getEncodingName() ? gfx_font->getEncodingName()->c_str() : "")
     {
-        if (gfx_font->getEncodingName()) {
-            e_name = gfx_font->getEncodingName()->getCString();
-
-            // set the type - MacRoman is set below as poppler
-            // provides a flag already
-            if (e_name.find("WinAnsi") != std::string::npos) {
-                e_type = ENC_WINANSI;
-            }
-            else if (e_name.find("MacExpert") != std::string::npos) {
-                e_type = ENC_MACOS_EXPERT;
-            }
-            else if (e_name.find("Expert") != std::string::npos) {
-                e_type = ENC_EXPERT;
-            }
-            else if (e_name.find("Symbol") != std::string::npos) {
-                e_type = ENC_SYMBOL;
-            }
-            else if (e_name.find("Zapf") != std::string::npos) {
-                e_type = ENC_ZAPF_DINGBATS;
-            }
-            else if ((e_name.find("ustom") != std::string::npos) ||
-                     (e_name.find("uiltin") != std::string::npos)) {
+        // set the type - MacRoman is set below as poppler
+        // provides a flag already
+        if (e_name.find("WinAnsi") != std::string::npos) {
+            e_type = ENC_WINANSI;
+        }
+        else if (e_name.find("MacExpert") != std::string::npos) {
+            e_type = ENC_MACOS_EXPERT;
+        }
+        else if (e_name.find("Expert") != std::string::npos) {
+            e_type = ENC_EXPERT;
+        }
+        else if (e_name.find("Symbol") != std::string::npos) {
+            e_type = ENC_SYMBOL;
+        }
+        else if (e_name.find("Zapf") != std::string::npos) {
+            e_type = ENC_ZAPF_DINGBATS;
+        }
+        else if ((e_name.find("ustom") != std::string::npos) ||
+                 (e_name.find("uiltin") != std::string::npos)) {
                 e_type = ENC_CUSTOM;
-            }
         }
 
         // if MacRoman, set it
@@ -149,7 +146,7 @@ namespace pdftoedn
         }
 
         // set the entity map if found
-        const char** enc_map = const_cast<const char**>(gfx_font->getEncoding());
+        const char** enc_map = const_cast<const char**>(const_cast<Gfx8BitFont*>(gfx_font)->getEncoding());
         if (enc_map) {
             const char* entity;
             for (uint_fast16_t ii = 0; ii < 256; ++ii) {
@@ -219,7 +216,7 @@ namespace pdftoedn
     // sets, encodings, etc.
     //
     // constructor for embedded fonts - cache the font blob in a buffer
-    FontSource::FontSource(GfxFont* gfx_font, FontType font_type, const std::string& font_name,
+    FontSource::FontSource(const GfxFont* gfx_font, FontType font_type, const std::string& font_name,
                            FT_Library lib, const uint8_t* buffer, uintmax_t len,
                            uintmax_t font_face_index) :
         ref(gfx_font->getID()),
@@ -245,7 +242,7 @@ namespace pdftoedn
 
     //
     // constructor for external fonts
-    FontSource::FontSource(GfxFont* gfx_font, FontType font_type, const std::string& font_name,
+    FontSource::FontSource(const GfxFont* gfx_font, FontType font_type, const std::string& font_name,
                            const std::string& font_file) :
         ref(gfx_font->getID()),
         type(font_type),
@@ -305,7 +302,7 @@ namespace pdftoedn
 
     //
     // load a font
-    bool FontSource::load_font(GfxFont* gfx_font)
+    bool FontSource::load_font(const GfxFont* gfx_font)
     {
         bool status = false;
 
@@ -321,11 +318,11 @@ namespace pdftoedn
         }
 
         // if it's a CID font, get the collection name
-        GfxCIDFont* cid_font = nullptr;
-        Gfx8BitFont* g8_font = nullptr;
+        const GfxCIDFont* cid_font = nullptr;
+        const Gfx8BitFont* g8_font = nullptr;
         if ( !is_cid() )
         {
-            g8_font = dynamic_cast<Gfx8BitFont*>(gfx_font);
+            g8_font = dynamic_cast<const Gfx8BitFont*>(gfx_font);
 
             if (!g8_font) {
                 std::stringstream err;
@@ -345,7 +342,7 @@ namespace pdftoedn
             }
 
         } else {
-            cid_font = dynamic_cast<GfxCIDFont*>(gfx_font);
+            cid_font = dynamic_cast<const GfxCIDFont*>(gfx_font);
             if (!cid_font) {
                 std::stringstream err;
                 err << __FUNCTION__ << " - GfxFont should be CID but failed to cast: " << name;
@@ -354,8 +351,8 @@ namespace pdftoedn
             }
 
             const GooString* col = cid_font->getCollection();
-            if (col && (col->getLength() > 0)) {
-                collection = col->getCString();
+            if (col && col->getLength() > 0) {
+                collection = col->c_str();
             }
         }
 
@@ -398,7 +395,7 @@ namespace pdftoedn
 
     //
     // type1 fonts carry an encoding table of 256 entities
-    bool FontSource::load_type1_font(Gfx8BitFont* gfx_font)
+    bool FontSource::load_type1_font(const Gfx8BitFont* gfx_font)
     {
         if (!gfx_font || !load_face()) {
             return false;
@@ -419,7 +416,7 @@ namespace pdftoedn
 
     //
     // true type fonts - use FoFi (yuk) to extract code 2 GID map
-    bool FontSource::load_truetype_font(Gfx8BitFont* gfx_font)
+    bool FontSource::load_truetype_font(const Gfx8BitFont* gfx_font)
     {
         if (!gfx_font || !load_face()) {
             return false;
@@ -428,7 +425,7 @@ namespace pdftoedn
         FoFiTrueType *ff = FoFiTrueType::make(const_cast<char*>(font_blob.c_str()), font_blob.length());
 
         if (ff) {
-            int* c2gmap = gfx_font->getCodeToGIDMap(ff);
+            int* c2gmap = const_cast<Gfx8BitFont*>(gfx_font)->getCodeToGIDMap(ff);
 
             if (c2gmap) {
                 // if we're substituting for a non-TrueType font, we need to mark
@@ -452,7 +449,7 @@ namespace pdftoedn
 
     //
     // CID type 0 fonts - only open-type carries a code 2 GID map (?!)
-    bool FontSource::load_cid_font(GfxCIDFont* cid_font)
+    bool FontSource::load_cid_font(const GfxCIDFont* cid_font)
     {
         if (!cid_font || !load_face()) {
             return false;
@@ -470,7 +467,7 @@ namespace pdftoedn
 
     //
     // CID type 2 (aka CFF)
-    bool FontSource::load_cidtype2_font(GfxCIDFont* cid_font)
+    bool FontSource::load_cidtype2_font(const GfxCIDFont* cid_font)
     {
         if (!cid_font || !load_face()) {
             return false;
@@ -483,7 +480,7 @@ namespace pdftoedn
 
             if (ff) {
                 int n;
-                int* codeToGIDMap = cid_font->getCodeToGIDMap(ff, &n);
+                int* codeToGIDMap = const_cast<GfxCIDFont*>(cid_font)->getCodeToGIDMap(ff, &n);
 
                 if (codeToGIDMap) {
                     code_to_gid = new CodeToGIDMap(n, codeToGIDMap);

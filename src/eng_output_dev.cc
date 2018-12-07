@@ -113,7 +113,7 @@ namespace pdftoedn
                   }
                   else if (ha->getNamedDest() != nullptr) {
                       dest = catalog->findDest(ha->getNamedDest());
-                      dest_file = ha->getNamedDest()->getCString();
+                      dest_file = ha->getNamedDest()->c_str();
                   }
 
                   int page = (dest ? get_dest_goto_page(dest) : -1);
@@ -133,7 +133,7 @@ namespace pdftoedn
                   std::string file_dest;
 
                   if (ha->getFileName()) {
-                      file_dest = ha->getFileName()->getCString();
+                      file_dest = ha->getFileName()->c_str();
                   }
 
                   int page = -1;
@@ -159,7 +159,7 @@ namespace pdftoedn
                   // found some PDFs where URIs had null strings.. huh?
                   const GooString* uri = ha->getURI();
                   pdf_link = new PdfAnnotLinkURI(x1, y1, x2, y2, effect,
-                                                 ((uri != nullptr) ? uri->getCString() : ""));
+                                                 (uri ? uri->c_str() : ""));
               }
               break;
 
@@ -171,8 +171,7 @@ namespace pdftoedn
                       break;
                   }
 
-                  pdf_link = new PdfAnnotLinkLaunch(x1, y1, x2, y2, effect,
-                                                    ha->getFileName()->getCString());
+                  pdf_link = new PdfAnnotLinkLaunch(x1, y1, x2, y2, effect, ha->getFileName()->c_str());
               }
               break;
 
