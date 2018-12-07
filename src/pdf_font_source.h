@@ -127,9 +127,11 @@ namespace pdftoedn
         static const pdftoedn::Symbol SYMBOL_TYPE[];
 
     private:
-        Type e_type;
         std::string e_name;
+        Type e_type;
         std::vector<std::string> e_map;
+
+        Type determine_type(const Gfx8BitFont*) const;
     };
 
 

@@ -115,36 +115,9 @@ namespace pdftoedn
     // encoding container
     //
     Encoding::Encoding(const Gfx8BitFont* gfx_font) :
-        e_type(ENC_INVALID),
-        e_name(gfx_font->getEncodingName() ? gfx_font->getEncodingName()->c_str() : "")
+        e_name(gfx_font->getEncodingName() ? gfx_font->getEncodingName()->c_str() : ""),
+        e_type(determine_type(gfx_font))
     {
-        // set the type - MacRoman is set below as poppler
-        // provides a flag already
-        if (e_name.find("WinAnsi") != std::string::npos) {
-            e_type = ENC_WINANSI;
-        }
-        else if (e_name.find("MacExpert") != std::string::npos) {
-            e_type = ENC_MACOS_EXPERT;
-        }
-        else if (e_name.find("Expert") != std::string::npos) {
-            e_type = ENC_EXPERT;
-        }
-        else if (e_name.find("Symbol") != std::string::npos) {
-            e_type = ENC_SYMBOL;
-        }
-        else if (e_name.find("Zapf") != std::string::npos) {
-            e_type = ENC_ZAPF_DINGBATS;
-        }
-        else if ((e_name.find("ustom") != std::string::npos) ||
-                 (e_name.find("uiltin") != std::string::npos)) {
-                e_type = ENC_CUSTOM;
-        }
-
-        // if MacRoman, set it
-        if (gfx_font->getUsesMacRomanEnc()) {
-            e_type = ENC_MACOS_ROMAN;
-        }
-
         // set the entity map if found
         const char** enc_map = const_cast<const char**>(const_cast<Gfx8BitFont*>(gfx_font)->getEncoding());
         if (enc_map) {
@@ -156,6 +129,41 @@ namespace pdftoedn
                 //                std::cerr << "  [" << ii << "]=> " << enc_map[ii] << std::endl;
             }
         }
+    }
+
+    Encoding::Type Encoding::determine_type(const Gfx8BitFont* gfx_font) const
+    {
+        // set the type - MacRoman is set below as poppler
+        // provides a flag already
+        if (!e_name.empty())
+        {
+            if (e_name.find("WinAnsi") != std::string::npos) {
+                return ENC_WINANSI;
+            }
+            else if (e_name.find("MacExpert") != std::string::npos) {
+                return ENC_MACOS_EXPERT;
+            }
+            else if (e_name.find("Expert") != std::string::npos) {
+                return ENC_EXPERT;
+            }
+            else if (e_name.find("Symbol") != std::string::npos) {
+                return ENC_SYMBOL;
+            }
+            else if (e_name.find("Zapf") != std::string::npos) {
+                return ENC_ZAPF_DINGBATS;
+            }
+            else if ((e_name.find("ustom") != std::string::npos) ||
+                     (e_name.find("uiltin") != std::string::npos)) {
+                return ENC_CUSTOM;
+            }
+        }
+
+        // if MacRoman, set it
+        if (gfx_font->getUsesMacRomanEnc()) {
+            return ENC_MACOS_ROMAN;
+        }
+
+        return ENC_INVALID;
     }
 
     //
