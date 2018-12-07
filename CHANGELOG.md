@@ -1,8 +1,12 @@
 # Change Log
 
+## 0.36.2 - 2018-12-07
+* Last set of poppler booleans I missed
+* const fixes for poppler 0.72.0
+
 ## 0.36.1 - 2018-10-31
 ### Fixed
-* Replaced deprecated poppler boooleans to allow compilation against poppler-0.71.0
+* Replaced deprecated poppler booleans to allow compilation against poppler-0.71.0
 
 ## 0.36.0 - 2018-10-22
 ### Fixed
