@@ -52,6 +52,44 @@ namespace pdftoedn
         // called to process a page
         const PdfPage* page_data() const { return pg_data; }
 
+        // some default values
+        virtual bool useTilingPatternFill() { return true; }
+
+        // force these methods to be NO-OPS unless defined by the subclasses
+        virtual bool beginType3Char(GfxState * /*state*/, double /*x*/, double /*y*/,
+                                    double /*dx*/, double /*dy*/,
+                                    CharCode /*code*/, Unicode * /*u*/, int /*uLen*/)
+        { return false; }
+
+        virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
+                                   int width, int height, bool invert, bool interpolate,
+                                   bool inlineImg) {}
+        virtual void setSoftMaskFromImageMask(GfxState *state,
+                                              Object *ref, Stream *str,
+                                              int width, int height, bool invert,
+                                              bool inlineImg, double *baseMatrix) {}
+        virtual void unsetSoftMaskFromImageMask(GfxState *state, double *baseMatrix) {}
+        virtual void drawImage(GfxState *state, Object *ref, Stream *str,
+                               int width, int height, GfxImageColorMap *colorMap,
+                               bool interpolate, int *maskColors, bool inlineImg) {}
+        virtual void drawMaskedImage(GfxState *state, Object *ref, Stream *str,
+                                     int width, int height,
+                                     GfxImageColorMap *colorMap, bool interpolate,
+                                     Stream *maskStr, int maskWidth, int maskHeight,
+                                     bool maskInvert, bool maskInterpolate) {}
+        virtual void drawSoftMaskedImage(GfxState *state, Object *ref, Stream *str,
+                                         int width, int height,
+                                         GfxImageColorMap *colorMap,
+                                         bool interpolate,
+                                         Stream *maskStr,
+                                         int maskWidth, int maskHeight,
+                                         GfxImageColorMap *maskColorMap,
+                                         bool maskInterpolate) {}
+        virtual void endMarkedContent(GfxState *state) {}
+        virtual void beginMarkedContent(const char *name, Dict *properties) {}
+        virtual void markPoint(const char *name) {}
+        virtual void markPoint(const char *name, Dict *properties) {}
+
     protected:
         Catalog* catalog;
         pdftoedn::PdfPage* pg_data;
