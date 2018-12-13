@@ -126,10 +126,10 @@ namespace pdftoedn
 
         //----- patterns
         virtual bool tilingPatternFill(GfxState * /*state*/, Gfx * /*gfx*/, Catalog * /*cat*/, Object * /*str*/,
-                                        double * /*pmat*/, int /*paintType*/, int /*tilingType*/, Dict * /*resDict*/,
-                                        double * /*mat*/, double * /*bbox*/,
-                                        int /*x0*/, int /*y0*/, int /*x1*/, int /*y1*/,
-                                        double /*xStep*/, double /*yStep*/);
+                                       const double * /*pmat*/, int /*paintType*/, int /*tilingType*/, Dict * /*resDict*/,
+                                       const double * /*mat*/, const double * /*bbox*/,
+                                       int /*x0*/, int /*y0*/, int /*x1*/, int /*y1*/,
+                                       double /*xStep*/, double /*yStep*/);
 
         //----- clipping
         virtual void clip(GfxState *state);
