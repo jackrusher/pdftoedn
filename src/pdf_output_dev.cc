@@ -1075,7 +1075,7 @@ namespace pdftoedn
 
 
     //----- transparency groups and soft masks
-    void OutputDev::beginTransparencyGroup(GfxState * /*state*/, double * /*bbox*/,
+    void OutputDev::beginTransparencyGroup(GfxState * /*state*/, const double * /*bbox*/,
                                            GfxColorSpace * /*blendingColorSpace*/,
                                            bool /*isolated*/, bool /*knockout*/,
                                            bool /*forSoftMask*/)
@@ -1092,7 +1092,7 @@ namespace pdftoedn
         et.log_info( ErrorTracker::ERROR_OD_UNIMPLEMENTED_CB, MODULE, __FUNCTION__ );
     }
 
-    void OutputDev::paintTransparencyGroup(GfxState * /*state*/, double * /*bbox*/)
+    void OutputDev::paintTransparencyGroup(GfxState * /*state*/, const double * /*bbox*/)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);
 
@@ -1100,7 +1100,7 @@ namespace pdftoedn
     }
 
 
-    void OutputDev::setSoftMask(GfxState * /*state*/, double * /*bbox*/, bool /*alpha*/,
+    void OutputDev::setSoftMask(GfxState * /*state*/, const double * /*bbox*/, bool /*alpha*/,
                                 Function * /*transferFunc*/, GfxColor * /*backdropColor*/)
     {
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << " ---- + " << std::endl);

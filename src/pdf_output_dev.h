@@ -56,26 +56,14 @@ namespace pdftoedn
 
         // POPPLER virtual interface
         // =========================
-        // Does this device use upside-down coordinates?
-        // (Upside-down means (0,0) is the top left corner of the page.)
-        virtual bool upsideDown() { return true; }
-
-        virtual bool needNonText() { return true; }
-        virtual bool needCharCount() { return true; }
-
         // Does this device use drawChar() or drawString()?
         virtual bool useDrawChar() { return true; }
-
-        virtual bool useTilingPatternFill() { return true; }
 
         // Does this device use beginType3Char/endType3Char?  Otherwise,
         // text in Type 3 fonts will be drawn with drawChar/drawString.
         virtual bool interpretType3Chars() { return true; }
-
-        // This device now supports text in pattern colorspace!
-        virtual bool supportTextCSPattern(GfxState *state) {
-            return state->getFillColorSpace()->getMode() == csPattern;
-        }
+        virtual bool needNonText() { return true; }
+        virtual bool useTilingPatternFill() { return true; }
 
         //----- initialization and control
         virtual void startPage(int pageNum, GfxState *state, XRef *xref);
@@ -171,13 +159,13 @@ namespace pdftoedn
 
         //----- transparency groups and soft masks
         virtual bool checkTransparencyGroup(GfxState * /*state*/, bool /*knockout*/) { return true; }
-        virtual void beginTransparencyGroup(GfxState * /*state*/, double * /*bbox*/,
+        virtual void beginTransparencyGroup(GfxState * /*state*/, const double * /*bbox*/,
                                             GfxColorSpace * /*blendingColorSpace*/,
                                             bool /*isolated*/, bool /*knockout*/,
                                             bool /*forSoftMask*/);
         virtual void endTransparencyGroup(GfxState * /*state*/);
-        virtual void paintTransparencyGroup(GfxState * /*state*/, double * /*bbox*/);
-        virtual void setSoftMask(GfxState * /*state*/, double * /*bbox*/, bool /*alpha*/,
+        virtual void paintTransparencyGroup(GfxState * /*state*/, const double * /*bbox*/);
+        virtual void setSoftMask(GfxState * /*state*/, const double * /*bbox*/, bool /*alpha*/,
                                  Function * /*transferFunc*/, GfxColor * /*backdropColor*/);
         virtual void clearSoftMask(GfxState * /*state*/);
 
