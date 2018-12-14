@@ -80,7 +80,8 @@ namespace pdftoedn
         }
 
         double scaling = attribs.txt.font_size * metrics.horiz_scaling;
-        double max_space = 1.2 * scaling;
+        double max_gap = 1.2 * scaling;
+        double max_space = max_gap * 1.1;
 
         // found cases where a very large whitespace is used to
         // separate text spans in table cells, footers, etc.
@@ -127,12 +128,12 @@ namespace pdftoedn
             // if there's a gap, only break it up if they're both not whitespace
             (((bbox_delta > min_ws_space) && (!prev.is_space() && !is_space())) ||
              // or if it's a large gap, split it
-             ( bbox_delta > max_space )
+             ( bbox_delta > max_gap )
                 )) {
             return false;
         } else {
             // it's in a link - split only if space looks too big
-            if ( bbox_delta > max_space ) {
+            if ( bbox_delta > max_gap ) {
                 return false;
             }
         }
