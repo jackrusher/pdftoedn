@@ -53,7 +53,14 @@ namespace pdftoedn
         const PdfPage* page_data() const { return pg_data; }
 
         // some default values
-        virtual bool useTilingPatternFill() { return true; }
+        // Does this device use upside-down coordinates?
+        // (Upside-down means (0,0) is the top left corner of the page.)
+        virtual bool upsideDown() { return true; }
+        virtual bool useDrawChar() { return false; }
+        virtual bool interpretType3Chars() { return false; }
+        virtual bool needNonText() { return false; }
+        virtual bool needCharCount() { return false; }
+        virtual bool useTilingPatternFill() { return false; }
 
         // force these methods to be NO-OPS unless defined by the subclasses
         virtual bool beginType3Char(GfxState * /*state*/, double /*x*/, double /*y*/,
@@ -85,7 +92,6 @@ namespace pdftoedn
                                          int maskWidth, int maskHeight,
                                          GfxImageColorMap *maskColorMap,
                                          bool maskInterpolate) {}
-        virtual void endMarkedContent(GfxState *state) {}
         virtual void beginMarkedContent(const char *name, Dict *properties) {}
         virtual void markPoint(const char *name) {}
         virtual void markPoint(const char *name, Dict *properties) {}

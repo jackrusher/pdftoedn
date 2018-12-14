@@ -40,10 +40,8 @@ namespace pdftoedn
         virtual ~FontEngDev() { }
 
         // need to define these
-        virtual bool upsideDown() { return true; }
         virtual bool useDrawChar() { return true; }
         virtual bool interpretType3Chars() { return true; }
-        virtual bool needNonText() { return false; }
 
         virtual void startPage(int pageNum, GfxState *state, XRef *xref) { }
 

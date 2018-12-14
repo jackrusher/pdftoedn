@@ -36,30 +36,12 @@ namespace pdftoedn
 
         // POPPLER virtual interface
         // =========================
-        // Does this device use upside-down coordinates?
-        // (Upside-down means (0,0) is the top left corner of the page.)
-        virtual bool upsideDown() { return true; }
 
-        virtual bool needNonText() { return false; }
-        virtual bool needCharCount() { return false; }
-
-        // Does this device use drawChar() or drawString()?
-        virtual bool useDrawChar() { return false; }
-        virtual bool useTilingPatternFill() { return false; }
-
-        // Does this device use beginType3Char/endType3Char?  Otherwise,
-        // text in Type 3 fonts will be drawn with drawChar/drawString.
-        virtual bool interpretType3Chars() { return false; }
-
-        // This device now supports text in pattern colorspace!
-        virtual bool supportTextCSPattern(GfxState *state) { return false; }
+        // to prevent updates to fonts, etc.
+        virtual void updateAll(GfxState *state) {}
 
         //----- initialization and control
         virtual void startPage(int pageNum, GfxState *state, XRef *xref);
-
-        //----- text drawing
-        virtual void beginString(GfxState * /*state*/, GooString * /*s*/) {}
-        virtual void endString(GfxState * /*state*/) {}
     };
 
 } // namespace
