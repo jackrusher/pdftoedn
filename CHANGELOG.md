@@ -1,6 +1,14 @@
 # Change Log
 
+## 0.36.3 - 2018-12-14
+### Fixed
+* mismatched virtual method signatures in the output devices.
+
+### Changed
+* Slight tweak to span splitting rule.
+
 ## 0.36.2 - 2018-12-07
+### Fixed
 * Last set of poppler booleans I missed
 * const fixes for poppler 0.72.0
 
