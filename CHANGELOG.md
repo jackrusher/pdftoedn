@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.36.4 - 2019-01-08
+### Fixed
+* replaced typedefs deprecated in poppler-0.73.0
+
+# Added
+* new option to only dump EDN output, thus preventing writing of image
+  blobs to disk.
+
 ## 0.36.3 - 2018-12-14
 ### Fixed
 * mismatched virtual method signatures in the output devices.

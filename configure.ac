@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-m4_define([pdftoedn_version],[0.36.3])
-m4_define([min_poppler_version],[0.72.0])
+m4_define([pdftoedn_version],[0.36.4])
+m4_define([min_poppler_version],[0.73.0])
 m4_define([min_lept_version],[1.74])
 m4_define([min_boost_version],[1.57])
 
@@ -103,7 +103,7 @@ AC_SUBST([POPPLER_PARENT_INCLUDE])
 dnl make sure poppler xpdf headers are installed
 save_CPPFLAGS=$CPPFLAGS
 CPPFLAGS="$CPPFLAGS $poppler_CFLAGS"
-AC_CHECK_HEADER([GfxState.h],,[AC_MSG_ERROR([poppler headers not found. Please build poppler with -DENABLE_XPDF_HEADERS=ON])])
+AC_CHECK_HEADER([GfxState.h],,[AC_MSG_ERROR([poppler headers not found. Please build poppler with -DENABLE_XPDF_HEADERS=ON or ensure the minimum required version (min_poppler_version) is installed.])])
 CPPFLAGS=$save_CPPFLAGS
 
 dnl rapidjson
