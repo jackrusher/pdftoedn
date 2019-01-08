@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -24,6 +24,7 @@
 #include <wordexp.h>
 #include "util_fs.h"
 #include "pdf_error_tracker.h"
+#include "runtime_options.h"
 
 namespace pdftoedn
 {
@@ -45,7 +46,9 @@ namespace pdftoedn
                 }
                 else {
                     // otherwise try to create it
-                    return (fs::create_directories(dir));
+                    if (!options.edn_output_only()) {
+                        return (fs::create_directories(dir));
+                    }
                 }
                 return true;
             }
@@ -102,6 +105,11 @@ namespace pdftoedn
             bool write_image_to_disk(const std::string& filename, const std::string& blob,
                                      bool overwrite)
             {
+                if (options.edn_output_only()) {
+                    // don't write images
+                    return true;
+                }
+
                 // TODO: overwrite is now false by default but maybe
                 // check if destination is the same and overwrite?
                 if (overwrite || !boost::filesystem::exists(filename))

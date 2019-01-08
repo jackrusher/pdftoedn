@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -94,6 +94,8 @@ int main(int argc, char** argv)
              "Overwrite output file if it exists.")
             ("invisible_text,i",    po::bool_switch(&flags.include_invisible_text),
              "Include invisible text in output (for use with OCR'd documents).")
+            ("write_doc_edn_only,d", po::bool_switch(&flags.edn_output_only),
+             "Write only EDN output (omit writing image blobs to disk).")
             ("links_only,L",        po::bool_switch(&flags.link_output_only),
              "Extract only link data.")
             ("text_only,T",         po::bool_switch(&flags.text_output_only),

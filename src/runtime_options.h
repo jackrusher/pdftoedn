@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -32,6 +32,7 @@ namespace pdftoedn {
             bool crop_page;
             bool include_invisible_text;
             bool link_output_only;
+            bool edn_output_only;
             bool include_debug_info;
             bool libpng_use_best_compression;
             bool force_font_preprocess;
@@ -69,6 +70,7 @@ namespace pdftoedn {
         bool crop_page() const                   { return flags.crop_page; }
         bool include_invisible_text() const      { return flags.include_invisible_text; }
         bool link_output_only() const            { return flags.link_output_only; }
+        bool edn_output_only() const             { return flags.edn_output_only; }
         bool libpng_use_best_compression() const { return flags.libpng_use_best_compression; }
         bool include_debug_info() const          { return flags.include_debug_info; }
         bool force_pre_process_fonts() const     { return flags.force_font_preprocess; }
