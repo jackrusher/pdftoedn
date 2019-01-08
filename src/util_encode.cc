@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -143,7 +143,7 @@ namespace pdftoedn
                   case csIndexed:
                   case csSeparation:
                       for (size_t y = 0; y < height; y++) {
-                          Guchar *pix = img_str->getLine();
+                          unsigned char *pix = img_str->getLine();
                           png_write_rows(png_ptr, &pix, 1);
                       }
                       break;
@@ -188,7 +188,7 @@ namespace pdftoedn
                   case csPattern:
                   case csDeviceN:
                       {
-                          Guchar pix[num_pix_comps];
+                          unsigned char pix[num_pix_comps];
 
                           png_bytep data_row = reinterpret_cast<png_bytep>( png_malloc(png_ptr, num_pix_comps * sizeof(png_byte) * width) );
                           if (!data_row) {
@@ -311,11 +311,11 @@ namespace pdftoedn
                             throw std::runtime_error(err.str());
                         }
 
-                        Guchar pix;
+                        unsigned char pix;
                         GfxRGB rgb;
 
                         for (int i = 0; i < n; i++) {
-                            pix = (Guchar) i;
+                            pix = static_cast<unsigned char>(i);
 
                             color_map->getRGB(&pix, &rgb);
                             palette[i].red = colToByte(rgb.r);
@@ -457,8 +457,8 @@ namespace pdftoedn
                     // ready to copy image data - combine the image data
                     // (RGB if 3 bpp, Grey if 1) with mask data
                     // (1-channel) to form an RGBA png
-                    Guchar pix[num_pix_comps];
-                    Guchar* mask_bits;
+                    unsigned char pix[num_pix_comps];
+                    unsigned char* mask_bits;
                     uint32_t o_num_pix_comps = 4; // add 1 for alpha channel
 
                     data_row = reinterpret_cast<png_bytep>( png_malloc(png_ptr, o_num_pix_comps * sizeof(png_byte) * width) );
@@ -639,7 +639,7 @@ namespace pdftoedn
                     img_str->reset();
 
                     for (size_t y = 0; y < height; y++) {
-                        Guchar* pix = img_str->getLine();
+                        unsigned char* pix = img_str->getLine();
                         for (size_t x = 0; x < width; x++) {
                             data_row[x] = (properties.mask_is_inverted() ? !pix[x] : pix[x]);
                         }
