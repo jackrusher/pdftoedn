@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -491,18 +491,5 @@ namespace pdftoedn
         util::delete_ptr_container_elems(transforms);
         return o;
     }
-
-
-    // =============================================
-    // PdfGlyph - unmapped character to be represented via a path
-    //
-#if 0
-    Rice::Object PdfGlyph::to_ruby() const
-    {
-        Rice::Hash path_h = PdfPath::to_ruby();
-
-        return path_h;
-    }
-#endif
 
 } // namespace

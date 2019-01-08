@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -193,7 +193,7 @@ namespace pdftoedn
 
     // -------------------------------------------------------
     // pdf characters without mappings - must be drawn using paths
-    // TODO: FIX
+    // TODO: This is not implemented
     class PdfGlyph : public PdfPath {
     public:
         PdfGlyph(uintmax_t glyph_font_idx, uintmax_t glyph_unicode) :
@@ -206,8 +206,6 @@ namespace pdftoedn
         }
 
         static const pdftoedn::Symbol SYMBOL;
-
-        //        virtual Rice::Object to_ruby() const;
 
     private:
         uintmax_t font_idx;
