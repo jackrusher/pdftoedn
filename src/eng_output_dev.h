@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -55,35 +55,35 @@ namespace pdftoedn
         // some default values
         // Does this device use upside-down coordinates?
         // (Upside-down means (0,0) is the top left corner of the page.)
-        virtual bool upsideDown() { return true; }
-        virtual bool useDrawChar() { return false; }
-        virtual bool interpretType3Chars() { return false; }
-        virtual bool needNonText() { return false; }
-        virtual bool needCharCount() { return false; }
-        virtual bool useTilingPatternFill() { return false; }
+        virtual bool upsideDown() override { return true; }
+        virtual bool useDrawChar() override { return false; }
+        virtual bool interpretType3Chars() override { return false; }
+        virtual bool needNonText() override { return false; }
+        virtual bool needCharCount() override { return false; }
+        virtual bool useTilingPatternFill() override { return false; }
 
         // force these methods to be NO-OPS unless defined by the subclasses
         virtual bool beginType3Char(GfxState * /*state*/, double /*x*/, double /*y*/,
                                     double /*dx*/, double /*dy*/,
-                                    CharCode /*code*/, Unicode * /*u*/, int /*uLen*/)
+                                    CharCode /*code*/, Unicode * /*u*/, int /*uLen*/) override
         { return false; }
 
         virtual void drawImageMask(GfxState *state, Object *ref, Stream *str,
                                    int width, int height, bool invert, bool interpolate,
-                                   bool inlineImg) {}
+                                   bool inlineImg) override {}
         virtual void setSoftMaskFromImageMask(GfxState *state,
                                               Object *ref, Stream *str,
                                               int width, int height, bool invert,
-                                              bool inlineImg, double *baseMatrix) {}
-        virtual void unsetSoftMaskFromImageMask(GfxState *state, double *baseMatrix) {}
+                                              bool inlineImg, double *baseMatrix) override {}
+        virtual void unsetSoftMaskFromImageMask(GfxState *state, double *baseMatrix) override {}
         virtual void drawImage(GfxState *state, Object *ref, Stream *str,
                                int width, int height, GfxImageColorMap *colorMap,
-                               bool interpolate, int *maskColors, bool inlineImg) {}
+                               bool interpolate, int *maskColors, bool inlineImg) override {}
         virtual void drawMaskedImage(GfxState *state, Object *ref, Stream *str,
                                      int width, int height,
                                      GfxImageColorMap *colorMap, bool interpolate,
                                      Stream *maskStr, int maskWidth, int maskHeight,
-                                     bool maskInvert, bool maskInterpolate) {}
+                                     bool maskInvert, bool maskInterpolate) override {}
         virtual void drawSoftMaskedImage(GfxState *state, Object *ref, Stream *str,
                                          int width, int height,
                                          GfxImageColorMap *colorMap,
@@ -91,10 +91,10 @@ namespace pdftoedn
                                          Stream *maskStr,
                                          int maskWidth, int maskHeight,
                                          GfxImageColorMap *maskColorMap,
-                                         bool maskInterpolate) {}
-        virtual void beginMarkedContent(const char *name, Dict *properties) {}
-        virtual void markPoint(const char *name) {}
-        virtual void markPoint(const char *name, Dict *properties) {}
+                                         bool maskInterpolate) override {}
+        virtual void beginMarkedContent(const char *name, Dict *properties) override {}
+        virtual void markPoint(const char *name) override {}
+        virtual void markPoint(const char *name, Dict *properties) override {}
 
     protected:
         Catalog* catalog;

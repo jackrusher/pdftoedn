@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -38,10 +38,10 @@ namespace pdftoedn
         // =========================
 
         // to prevent updates to fonts, etc.
-        virtual void updateAll(GfxState *state) {}
+        virtual void updateAll(GfxState *state) override {}
 
         //----- initialization and control
-        virtual void startPage(int pageNum, GfxState *state, XRef *xref);
+        virtual void startPage(int pageNum, GfxState *state, XRef *xref) override;
     };
 
 } // namespace

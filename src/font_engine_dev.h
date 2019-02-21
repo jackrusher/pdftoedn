@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -40,17 +40,17 @@ namespace pdftoedn
         virtual ~FontEngDev() { }
 
         // need to define these
-        virtual bool useDrawChar() { return true; }
-        virtual bool interpretType3Chars() { return true; }
+        virtual bool useDrawChar() override { return true; }
+        virtual bool interpretType3Chars() override { return true; }
 
-        virtual void startPage(int pageNum, GfxState *state, XRef *xref) { }
+        virtual void startPage(int pageNum, GfxState *state, XRef *xref) override { }
 
         // but we only care about these here
-        virtual void updateFont(GfxState *state);
+        virtual void updateFont(GfxState *state) override;
         virtual void drawChar(GfxState *state, double x, double y,
                               double dx, double dy,
                               double originX, double originY,
-                              CharCode code, int nBytes, Unicode *u, int uLen);
+                              CharCode code, int nBytes, Unicode *u, int uLen) override;
 
     private:
         pdftoedn::FontEngine& font_engine;
