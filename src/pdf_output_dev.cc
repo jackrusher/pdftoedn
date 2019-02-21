@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -50,8 +50,6 @@
 //#define ENABLE_OP_TRACE_TEXT_VERBOSE
 #endif
 
-//#define ENABLE_IMG_DUMP_TO_DISK    // dump images to desktop
-
 #define DBG_TRACE(t)
 #define DBG_TRACE_TXT(t)
 #define DBG_TRACE_IMG(t)
@@ -74,13 +72,14 @@
  #endif
 #endif
 
-#ifdef ENABLE_IMG_DUMP_TO_DISK
-  #define DUMP_IMG(basename) util::debug::save_blob_to_disk(blob, basename "-a", ref_num); \
-                             if (xformed_blob.str().length() > 0) {                        \
-                                 util::debug::save_blob_to_disk( xformed_blob, basename "-x", ref_num); \
-                             }
+#ifdef ENABLE_OP_TRACE
+ #define ENABLE_IMG_DUMP_TO_DISK    // dump images to desktop
+
+ #ifdef ENABLE_IMG_DUMP_TO_DISK
+  #define DUMP_IMG(basename) util::debug::save_blob_to_disk(blob, basename "-a", ref_num);
+ #endif
 #else
-  #define DUMP_IMG(basename)
+ #define DUMP_IMG(basename)
 #endif
 
 
