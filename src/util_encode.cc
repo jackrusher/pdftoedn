@@ -179,14 +179,41 @@ namespace pdftoedn
                       }
                       break;
 
+                  case csICCBased:
+                      {
+                          GfxICCBasedColorSpace* icc_cs = dynamic_cast<GfxICCBasedColorSpace*>(cspace);
+
+                          if (!icc_cs) {
+                              std::stringstream err;
+                              err << __FUNCTION__ << "() - poppler "
+                                  << GfxColorSpace::getColorSpaceModeName(cspace_mode)
+                                  << " stream not carrying ICC based color space";
+                              throw std::runtime_error(err.str());
+                          }
+
+                          // we'll convert it to RGB so only need 3 color chans
+                          png_bytep data_row = reinterpret_cast<png_bytep>( png_malloc(png_ptr, 3 * sizeof(png_byte) * width) );
+                          if (!data_row) {
+                              std::stringstream err;
+                              err << __FUNCTION__ << "() - png_malloc failed when handling color space "
+                                  << GfxColorSpace::getColorSpaceModeName(cspace_mode);
+                              throw std::runtime_error(err.str());
+                          }
+
+                          for (size_t y = 0; y < height; ++y)
+                          {
+                              icc_cs->getRGBLine(img_str->getLine(), data_row, width);
+                              png_write_rows(png_ptr, &data_row, 1);
+                          }
+
+                          png_free(png_ptr, data_row);
+                      }
+                      break;
+
                   case csDeviceGray:
                   case csCalGray:
                   case csDeviceRGB:
                   case csCalRGB:
-                  case csLab:
-                  case csICCBased:
-                  case csPattern:
-                  case csDeviceN:
                       {
                           unsigned char pix[num_pix_comps];
 
@@ -215,6 +242,10 @@ namespace pdftoedn
                       }
                       break;
 
+                  // need sample files to check these
+                  case csLab:
+                  case csDeviceN:
+                  case csPattern:
                   default:
                       std::stringstream err;
                       err << __FUNCTION__ << "() - unhandled color space mode:  "
