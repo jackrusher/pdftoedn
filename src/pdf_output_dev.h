@@ -74,6 +74,8 @@ namespace pdftoedn
         virtual void restoreState(GfxState* state) override;
 
         virtual void updateAll(GfxState *state) override;
+        virtual void updateCTM(GfxState *state, double m11, double m12,
+                               double m21, double m22, double m31, double m32) override;
         virtual void updateLineDash(GfxState* state) override;
         virtual void updateFlatness(GfxState * /*state*/) override {}
         virtual void updateLineJoin(GfxState *state) override;

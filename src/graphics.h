@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -209,23 +209,20 @@ namespace pdftoedn
         // GfxAttribs constructor
         //
         GfxAttribs() :
-            line_width(0), miter_limit(0),
+            miter_limit(0),
             line_cap(-1), line_join(-1),
             blend_mode(NORMAL_BLEND),
             overprint_mode(STANDARD_OVERPRINT),
-            clip_idx(-1)
+            clip_idx(-1),
+            line_w(0)
         { }
 
-
-        bool operator==(const GfxAttribs& a2) const { return equals(a2); }
         bool operator!=(const GfxAttribs& a2) const { return !equals(a2); }
-        bool equals(const GfxAttribs& a2) const;
 
         // data
         StrokeFill stroke;
         StrokeFill fill;
         std::vector<double> line_dash;
-        double line_width;
         double miter_limit;
         int8_t line_cap;
         int8_t line_join;
@@ -233,8 +230,19 @@ namespace pdftoedn
         uint8_t overprint_mode;
         intmax_t clip_idx;
 
+        void update_ctm(const PdfTM& CTM) { ctm = CTM; }
+        void update_line_width(double width) { line_w = width; }
+
+        double line_width() const;
+
         std::ostream& dump(std::ostream& o) const;
         friend std::ostream& operator<<(std::ostream& o, const GfxAttribs& a);
+
+    private:
+        PdfTM ctm; // not included in comparisons or output
+        double line_w; // output needs to be transformed
+
+        bool equals(const GfxAttribs& a2) const;
     };
 
 

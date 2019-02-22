@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -85,6 +85,7 @@ namespace pdftoedn
 
         // graphics-related methods --
         //
+        void update_ctm(const double* CTM);
         void push_gfx_state();
         void pop_gfx_state();
 
@@ -94,7 +95,7 @@ namespace pdftoedn
         void update_line_join(int8_t line_join) { cur_gfx.attribs.line_join = line_join; }
         void update_line_cap(int8_t line_cap) { cur_gfx.attribs.line_cap = line_cap; }
         void update_miter_limit(double miter_limit) { cur_gfx.attribs.miter_limit = miter_limit; }
-        void update_line_width(double line_width) { cur_gfx.attribs.line_width = line_width; }
+        void update_line_width(double line_width) { cur_gfx.attribs.update_line_width(line_width); }
         void update_stroke_color(color_comp_t r, color_comp_t g, color_comp_t b) {
             cur_gfx.attribs.stroke.color_idx = register_color(r, g, b);
         }

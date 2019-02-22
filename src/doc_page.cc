@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -484,11 +484,19 @@ namespace pdftoedn
     }
 
     //
+    // update the state's transform matrix
+    void PdfPage::update_ctm(const double* CTM)
+    {
+        cur_gfx.attribs.update_ctm(PdfTM(CTM));
+    }
+
+    //
     // push the current state into the stack
     void PdfPage::push_gfx_state()
     {
-        //        std::cerr << "     pushing gfx attribs " << std::endl << cur_gfx.attribs << std::endl;
         cur_gfx.attribs_stack.push( cur_gfx.attribs );
+        // std::cerr << "  + pushing gfx attribs: " << std::endl
+        //           << cur_gfx.attribs << std::endl;
     }
 
     //
@@ -496,9 +504,11 @@ namespace pdftoedn
     void PdfPage::pop_gfx_state()
     {
         if (!cur_gfx.attribs_stack.empty()) {
-            //        std::cerr << "     popping gfx attribs: " << std::endl << cur_gfx.attribs << std::endl;
             cur_gfx.attribs = cur_gfx.attribs_stack.top();
             cur_gfx.attribs_stack.pop();
+
+            // std::cerr << "  - popped gfx attribs. Current state: " << std::endl
+            //           << cur_gfx.attribs << std::endl;
         }
     }
 

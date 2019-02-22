@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -189,12 +189,19 @@ namespace pdftoedn
         return (
                 (stroke == a2.stroke) &&
                 (fill == a2.fill) &&
-                (line_width == a2.line_width) &&
+                (line_w == a2.line_w) &&
                 (miter_limit == a2.miter_limit) &&
                 (line_cap == a2.line_cap) &&
                 (line_join == a2.line_join) &&
                 (blend_mode == a2.blend_mode)
                 );
+    }
+
+    //
+    // transform the line wdith using the state's CTM for output
+    double GfxAttribs::line_width() const
+    {
+        return ctm.transform_line_width(line_w);
     }
 
     //
@@ -214,7 +221,7 @@ namespace pdftoedn
     {
         o << "  S: " << stroke << std::endl
           << "  F: " << fill << std::endl
-          << "  lw: " << line_width
+          << "  lw: " << line_w
           << ", ml: " << miter_limit
           << ", lc: " << (int) line_cap
           << ", lj: " << (int) line_join
@@ -472,7 +479,7 @@ namespace pdftoedn
                     }
 
                     // line width & miter limit
-                    attribs_h.push( GfxAttribs::SYMBOL_LINE_WIDTH, attribs.line_width );
+                    attribs_h.push( GfxAttribs::SYMBOL_LINE_WIDTH, attribs.line_width() );
                     attribs_h.push( GfxAttribs::SYMBOL_MITER_LIMIT, attribs.miter_limit );
 
                     // translate the line cap:

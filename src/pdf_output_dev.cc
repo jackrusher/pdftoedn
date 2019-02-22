@@ -72,14 +72,14 @@
  #endif
 #endif
 
+#define DUMP_IMG(basename)
 #ifdef ENABLE_OP_TRACE
- #define ENABLE_IMG_DUMP_TO_DISK    // dump images to desktop
+//#define ENABLE_IMG_DUMP_TO_DISK    // dump images to desktop
 
  #ifdef ENABLE_IMG_DUMP_TO_DISK
+  #undef DUMP_IMG
   #define DUMP_IMG(basename) util::debug::save_blob_to_disk(blob, basename "-a", ref_num);
  #endif
-#else
- #define DUMP_IMG(basename)
 #endif
 
 
@@ -95,7 +95,7 @@ namespace pdftoedn
     void OutputDev::startPage(int pageNum, GfxState *state, XRef *xref)
     {
 #ifdef ENABLE_PAGE_MARKER
-        std::cerr << " + ===== " << __FUNCTION__ << " - page " << (pageNum - 1)<< " ===== + " << std::endl;
+        std::cerr << " + ===== " << __FUNCTION__ << " - page " << (pageNum - 1) << std::endl;
 #endif
 
         int w, h, rot;
@@ -108,9 +108,6 @@ namespace pdftoedn
             w = EngOutputDev::adjust_page_dim(state->getPageWidth());
             h = EngOutputDev::adjust_page_dim(state->getPageHeight());
             rot = state->getRotate();
-
-            updateCTM(state, 0, 0, 0, 0, 0, 0);
-
         } else {
             w = h = 1;
             rot = 0;
@@ -122,6 +119,9 @@ namespace pdftoedn
             delete pg_data;
         }
         pg_data = new pdftoedn::PdfPage(pageNum, w, h, rot);
+
+        // update CTM on page now that it exists
+        updateCTM(state, 1, 0, 0, 1, 0, 0);
 
         // finally, update the xref pointer with the font engine
         if (xref) {
@@ -848,6 +848,10 @@ namespace pdftoedn
         assert((pg_data != nullptr) && "updateAll: PdfPage instance has not been allocated" );
     }
 
+    void OutputDev::updateCTM(GfxState *state, double, double, double, double, double, double)
+    {
+        pg_data->update_ctm(state->getCTM());
+    }
 
     //
     // line-dashes
@@ -919,8 +923,7 @@ namespace pdftoedn
         DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << ": SA? " << std::boolalpha << state->getStrokeAdjust()
                             << ", state LW: " << state->getLineWidth()
                             << " ---- + " << std::endl);
-        PdfTM ctm(state->getCTM());
-        pg_data->update_line_width( ctm.transform_line_width(state->getLineWidth()) );
+        pg_data->update_line_width(state->getLineWidth());
     }
 
     //
