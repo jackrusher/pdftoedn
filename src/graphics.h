@@ -214,7 +214,7 @@ namespace pdftoedn
             blend_mode(NORMAL_BLEND),
             overprint_mode(STANDARD_OVERPRINT),
             clip_idx(-1),
-            line_w(0)
+            l_width(0)
         { }
 
         bool operator!=(const GfxAttribs& a2) const { return !equals(a2); }
@@ -222,7 +222,6 @@ namespace pdftoedn
         // data
         StrokeFill stroke;
         StrokeFill fill;
-        std::vector<double> line_dash;
         double miter_limit;
         int8_t line_cap;
         int8_t line_join;
@@ -231,16 +230,22 @@ namespace pdftoedn
         intmax_t clip_idx;
 
         void update_ctm(const PdfTM& CTM) { ctm = CTM; }
-        void update_line_width(double width) { line_w = width; }
+        void update_line_width(double width) { l_width = width; }
+        void update_line_dash(const std::vector<double>& line_dash) { l_dash = line_dash; }
 
         double line_width() const;
+        const std::vector<double> line_dash() const;
+
+        void clear_line_dash() { l_dash.clear(); }
 
         std::ostream& dump(std::ostream& o) const;
         friend std::ostream& operator<<(std::ostream& o, const GfxAttribs& a);
 
     private:
         PdfTM ctm; // not included in comparisons or output
-        double line_w; // output needs to be transformed
+        // output needs to be transformed for these
+        double l_width;
+        std::vector<double> l_dash;
 
         bool equals(const GfxAttribs& a2) const;
     };

@@ -512,6 +512,23 @@ namespace pdftoedn
         }
     }
 
+    //
+    // convert poppler line dashes
+    void PdfPage::update_line_dash(int length, const double* pattern, double phase)
+    {
+        std::vector<double> line_dash;
+
+        // dash phase is stored at the head
+        line_dash.reserve(length + 1);
+        line_dash.push_back(phase);
+
+        // followed by the pattern
+        for (intmax_t i = 0; i < length; ++i) {
+            line_dash.push_back(pattern[i]);
+        }
+
+        cur_gfx.attribs.update_line_dash(line_dash);
+    }
 
     //
     // page data collection is done

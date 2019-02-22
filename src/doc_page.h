@@ -90,8 +90,8 @@ namespace pdftoedn
         void pop_gfx_state();
 
         // update_line_dash: pass by copy to invoke vector= w/ move
-        void update_line_dash(std::vector<double> l_dash) { cur_gfx.attribs.line_dash = l_dash; }
-        void clear_line_dash() { cur_gfx.attribs.line_dash.clear(); }
+        void update_line_dash(int length, const double* pattern, double phase);
+        void clear_line_dash() { cur_gfx.attribs.clear_line_dash(); }
         void update_line_join(int8_t line_join) { cur_gfx.attribs.line_join = line_join; }
         void update_line_cap(int8_t line_cap) { cur_gfx.attribs.line_cap = line_cap; }
         void update_miter_limit(double miter_limit) { cur_gfx.attribs.miter_limit = miter_limit; }

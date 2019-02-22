@@ -862,32 +862,17 @@ namespace pdftoedn
         // line dash pattern
         double *pattern;
         int length;
-        double d;
-        state->getLineDash(&pattern, &length, &d);
+        double phase;
+        state->getLineDash(&pattern, &length, &phase);
 
-        std::vector<double> line_dash;
-        if (length > 0)
-        {
-            line_dash.reserve(length + 1);
-
-            // dash phase is stored at the head
-            line_dash.push_back( d );
-
-            // followed by the dash pattern - lengths have to be
-            // tranformed
-            PdfTM ctm(state->getCTM());
-            for (intmax_t i = 0; i < length; ++i) {
-                d = ctm.transform_line_width(pattern[i]);
-                line_dash.push_back( d );
-            }
-            pg_data->update_line_dash(line_dash);
+        if (length > 0) {
+            pg_data->update_line_dash(length, pattern, phase);
         }
         else {
             // dash pattern reset
             pg_data->clear_line_dash();
         }
     }
-
 
     //
     // line join style

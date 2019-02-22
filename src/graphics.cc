@@ -189,7 +189,7 @@ namespace pdftoedn
         return (
                 (stroke == a2.stroke) &&
                 (fill == a2.fill) &&
-                (line_w == a2.line_w) &&
+                (l_width == a2.l_width) &&
                 (miter_limit == a2.miter_limit) &&
                 (line_cap == a2.line_cap) &&
                 (line_join == a2.line_join) &&
@@ -201,7 +201,18 @@ namespace pdftoedn
     // transform the line wdith using the state's CTM for output
     double GfxAttribs::line_width() const
     {
-        return ctm.transform_line_width(line_w);
+        return ctm.transform_line_width(l_width);
+    }
+
+    //
+    // similar for line dashes
+    const std::vector<double> GfxAttribs::line_dash() const
+    {
+        std::vector<double> xformed_dash;
+        for (double d : l_dash) {
+            xformed_dash.push_back(ctm.transform_line_width(d));
+        }
+        return xformed_dash;
     }
 
     //
@@ -221,7 +232,7 @@ namespace pdftoedn
     {
         o << "  S: " << stroke << std::endl
           << "  F: " << fill << std::endl
-          << "  lw: " << line_w
+          << "  lw: " << l_width
           << ", ml: " << miter_limit
           << ", lc: " << (int) line_cap
           << ", lj: " << (int) line_join
@@ -495,9 +506,10 @@ namespace pdftoedn
                     }
 
                     // line dash
-                    if (!attribs.line_dash.empty()) {
-                        util::edn::Vector dash_a(attribs.line_dash.size());
-                        for (double d : attribs.line_dash) {
+                    std::vector<double> xformed_dash = attribs.line_dash();
+                    if (!xformed_dash.empty()) {
+                        util::edn::Vector dash_a(xformed_dash.size());
+                        for (double d : xformed_dash) {
                             dash_a.push(d);
                         }
                         attribs_h.push( GfxAttribs::SYMBOL_DASH_VECTOR, dash_a );
