@@ -1,4 +1,4 @@
-# pdftoedn 0.36.4
+# pdftoedn 0.36.5
 A [poppler](https://poppler.freedesktop.org)-based PDF processing tool
 to extract document data and save it in
 [EDN](https://github.com/edn-format/edn) format. It supports:

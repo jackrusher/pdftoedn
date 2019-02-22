@@ -1,10 +1,19 @@
 # Change Log
 
+## 0.36.5 - 2019-02-22
+### Fixed
+* ICC-based image encoding.
+* CTM state tracking to correctly compute output line widths for
+  strokes and line dash patterns.
+
+### Changed
+* virtual output device methods now use `override` to help catch ABI changes.
+
 ## 0.36.4 - 2019-01-08
 ### Fixed
-* replaced typedefs deprecated in poppler-0.73.0
+* replaced typedefs deprecated in poppler-0.73.0.
 
-# Added
+### Added
 * new option to only dump EDN output, thus preventing writing of image
   blobs to disk.
 
