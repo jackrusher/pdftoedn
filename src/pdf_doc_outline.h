@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -34,7 +34,11 @@ namespace pdftoedn
     class PdfOutline : public gemable {
     public:
 
-        PdfOutline() { }
+        PdfOutline() =default;
+        PdfOutline(const PdfOutline&) = delete;
+        PdfOutline(PdfOutline&) = delete;
+        PdfOutline& operator=(PdfOutline&) = delete;
+        PdfOutline& operator=(const PdfOutline&) = delete;
         virtual ~PdfOutline() { util::delete_ptr_container_elems(entries); }
 
         //
@@ -75,12 +79,6 @@ namespace pdftoedn
 
     private:
         std::list<Entry *> entries;
-
-        // prohibit
-        PdfOutline(const PdfOutline&);
-        PdfOutline(PdfOutline&);
-        PdfOutline& operator=(PdfOutline&);
-        PdfOutline& operator=(const PdfOutline&);
     };
 
 } // namespace

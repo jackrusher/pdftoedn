@@ -55,7 +55,7 @@ namespace pdftoedn
     //
     struct Symbol : public gemable
     {
-        Symbol() {}
+        Symbol() =default;
         Symbol(const char* s) : str(s) {}
         explicit Symbol(const std::string& s) : str(s) {}
 

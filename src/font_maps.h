@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -152,8 +152,8 @@ namespace pdftoedn
     //
     class DocFontMaps {
     public:
-
         DocFontMaps() : system_map_ptr(font_maps.end()) { }
+        DocFontMaps(const DocFontMaps&) = delete;
         ~DocFontMaps() { clear(); }
 
         void clear();
@@ -182,9 +182,6 @@ namespace pdftoedn
 
         bool glyph_list_valid(const std::list<const char*>& gm) const;
         bool make_entity_list(const std::list<const char*>& mapper_names, EntityMapPtrList& mappers);
-
-        // prohibit
-        DocFontMaps(const DocFontMaps&);
     };
 
     // defined in main.cc

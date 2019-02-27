@@ -46,6 +46,11 @@ namespace pdftoedn
             number(page_number), bbox(0, 0, page_width, page_height), rotation(page_rotation),
             has_invisible_text(false)
         {}
+        PdfPage() = delete;
+        PdfPage(const PdfPage&) = delete;
+        PdfPage(PdfPage&) = delete;
+        PdfPage& operator=(PdfPage&) = delete;
+        PdfPage& operator=(const PdfPage&) = delete;
         virtual ~PdfPage();
 
         // accessors
@@ -214,13 +219,6 @@ namespace pdftoedn
         void mark_end_of_text();
 
         util::edn::Hash& resource_to_edn_hash(util::edn::Hash& resource_h) const;
-
-        // prohibit these cause we shouldn't be using them anyway
-        PdfPage();
-        PdfPage(const PdfPage&);
-        PdfPage(PdfPage&);
-        PdfPage& operator=(PdfPage&);
-        PdfPage& operator=(const PdfPage&);
     };
 
 } // namespace

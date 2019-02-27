@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -192,6 +192,7 @@ namespace pdftoedn {
                     n.owner = false;
                 }
                 EDNNode& operator=(EDNNode);
+                EDNNode() = delete;
                 ~EDNNode();
 
                 // all these are stored directly - no object is created
@@ -254,9 +255,6 @@ namespace pdftoedn {
                     const pdftoedn::gemable* obj;
                 } val;
                 mutable bool owner;
-
-                // prohibit
-                EDNNode();
             };
         }
     }
