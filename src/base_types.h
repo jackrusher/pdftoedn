@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -326,7 +326,7 @@ namespace pdftoedn
 
         // predicate for sorting a set of boxed items
         struct lt {
-            bool operator()(const pdftoedn::PdfBoxedItem* const i1, const pdftoedn::PdfBoxedItem* const i2) {
+            bool operator()(const pdftoedn::PdfBoxedItem* const i1, const pdftoedn::PdfBoxedItem* const i2) const {
                 return i1->is_positioned_before(i2);
             }
         };

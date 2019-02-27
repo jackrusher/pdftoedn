@@ -25,7 +25,7 @@ fi
 AC_SUBST([PDFTOEDN_BUILD_CPPFLAGS])
 
 dnl compiler options
-AX_CHECK_COMPILE_FLAG([-Wno-user-defined-warnings], [CXXFLAGS="$CXXFLAGS -Wno-user-defined-warnings"])
+dnl AX_CHECK_COMPILE_FLAG([-Wno-user-defined-warnings], [CXXFLAGS="$CXXFLAGS -Wno-user-defined-warnings"])
 
 dnl Checks for programs.
 PKG_PROG_PKG_CONFIG

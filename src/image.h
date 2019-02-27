@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -204,7 +204,7 @@ namespace pdftoedn
 
         // predicate for sorting a set of images
         struct lt {
-            bool operator()(const pdftoedn::ImageData* const i1, const pdftoedn::ImageData* const i2) {
+            bool operator()(const pdftoedn::ImageData* const i1, const pdftoedn::ImageData* const i2) const {
                 return (i1->id() < i2->id());
             }
         };

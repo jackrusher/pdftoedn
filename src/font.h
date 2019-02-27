@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -70,7 +70,7 @@ namespace pdftoedn
 
         // for comparing font pointers using their names
         struct lt {
-            bool operator()(const PdfFont* a, const PdfFont* b) {
+            bool operator()(const PdfFont* a, const PdfFont* b) const {
                 return (a->name() < b->name());
             }
         };
