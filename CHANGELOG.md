@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.36.6 - 2019-02-28
+### Fixed
+* Resolved cause of user-defined warnings that were previously muted.
+* Switch to use GooString toStr() instead of c_str() for cases where 0
+  might be found within the byte sequence.
+* Include csSearation case to select png_type in encode_rgba_image
+
+### Changed
+* More const usage to try and prevent brokenness by future poppler ABI changes.
+
 ## 0.36.5 - 2019-02-22
 ### Fixed
 * ICC-based image encoding.
