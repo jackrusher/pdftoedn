@@ -101,8 +101,8 @@ namespace pdftoedn
         pdftoedn::PdfPage* pg_data;
 
         void process_page_links(int page_num);
-        void create_annot_link(AnnotLink *link);
-        uintmax_t get_dest_goto_page(LinkDest* dest) const;
+        void create_annot_link(const AnnotLink* const link);
+        uintmax_t get_dest_goto_page(const LinkDest* const dest) const;
     };
 
 } // namespace

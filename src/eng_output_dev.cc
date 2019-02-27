@@ -41,25 +41,24 @@ namespace pdftoedn
     void EngOutputDev::process_page_links(int page_num)
     {
         Page* page = catalog->getPage(page_num);
-
         if (!page) {
             return;
         }
 
-        Links *linksList = page->getLinks();
-        for (int i = 0; i < linksList->getNumLinks(); ++i)
+        const Links *links = page->getLinks();
+        for (int i = 0; i < links->getNumLinks(); ++i)
         {
-            if (linksList->getLink(i)) {
-                create_annot_link(linksList->getLink(i));
+            if (links->getLink(i)) {
+                create_annot_link(links->getLink(i));
             }
         }
-        delete linksList;
+        delete links;
     }
 
 
     //
     // helper to add annocation links to a page
-    void EngOutputDev::create_annot_link(AnnotLink* annot_link)
+    void EngOutputDev::create_annot_link(const AnnotLink* const annot_link)
     {
         assert(pg_data != nullptr && "create_annot_link() - no page storage allocated");
 
@@ -100,8 +99,7 @@ namespace pdftoedn
         {
           case actionGoTo:
               {
-                  LinkGoTo *ha = dynamic_cast<LinkGoTo*>(link_action);
-
+                  const LinkGoTo* const ha = dynamic_cast<LinkGoTo*>(link_action);
                   if (!ha) { // paranoid check
                       break;
                   }
@@ -124,8 +122,7 @@ namespace pdftoedn
 
           case actionGoToR:
               {
-                  LinkGoToR *ha = dynamic_cast<LinkGoToR *>(link_action);
-
+                  const LinkGoToR* const ha = dynamic_cast<LinkGoToR*>(link_action);
                   if (!ha) {
                       break;
                   }
@@ -150,8 +147,7 @@ namespace pdftoedn
 
           case actionURI:
               {
-                  LinkURI *ha = dynamic_cast<LinkURI *>(link_action);
-
+                  const LinkURI* const ha = dynamic_cast<LinkURI*>(link_action);
                   if (!ha) {
                       break;
                   }
@@ -165,8 +161,7 @@ namespace pdftoedn
 
           case actionLaunch:
               {
-                  LinkLaunch *ha = dynamic_cast<LinkLaunch *>(link_action);
-
+                  const LinkLaunch* const ha = dynamic_cast<LinkLaunch *>(link_action);
                   if (!ha) {
                       break;
                   }
@@ -192,7 +187,7 @@ namespace pdftoedn
 
     //
     // retrieve the page number from a link actionGoto type
-    uintmax_t EngOutputDev::get_dest_goto_page(LinkDest* dest) const
+    uintmax_t EngOutputDev::get_dest_goto_page(const LinkDest* const dest) const
     {
         if (dest->isPageRef()){
             Ref pageref = dest->getPageRef();
