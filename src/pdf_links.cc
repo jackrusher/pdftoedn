@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -133,7 +133,7 @@ namespace pdftoedn
     util::edn::Hash& PdfAnnotLinkDest::to_edn_hash(util::edn::Hash& link_h) const
     {
         PdfAnnotLink::to_edn_hash(link_h);
-        if (dest.length() > 0) {
+        if (!dest.empty()) {
             link_h.push( SYMBOL_DEST, util::wstring_to_utfstring(util::string_to_iso8859(dest.c_str())) );
         }
         return link_h;

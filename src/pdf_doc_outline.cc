@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -58,7 +58,7 @@ namespace pdftoedn
         entry_h.push( SYMBOL_TITLE,    pdftoedn::util::wstring_to_utfstring(title) );
         entry_h.push( SYMBOL_PAGE_NUM, page );
 
-        if (dest.length() > 0) {
+        if (!dest.empty()) {
             entry_h.push( SYMBOL_DEST, dest );
         }
 
