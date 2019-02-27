@@ -105,13 +105,12 @@ namespace pdftoedn
                   }
 
                   std::string dest_file;
-
                   if (ha->getDest() != nullptr) {
                       dest = ha->getDest()->copy();
                   }
                   else if (ha->getNamedDest() != nullptr) {
                       dest = catalog->findDest(ha->getNamedDest());
-                      dest_file = ha->getNamedDest()->c_str();
+                      dest_file = ha->getNamedDest()->toStr();
                   }
 
                   int page = (dest ? get_dest_goto_page(dest) : -1);

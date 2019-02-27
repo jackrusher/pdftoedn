@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -106,6 +106,7 @@ namespace pdftoedn
                       // need to escape double quotes in the string
                       for (char c : (*val.str)) {
                           switch (c) {
+                            case 0:
                             case '"':
                             case '\\':
                                 o << '\\';

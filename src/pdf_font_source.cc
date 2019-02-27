@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -115,7 +115,7 @@ namespace pdftoedn
     // encoding container
     //
     Encoding::Encoding(const Gfx8BitFont* gfx_font) :
-        e_name(gfx_font->getEncodingName() ? gfx_font->getEncodingName()->c_str() : ""),
+        e_name(gfx_font->getEncodingName() ? gfx_font->getEncodingName()->toStr() : ""),
         e_type(determine_type(gfx_font))
     {
         // set the entity map if found
@@ -360,7 +360,7 @@ namespace pdftoedn
 
             const GooString* col = cid_font->getCollection();
             if (col && col->getLength() > 0) {
-                collection = col->c_str();
+                collection = col->toStr();
             }
         }
 
