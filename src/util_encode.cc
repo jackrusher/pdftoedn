@@ -415,6 +415,7 @@ namespace pdftoedn
                   case csDeviceRGB:
                   case csICCBased:
                   case csIndexed:
+                  case csSeparation:
                       png_type = PNG_COLOR_TYPE_RGB_ALPHA;
                       break;
                   case csDeviceGray:
