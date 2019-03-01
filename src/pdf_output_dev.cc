@@ -850,6 +850,9 @@ namespace pdftoedn
 
     void OutputDev::updateCTM(GfxState *state, double, double, double, double, double, double)
     {
+        DBG_TRACE(std::cerr << " + ---- " << __FUNCTION__ << std::endl
+                            << PdfTM(state->getCTM())
+                            << std::endl << " ---- + " << std::endl);
         pg_data->update_ctm(state->getCTM());
     }
 
