@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.36.7 - 2019-03-07
+### Added
+* Image references now include link indices when needed.
+
 ## 0.36.6 - 2019-02-28
 ### Fixed
 * Resolved cause of user-defined warnings that were previously muted.
