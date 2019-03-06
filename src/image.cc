@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -20,6 +20,7 @@
 #include <poppler/Stream.h>
 
 #include "image.h"
+#include "pdf_links.h"
 #include "util.h"
 #include "util_edn.h"
 
@@ -202,13 +203,16 @@ namespace pdftoedn
     std::ostream& PdfImage::to_edn(std::ostream& o) const
     {
         // image fields
-        util::edn::Hash image_h(4);
+        util::edn::Hash image_h(5);
         image_h.push( SYMBOL_TYPE,               cmd );
         image_h.push( BoundingBox::SYMBOL,       bbox );
         image_h.push( ImageData::SYMBOL_ID,      res_id );
 
         if (clip_path_id != -1) {
             image_h.push( PdfDocPath::SYMBOL_CLIP_TO, clip_path_id );
+        }
+        if (link_idx != -1) {
+            image_h.push( PdfLink::SYMBOL_LINK_IDX, link_idx );
         }
         o << image_h;
         return o;

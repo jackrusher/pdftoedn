@@ -22,6 +22,7 @@
 
 namespace pdftoedn
 {
+    const pdftoedn::Symbol PdfLink::SYMBOL_LINK_IDX            = "link_idx";
     const pdftoedn::Symbol PdfLink::SYMBOL_POS_TOP             = "top";
     const pdftoedn::Symbol PdfLink::SYMBOL_POS_BOTTOM          = "bottom";
     const pdftoedn::Symbol PdfLink::SYMBOL_POS_LEFT            = "left";
@@ -36,7 +37,6 @@ namespace pdftoedn
 
     const pdftoedn::Symbol PdfAnnotLinkDest::SYMBOL_DEST       = "dest";
     const pdftoedn::Symbol PdfAnnotLinkGoto::SYMBOL_PAGE       = "page";
-
 
     // =============================================
     // links found in outlines
@@ -70,7 +70,6 @@ namespace pdftoedn
             if (pos.y > 0) {
                 link_h.push( SYMBOL_POS_TOP, pos.y );
             }
-
             if (pos.x > 0) {
                 link_h.push( SYMBOL_POS_LEFT, pos.x );
             }

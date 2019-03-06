@@ -229,10 +229,12 @@ namespace pdftoedn
     public:
         // constructor
         PdfImage(intmax_t resource_id, // index in image table
-                 const BoundingBox& b) :
+                 const BoundingBox& b,
+                 intmax_t link_index) :
             PdfGfxCmd(SYMBOL_TYPE_IMAGE),
             res_id(resource_id),
             clip_path_id(-1),
+            link_idx(link_index),
             bbox(b)
         {  }
 
@@ -245,6 +247,7 @@ namespace pdftoedn
     private:
         intmax_t res_id;
         intmax_t clip_path_id;
+        intmax_t link_idx;
         BoundingBox bbox;
     };
 

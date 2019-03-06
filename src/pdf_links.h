@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2017 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -47,6 +47,7 @@ namespace pdftoedn
             BOTTOM_RIGHT
         };
 
+        static const pdftoedn::Symbol SYMBOL_LINK_IDX;
         static const pdftoedn::Symbol SYMBOL_POS_TOP;
         static const pdftoedn::Symbol SYMBOL_POS_BOTTOM;
         static const pdftoedn::Symbol SYMBOL_POS_LEFT;

@@ -676,7 +676,7 @@ namespace pdftoedn
     // adds an image entry to the list
     void PdfPage::new_image(int resource_id, const BoundingBox& bbox)
     {
-        PdfImage* img = new pdftoedn::PdfImage(resource_id, bbox);
+        PdfImage* img = new pdftoedn::PdfImage(resource_id, bbox, inside_link(bbox));
 
         BoundingBox img_bbox(bbox);
         if (cur_gfx.clip_path_set()) {

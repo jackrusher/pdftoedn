@@ -42,7 +42,6 @@ namespace pdftoedn
     static const pdftoedn::Symbol SYMBOL_TEXT           = "text";
     static const pdftoedn::Symbol SYMBOL_PT_SIZE        = "size";
     static const pdftoedn::Symbol SYMBOL_INVISIBLE      = "invisible";
-    static const pdftoedn::Symbol SYMBOL_LINK_IDX       = "link_idx";
 
     // when two spans overlap, this is the minimum ratio between their
     // intersection and union to call it a full overlap
@@ -474,7 +473,7 @@ namespace pdftoedn
         }
 
         if (attribs.txt.link_idx != -1) {
-            text_h.push( SYMBOL_LINK_IDX,            attribs.txt.link_idx );
+            text_h.push( PdfLink::SYMBOL_LINK_IDX,   attribs.txt.link_idx );
         }
 
         if (ctm.is_sheared()) {
