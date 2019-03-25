@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.36.8 - 2019-03-25
+### Added
+* Document paths also include link indices when needed.
+
 ## 0.36.7 - 2019-03-07
 ### Added
 * Image references now include link indices when needed.
