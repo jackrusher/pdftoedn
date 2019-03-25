@@ -76,7 +76,6 @@ namespace pdftoedn
     };
 
 
-
     // -------------------------------------------------------
     // path building
     //
@@ -114,7 +113,6 @@ namespace pdftoedn
 
         virtual util::edn::Hash& to_edn_hash(util::edn::Hash& h) const;
     };
-
 
 
     // -------------------------------------------------------
@@ -177,7 +175,6 @@ namespace pdftoedn
         //
         // stroke / fill common attributes
         struct StrokeFill {
-
             // constructor
             StrokeFill(intmax_t color_index = -1, double _opacity = 0) :
                 color_idx(color_index), opacity(_opacity),
@@ -257,7 +254,6 @@ namespace pdftoedn
     class PdfDocPath : public PdfPath
     {
     public:
-
         static const pdftoedn::Symbol SYMBOL_PATH_TYPE;
         static const pdftoedn::Symbol SYMBOL_PATH_TYPES[]; // clip, fill, stroke
         static const pdftoedn::Symbol SYMBOL_ATTRIBS;
@@ -284,7 +280,8 @@ namespace pdftoedn
             path_type(doc_path_type),
             attribs(gfx_attribs),
             even_odd(even_odd_flag),
-            clip_id(-1)
+            clip_id(-1),
+            link_idx(-1)
         { }
 
         // accessors
@@ -293,6 +290,7 @@ namespace pdftoedn
         bool equals(const PdfDocPath& p2) const;
 
         void set_clip_id(intmax_t id) { clip_id = id; }
+        void set_link_idx(intmax_t id) { link_idx = id; }
         void clip_bounds(const BoundingBox& clip_bbox) { bounds.clip(clip_bbox); }
 
         virtual std::ostream& to_edn(std::ostream& o) const;
@@ -306,6 +304,10 @@ namespace pdftoedn
         // output; if STROKE or FILL path, this is the id of the clip
         // path to clip to (when != -1)
         intmax_t clip_id;
+
+        // if path is contained within a linked annotation, this
+        // points to it
+        intmax_t link_idx;
 
         util::edn::Hash& attribs_to_edn_hash(util::edn::Hash& h) const;
     };

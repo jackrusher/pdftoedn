@@ -663,6 +663,9 @@ namespace pdftoedn
                 remove_spans_overlapped_by_region( *path );
             }
 
+            // set the link index if this path's bbox is within one
+            path->set_link_idx(inside_link(path->bounding_box()));
+
             // all other paths get stored in the graphics list
             graphics.push_back( path );
 

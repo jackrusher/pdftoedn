@@ -20,6 +20,7 @@
 #include <list>
 
 #include "graphics.h"
+#include "pdf_links.h"
 #include "util.h"
 #include "util_edn.h"
 
@@ -446,7 +447,7 @@ namespace pdftoedn
     {
         // ready to produce the output - a hash contains the path data
         // and attributes
-        util::edn::Hash path_h(4);
+        util::edn::Hash path_h(5);
         to_edn_hash(path_h);
 
         path_h.push( SYMBOL_PATH_TYPE, SYMBOL_PATH_TYPES[path_type] );
@@ -465,6 +466,11 @@ namespace pdftoedn
         // even-odd if set
         if (even_odd) {
             path_h.push( SYMBOL_EVEN_ODD, true );
+        }
+
+        // if within a link annot
+        if (link_idx != -1) {
+            path_h.push( PdfLink::SYMBOL_LINK_IDX, link_idx );
         }
 
         util::edn::Hash attribs_h;
