@@ -48,7 +48,7 @@ namespace pdftoedn
     //
     bool EntityMap::find(const std::string& entity, uintmax_t& ret_val) const
     {
-        EntityPairMap::const_iterator en_it = entities.find(entity);
+        auto en_it = entities.find(entity);
         if (en_it == entities.end()) {
             return false;
         }
@@ -59,7 +59,7 @@ namespace pdftoedn
 
     bool EntityMap::add(const std::string& entity, uintmax_t unicode)
     {
-        EntityPairMap::iterator it = entities.find(entity);
+        auto it = entities.find(entity);
         if (it != entities.end()) {
             std::cerr << em_name << " already has entity for " << entity << " - OVERWRITING" << std::endl;
         }
@@ -450,7 +450,7 @@ namespace pdftoedn
             return false;
 
         for (const char* m : mapper_names) {
-            GlyphMap::const_iterator jj = doc_glyph_maps.find(m);
+            auto jj = doc_glyph_maps.find(m);
             if (jj != doc_glyph_maps.end()) {
                 mappers.push_back((jj->second));
             }
@@ -531,7 +531,7 @@ namespace pdftoedn
     bool DocFontMaps::add_glyph_map(const std::string& map_name, const std::string& code, uintmax_t unicode)
     {
         EntityMap* em = nullptr;
-        GlyphMap::iterator em_it = doc_glyph_maps.find(map_name);
+        auto em_it = doc_glyph_maps.find(map_name);
 
         if (em_it == doc_glyph_maps.end()) {
             em = new EntityMap(map_name);
@@ -568,7 +568,7 @@ namespace pdftoedn
     // searches for an entity in the standard map
     bool DocFontMaps::search_std_map(const std::string& entity, uintmax_t& remapped) const
     {
-        GlyphMap::const_iterator std_map_it = doc_glyph_maps.find(EntityMap::STANDARD_MAP_NAME);
+        auto std_map_it = doc_glyph_maps.find(EntityMap::STANDARD_MAP_NAME);
 
         if (std_map_it != doc_glyph_maps.end()) {
             return (std_map_it->second)->find(entity, remapped);

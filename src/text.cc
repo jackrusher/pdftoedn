@@ -310,12 +310,12 @@ namespace pdftoedn
     // remove characters from the span covered by the region
     void PdfText::whiteout(const BoundingBox& wo_region)
     {
-        std::list<PdfChar *>::iterator ci = chars.begin();
+        auto char_it = chars.begin();
 
-        while (ci != chars.end())
+        while (char_it != chars.end())
         {
-            std::list<PdfChar *>::iterator cur = ci++;
-            PdfChar* c = *cur;
+            auto cur_it = char_it++;
+            PdfChar* c = *cur_it;
 
             if (c->right() < wo_region.x_min()) {
                 continue;
@@ -326,7 +326,7 @@ namespace pdftoedn
             }
 
             delete c;
-            chars.erase(cur);
+            chars.erase(cur_it);
         }
 
         finalize();

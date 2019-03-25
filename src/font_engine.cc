@@ -65,9 +65,9 @@ namespace pdftoedn
     // look up the font in our cache
     pdftoedn::PdfFont* FontEngine::find_font(const GfxFont* gfx_font) const
     {
-        FontList::const_iterator fi = fonts.find(PdfRef(gfx_font->getID()));
-        if (fi != fonts.end()) {
-            return fi->second;
+        auto font_it = fonts.find(PdfRef(gfx_font->getID()));
+        if (font_it != fonts.end()) {
+            return font_it->second;
         }
         return nullptr;
     }

@@ -94,9 +94,9 @@ namespace pdftoedn
     // lookup glyph path for the code in the cache
     const PdfPath* PdfFont::get_glyph_path(uint32_t code) const
     {
-        std::map<int16_t, PdfPath*>::const_iterator pi = glyph_path_cache.find(code);
-        if (pi != glyph_path_cache.end()) {
-            return pi->second;
+        auto path_it = glyph_path_cache.find(code);
+        if (path_it != glyph_path_cache.end()) {
+            return path_it->second;
         }
 
         // not cached.. build it and cache it

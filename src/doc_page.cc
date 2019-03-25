@@ -319,23 +319,23 @@ namespace pdftoedn
     // and, if so, removes them
     void PdfPage::remove_spans_overlapped_by_span(const PdfText& pending_span)
     {
-        std::multiset<PdfBoxedItem*>::const_iterator si, cur = text_spans.begin();
+        auto cur_it = text_spans.begin();
 
         // search until no matches are found
         while (1)
         {
-            si = std::find_if( cur,
-                               text_spans.end(),
-                               pending_span.overlap_predicate() );
+            auto span_it = std::find_if( cur_it,
+                                         text_spans.end(),
+                                         pending_span.overlap_predicate() );
 
-            if (si == text_spans.end()) {
+            if (span_it == text_spans.end()) {
                 break;
             }
 
             // delete the text span and erase the container
-            cur = std::next(si);
-            delete *si;
-            text_spans.erase(si);
+            cur_it = std::next(span_it);
+            delete *span_it;
+            text_spans.erase(span_it);
         }
     }
 
@@ -346,14 +346,15 @@ namespace pdftoedn
     void PdfPage::remove_spans_overlapped_by_region(const PdfPath& region)
     {
         BoundingBox path_bbox = region.bounding_box();
-        std::multiset<PdfBoxedItem*>::iterator ti = text_spans.begin();
-        while (ti != text_spans.end())
+        auto span_it = text_spans.begin();
+
+        while (span_it != text_spans.end())
         {
-            PdfBoxedItem* span = *ti;
+            PdfBoxedItem* span = *span_it;
 
             // TODO: re-work rotated text spans to let this work
             if (span->CTM().is_rotated()) {
-                ++ti;
+                ++span_it;
                 continue;
             }
 
@@ -365,17 +366,17 @@ namespace pdftoedn
             // approx. rules for now. Anything that's covered less
             // than 25% we say is not covered
             if (overlap_ratio < 0.25) {
-                ++ti;
+                ++span_it;
                 continue;
             }
 
-            std::multiset<PdfBoxedItem*>::const_iterator tmp = ti++;
+            auto tmp_it = span_it++;
 
             // anything > 80% is fully covered. Might get some false
             // positives here because the bboxes are approximated
             if (overlap_ratio > 0.8) {
-                delete *tmp;
-                text_spans.erase(tmp);
+                delete *tmp_it;
+                text_spans.erase(tmp_it);
             }
             else {
                 // for ratios between 25% and 80%, check the bbox to
@@ -390,8 +391,8 @@ namespace pdftoedn
 
                         // if no chars are left, delete it
                         if (s->length() == 0) {
-                            delete *tmp;
-                            text_spans.erase(tmp);
+                            delete *tmp_it;
+                            text_spans.erase(tmp_it);
                         }
                     }
                 }
@@ -873,16 +874,16 @@ namespace pdftoedn
         util::edn::Hash font_h(4);
 
         // get the family & style from the first entry
-        std::set<const PdfFont*>::const_iterator fi = matching_doc_fonts.begin();
+        auto font_it = matching_doc_fonts.begin();
 
-        font_h.push( PdfFont::SYMBOL_FAMILY,             (*fi)->family() );
+        font_h.push( PdfFont::SYMBOL_FAMILY,             (*font_it)->family() );
 
         // font style attributes, if present
-        if ((*fi)->is_bold()) {
+        if ((*font_it)->is_bold()) {
             font_h.push( PdfFont::SYMBOL_STYLE_BOLD,     true );
         }
 
-        if ((*fi)->is_italic()) {
+        if ((*font_it)->is_italic()) {
             font_h.push( PdfFont::SYMBOL_STYLE_ITALIC,   true );
         }
 
@@ -891,8 +892,8 @@ namespace pdftoedn
             // list equivalent fonts
             util::edn::Vector refs_a(matching_doc_fonts.size());
 
-            while (fi != matching_doc_fonts.end()) {
-                const PdfFont* f = *fi;
+            while (font_it != matching_doc_fonts.end()) {
+                const PdfFont* f = *font_it;
 
                 // add the name to the array
                 refs_a.push( f->name() );
@@ -901,7 +902,7 @@ namespace pdftoedn
                 // this page
                 f->clear_unmapped_codes();
 
-                ++fi;
+                ++font_it;
             }
             font_h.push( SYMBOL_EQUIVALENT_FONTS, refs_a );
         }

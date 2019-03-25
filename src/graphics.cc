@@ -263,8 +263,7 @@ namespace pdftoedn
             return false;
         }
 
-        for (std::list<PdfSubPathCmd *>::const_iterator i = cmds.begin(),
-                 j = p2.cmds.begin();
+        for (auto i = cmds.begin(), j = p2.cmds.begin();
              (i != cmds.end() && j != p2.cmds.end());
              ++i, ++j)
         {
@@ -330,15 +329,15 @@ namespace pdftoedn
         // check if rectangular
         if (shape == UNKNOWN && cmds.size() == 5) {
             Coord c[4];
-            std::list<PdfSubPathCmd*>::const_iterator ci = std::next(cmds.begin());
+            auto cmd = std::next(cmds.begin());
 
-            for (uint8_t ii = 0; ci != cmds.end(); ++ci, ++ii) {
-                if ((*ci)->is_curved()) {
+            for (uint8_t ii = 0; cmd != cmds.end(); ++cmd, ++ii) {
+                if ((*cmd)->is_curved()) {
                     // there's a curve command.. break out
                     return;
                 }
 
-                (*(ci))->get_cur_pt(c[ii]);
+                (*(cmd))->get_cur_pt(c[ii]);
             }
 
             // build two bounding boxes with the four corners and compare them
@@ -426,10 +425,7 @@ namespace pdftoedn
         }
 
         // command list equal?
-        for (std::list<PdfSubPathCmd *>::const_reverse_iterator ii = cmds.rbegin(),
-                 jj = p2.cmds.rbegin();
-             ii != cmds.rend();
-             ++ii, ++jj)
+        for (auto ii = cmds.rbegin(), jj = p2.cmds.rbegin(); ii != cmds.rend(); ++ii, ++jj)
         {
             if (!((*ii)->equals(*(*jj)))) {
                 //                std::cerr << "  * different subpaths" << std::endl;
