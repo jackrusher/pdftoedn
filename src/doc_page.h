@@ -66,7 +66,7 @@ namespace pdftoedn
         // path ops --
         // creates a path, inserts it into the path list and returns a
         // reference to it
-        void add_path(GfxState* state, PdfDocPath::Type type, PdfDocPath::EvenOddRule eo_flag);
+        void new_path(GfxState* state, PdfDocPath::Type type, PdfDocPath::EvenOddRule eo_flag);
 
         // image blob manipulations
         bool image_is_cached(intmax_t resource_id) const;

@@ -560,7 +560,7 @@ namespace pdftoedn
 
     //
     // create and add a new path type
-    void PdfPage::add_path(GfxState* state, PdfDocPath::Type type, PdfDocPath::EvenOddRule eo_flag)
+    void PdfPage::new_path(GfxState* state, PdfDocPath::Type type, PdfDocPath::EvenOddRule eo_flag)
     {
         // convert the poppler path to our own type
         PdfDocPath* path = new PdfDocPath(type, cur_gfx.attribs, eo_flag);
