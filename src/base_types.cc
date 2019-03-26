@@ -211,16 +211,15 @@ namespace pdftoedn
             y0 = tm.f();
             x1 = tm.a() + tm.e();
             y1 = tm.d() + tm.f();
-            // ensuse boxes cover at least one pixel
+            // ensure boxes are at least one pixel wide
             if (x0 == x1) {
-                x1 = x1 + 1;
+                x1 += 1;
             }
             if (y0 == y1) {
-                y1 = y1 + 1;
+                y1 += 1;
             }
-
         } else if (tm.a() > 0 && minor_axis_0 && tm.d() < 0) {
-            // scaling plus vertical flip
+            // scaling w/ vertical flip
             x0 = tm.e();
             y0 = tm.d() + tm.f();
             x1 = tm.a() + tm.e();
@@ -239,7 +238,6 @@ namespace pdftoedn
                     ++y1;
                 }
             }
-
         } else {
             // all other cases
             double vx[4], vy[4];

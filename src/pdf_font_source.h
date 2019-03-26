@@ -42,7 +42,8 @@ namespace pdftoedn
     struct PdfRef : public Ref
     {
         PdfRef(int n, int g) { num = n; gen = g; }
-        explicit PdfRef(const Ref* const r) { num = r->num; gen = r->gen; }
+        explicit PdfRef(const Ref* const r) : PdfRef(r->num, r->gen) {}
+
         bool operator==(const Ref& r) const { return (r.num == num && r.gen == gen); }
         bool operator<(const PdfRef& r) const;
 

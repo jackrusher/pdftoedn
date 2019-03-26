@@ -137,7 +137,7 @@ namespace pdftoedn
                                  const Coord& c1,
                                  const Coord& c2,
                                  const Coord& c3) :
-        PdfGfxCmd(cmd_name)
+        PdfSubPathCmd(cmd_name)
     {
         coords.push_back(c1);
         coords.push_back(c2);
@@ -210,7 +210,7 @@ namespace pdftoedn
     const std::vector<double> GfxAttribs::line_dash() const
     {
         std::vector<double> xformed_dash;
-        for (double d : l_dash) {
+        for (const double& d : l_dash) {
             xformed_dash.push_back(ctm.transform_line_width(d));
         }
         return xformed_dash;

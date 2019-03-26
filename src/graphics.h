@@ -57,7 +57,7 @@ namespace pdftoedn
             PdfGfxCmd(cmd_symbol) {}
         PdfSubPathCmd(const pdftoedn::Symbol& cmd_symbol,
                       const Coord& c) :
-            PdfGfxCmd(cmd_symbol) {
+            PdfSubPathCmd(cmd_symbol) {
             coords.push_back(c);
         }
         PdfSubPathCmd(const pdftoedn::Symbol& cmd_name,
