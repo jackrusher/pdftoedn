@@ -235,7 +235,6 @@ namespace pdftoedn {
                 }
 
             private:
-
                 Type type;
                 union Val {
                     Val(bool val)                     : b(val)   {}
@@ -259,4 +258,3 @@ namespace pdftoedn {
         }
     }
 }
-

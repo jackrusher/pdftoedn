@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -190,9 +190,7 @@ namespace pdftoedn
               case destFitBV:
 
                   // top, left, bottom, right
-                  if (ldest.getChangeTop() ) { //&& ldest.getChangeLeft()
-                                               // XXX found VW links with
-                                               // changeTop only! -jar
+                  if (ldest.getChangeTop() ) {
                       link.set_top_left( page_height - ldest.getTop(),
                                          ldest.getLeft() );
                   } else {

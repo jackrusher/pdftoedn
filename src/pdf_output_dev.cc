@@ -1117,7 +1117,7 @@ namespace pdftoedn
             return;
         }
 
-        pg_data->add_path(state, type, eo_flag);
+        pg_data->new_path(state, type, eo_flag);
     }
 
 } // namespace

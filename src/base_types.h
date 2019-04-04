@@ -75,7 +75,7 @@ namespace pdftoedn
     struct Coord : public gemable {
         double x, y;
 
-        Coord() : x(0), y(0) { }
+        Coord() : Coord(0, 0) { }
         // change -0 weirdness to just 0
         Coord(double _x, double _y) :
             x( (_x == -0) ? 0 : _x), y( (_y == -0) ? 0 : _y)
@@ -102,13 +102,9 @@ namespace pdftoedn
         static const double DEG2RAD;
 
         // constructors
-        PdfTM() :
-            m11(1), m21(0), m12(0), m22(1), dx(0), dy(0)
-        { }
+        PdfTM() : PdfTM(1, 0, 0, 1, 0, 0) {}
         PdfTM(const double* const ctm) :
-            m11(ctm[A]), m21(ctm[B]),
-            m12(ctm[C]), m22(ctm[D]),
-            dx(ctm[E]),  dy(ctm[F])
+            PdfTM(ctm[A], ctm[B], ctm[C], ctm[D], ctm[E], ctm[F])
         { }
         PdfTM(double radians, double ox, double oy);
         PdfTM(double radians, const Coord& c);
@@ -192,11 +188,11 @@ namespace pdftoedn
     public:
 
         // constructors
-        BoundingBox(double x, double y, double width, double height) {
-            init(Coord(x, y), Coord(x + width, y + height));
+        BoundingBox(double x, double y, double width, double height) :
+            BoundingBox(Coord(x, y), Coord(x + width, y + height)) {
         }
-        BoundingBox(const Coord& p1, double width, double height) {
-            init(p1, Coord(c1.x + width, c1.y + height));
+        BoundingBox(const Coord& p1, double width, double height) :
+            BoundingBox(p1, Coord(p1.x + width, p1.y + height)) {
         }
         BoundingBox(const Coord& p1, const Coord& p2) {
             init(p1, p2);

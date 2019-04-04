@@ -20,6 +20,7 @@
 #include <list>
 
 #include "graphics.h"
+#include "pdf_links.h"
 #include "util.h"
 #include "util_edn.h"
 
@@ -136,7 +137,7 @@ namespace pdftoedn
                                  const Coord& c1,
                                  const Coord& c2,
                                  const Coord& c3) :
-        PdfGfxCmd(cmd_name)
+        PdfSubPathCmd(cmd_name)
     {
         coords.push_back(c1);
         coords.push_back(c2);
@@ -209,7 +210,7 @@ namespace pdftoedn
     const std::vector<double> GfxAttribs::line_dash() const
     {
         std::vector<double> xformed_dash;
-        for (double d : l_dash) {
+        for (const double& d : l_dash) {
             xformed_dash.push_back(ctm.transform_line_width(d));
         }
         return xformed_dash;
@@ -262,8 +263,7 @@ namespace pdftoedn
             return false;
         }
 
-        for (std::list<PdfSubPathCmd *>::const_iterator i = cmds.begin(),
-                 j = p2.cmds.begin();
+        for (auto i = cmds.begin(), j = p2.cmds.begin();
              (i != cmds.end() && j != p2.cmds.end());
              ++i, ++j)
         {
@@ -329,15 +329,15 @@ namespace pdftoedn
         // check if rectangular
         if (shape == UNKNOWN && cmds.size() == 5) {
             Coord c[4];
-            std::list<PdfSubPathCmd*>::const_iterator ci = std::next(cmds.begin());
+            auto cmd = std::next(cmds.begin());
 
-            for (uint8_t ii = 0; ci != cmds.end(); ++ci, ++ii) {
-                if ((*ci)->is_curved()) {
+            for (uint8_t ii = 0; cmd != cmds.end(); ++cmd, ++ii) {
+                if ((*cmd)->is_curved()) {
                     // there's a curve command.. break out
                     return;
                 }
 
-                (*(ci))->get_cur_pt(c[ii]);
+                (*(cmd))->get_cur_pt(c[ii]);
             }
 
             // build two bounding boxes with the four corners and compare them
@@ -425,10 +425,7 @@ namespace pdftoedn
         }
 
         // command list equal?
-        for (std::list<PdfSubPathCmd *>::const_reverse_iterator ii = cmds.rbegin(),
-                 jj = p2.cmds.rbegin();
-             ii != cmds.rend();
-             ++ii, ++jj)
+        for (auto ii = cmds.rbegin(), jj = p2.cmds.rbegin(); ii != cmds.rend(); ++ii, ++jj)
         {
             if (!((*ii)->equals(*(*jj)))) {
                 //                std::cerr << "  * different subpaths" << std::endl;
@@ -446,7 +443,7 @@ namespace pdftoedn
     {
         // ready to produce the output - a hash contains the path data
         // and attributes
-        util::edn::Hash path_h(4);
+        util::edn::Hash path_h(5);
         to_edn_hash(path_h);
 
         path_h.push( SYMBOL_PATH_TYPE, SYMBOL_PATH_TYPES[path_type] );
@@ -465,6 +462,11 @@ namespace pdftoedn
         // even-odd if set
         if (even_odd) {
             path_h.push( SYMBOL_EVEN_ODD, true );
+        }
+
+        // if within a link annot
+        if (link_idx != -1) {
+            path_h.push( PdfLink::SYMBOL_LINK_IDX, link_idx );
         }
 
         util::edn::Hash attribs_h;

@@ -1,5 +1,5 @@
 //
-// Copyright 2016-2018 Ed Porras
+// Copyright 2016-2019 Ed Porras
 //
 // This file is part of pdftoedn.
 //
@@ -178,9 +178,8 @@ namespace pdftoedn
                 // require some scaling but they'll be handled by the
                 // browser respecting the viewport. Still, mark as if
                 // the op was done
-                double img_ar, tm_ar;
-                img_ar = static_cast<double>(width) / height;
-                tm_ar = ctm.b() / ctm.c();
+                double img_ar = static_cast<double>(width) / height;
+                double tm_ar = ctm.b() / ctm.c();
 
                 double ratio_r = img_ar / tm_ar;
                 double ar_delta = ratio_r - 1;
